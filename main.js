@@ -86,3 +86,13 @@ function IndBlock(locationObj){
     }
 }}
 
+/************  Init 4 coins  **************/
+
+function initialFourCoins() {
+    let playerList = houseList();
+    let 
+    $(game.cells[4][4]).attr("house", playerList[0].house);
+    $(game.cells[5][5]).attr("house", playerList[0].house);
+    $(game.cells[4][5]).attr("house", playerList[1].house);
+    $(game.cells[5][4]).attr("house", playerList[1].house);
+}
