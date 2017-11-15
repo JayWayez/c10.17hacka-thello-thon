@@ -1,14 +1,66 @@
+<!doctype html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="main.js"></script>
+    <link rel="stylesheet" href="style.css">
+
+
+
+
+
     <title>Document</title>
+
 </head>
 
 <body>
-<p>Hello World</p>
+
+
+<div class="container">
+    <div class="modal fade" id="playerSelection" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-header">
+                        <h1>Please Select Your House</h1>
+                        <button type="button" class="close" data-dismiss="modal"> CLOSE </button>
+                    </div>
+                </div>
+                <div class="modal-body text-center container">
+
+                        <div class="col-md-3 stark">
+                            <img src="images/stark.jpeg" alt="Stark">
+                            <h2>Stark</h2>
+                        </div>
+                        <div class="col-md-3 lannister">
+                            <img src="images/lannister.jpeg" alt="Lannister">
+                            <h2>Lannister</h2>
+                        </div>
+                        <div class="col-md-3 targaryen">
+                            <img src="images/targaryen.jpeg" alt="Targaryen">
+                            <h2>Targaryen</h2>
+                        </div>
+                        <div class="col-md-3 greyjoy">
+                            <img src="images/greyjoy.jpeg" alt="Greyjoy">
+                            <h2>Greyjoy</h2>
+                        </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 </body>
 
 </html>
