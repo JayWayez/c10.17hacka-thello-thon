@@ -1,3 +1,4 @@
+
 $(document).ready(initializeApplication);
 
 function initializeApplication(){
