@@ -55,4 +55,21 @@
     width: 20%;
     height: 85%;
 }
+.p1_flag_box {
+    background-color: blue;
+    height: 25%;
+}
+.p2_flag_box {
+    background-color: blue;
+    height: 25%;
+}
+.p1_stat_box {
+    background-color: rgb(0, 140, 255);
+    height: 75%;
+}
+.p2_stat_box {
+    background-color: rgb(157, 255, 0);
+    height: 75%;
+}
+
 
