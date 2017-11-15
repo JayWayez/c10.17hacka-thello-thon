@@ -1,0 +1,58 @@
+.fullview_area {
+    width: 100vw;
+    height: 100vh;
+}
+
+.game_area {
+    /* display: flex;
+    justify-content: space-around;
+    align-items: center; */
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color:black;
+}
+.top_row{
+    display: flex;
+    justify-content: center;
+    height: 15vh;
+    background-color: palegreen;
+}
+.mid_row{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 75vh;
+    background-color: rgb(152, 236, 251);
+}
+.bottom_row{
+    display: flex;
+    justify-content: center;
+    height: 10vh;
+    background-color: rgb(251, 236, 152);
+}
+#got_logo{
+    position: relative;
+    width: 50%;
+    height: 100%;
+    background-color: white;
+}
+#gameBoard{
+    position: relative;
+    width: 45%;
+    height: 85%;
+    background-color: white;
+}
+.p1_area {
+    /* position: absolute; */
+    background-color: pink;
+    width: 20%;
+    height: 85%;
+}
+.p2_area {
+    /* position: relative; */
+    background-color: blueviolet;
+    width: 20%;
+    height: 85%;
+}
+
