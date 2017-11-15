@@ -5,6 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
     <title>Othello</title>
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">    
     <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
@@ -14,9 +15,51 @@
 
     <style>
 
+
     </style>
 </head>
 <body>
+
+
+
+<div class="container">
+    <div class="modal fade" id="playerSelection" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-header">
+                        <h1>Please Select Your House</h1>
+                        <button type="button" class="close" data-dismiss="modal"> CLOSE </button>
+                    </div>
+                </div>
+                <div class="modal-body text-center container">
+
+                        <div class="col-md-3 stark">
+                            <img src="images/stark.jpeg" alt="Stark">
+                            <h2>Stark</h2>
+                        </div>
+                        <div class="col-md-3 lannister">
+                            <img src="images/lannister.jpeg" alt="Lannister">
+                            <h2>Lannister</h2>
+                        </div>
+                        <div class="col-md-3 targaryen">
+                            <img src="images/targaryen.jpeg" alt="Targaryen">
+                            <h2>Targaryen</h2>
+                        </div>
+                        <div class="col-md-3 greyjoy">
+                            <img src="images/greyjoy.jpeg" alt="Greyjoy">
+                            <h2>Greyjoy</h2>
+                        </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
         <div class="game_area">
             <div class="top_row">
                 <div id="got_logo"></div>
@@ -27,6 +70,7 @@
                     <div class="p1_stat_box"></div>
                 </div>
 
+
                 <div id="gameBoard"></div>
                 <div class="p2_area">
                     <div class="p2_flag_box"></div>
@@ -35,5 +79,8 @@
             </div>
             <div class="bottom_row"></div>
         </div>
-    </div>
+
 </body>
+
+
+</html>

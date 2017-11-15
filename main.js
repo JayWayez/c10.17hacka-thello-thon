@@ -1,11 +1,15 @@
 
+
 $(document).ready(initializeApplication);
 
 function initializeApplication(){
     window.game = new othello();
     game.createBlocks(8,8);
+    playerSelectionModel();
 /*********** Othello*************/
-
+function playerSelectionModel (){
+    $('#playerSelection').modal({backdrop: true});
+}
 function othello(){
     this.containerElement = $("#gameBoard");
     this.currentPlayer = 0;
@@ -81,3 +85,4 @@ function IndBlock(locationObj){
         return this.domElement.text();
     }
 }}
+

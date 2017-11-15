@@ -1,3 +1,11 @@
+
+
+
+.house img{
+    width: 25%;
+}
+
+
 .fullview_area {
     width: 100vw;
     height: 100vh;
@@ -98,3 +106,4 @@
 /*.cell:nth-child(3n+1){*/
     /*clear: left;*/
 /*}*/
+
