@@ -1,3 +1,11 @@
+
+
+
+.house img{
+    width: 25%;
+}
+
+
 .fullview_area {
     width: 100vw;
     height: 100vh;
@@ -38,6 +46,8 @@
     background-color: white;
 }
 #gameBoard{
+    display: flex;
+    flex-flow: row wrap;
     position: relative;
     width: 45%;
     height: 85%;
@@ -74,8 +84,8 @@
 
 
 .cell{
-    width: 12.5vmin;
-    height: 12.5vmin;
+    width: 12.5%;
+    height: 12.5%;
     border: 1px solid black;
     box-sizing: border-box;
     float: left;
@@ -96,3 +106,4 @@
 /*.cell:nth-child(3n+1){*/
     /*clear: left;*/
 /*}*/
+
