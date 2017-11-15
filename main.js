@@ -86,3 +86,13 @@ function IndBlock(locationObj){
     }
 }}
 
+///////score/////////////////////////////////////
+function score(){
+    for (var i = 0; i < game.cells.length; i++){
+        for (var j = 0; j < game.cells[i].length; i++){
+
+        }
+    }
+}
+
+
