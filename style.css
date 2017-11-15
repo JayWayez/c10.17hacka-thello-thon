@@ -73,3 +73,26 @@
 }
 
 
+.cell{
+    width: 12.5vmin;
+    height: 12.5vmin;
+    border: 1px solid black;
+    box-sizing: border-box;
+    float: left;
+    font-size: 8vmin;
+}
+.cell:nth-child(8n+1){
+    clear: left;
+}
+
+/*.cell{*/
+    /*width: 33vmin;*/
+    /*height: 33vmin;*/
+    /*border: 1px solid black;*/
+    /*box-sizing: border-box;*/
+    /*float: left;*/
+    /*font-size: 8vmin;*/
+/*}*/
+/*.cell:nth-child(3n+1){*/
+    /*clear: left;*/
+/*}*/
