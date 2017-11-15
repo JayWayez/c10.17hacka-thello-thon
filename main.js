@@ -94,7 +94,7 @@ function IndBlock(locationObj){
 function houseList (){
 
 
-    var stark = {
+    var player1 = {
         'house' : 'stark',
         'coinImage': 'image/coin/...',
         'audio': 'audio/...',
@@ -102,7 +102,7 @@ function houseList (){
         'backgroundImg': 'image/background/...',
         'score': null
     }
-    var greyjoy = {
+    var player2 = {
         'house' : 'greyjoy',
         'coinImage': 'image/coin/...',
         'audio': 'audio/...',
@@ -127,7 +127,7 @@ function houseList (){
         'score': null
     }
 
-    var houses = [stark, greyjoy];
+    var houses = [player1, player2];
     return houses;
 }
 
