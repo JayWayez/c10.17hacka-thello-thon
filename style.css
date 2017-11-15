@@ -38,6 +38,8 @@
     background-color: white;
 }
 #gameBoard{
+    display: flex;
+    flex-flow: row wrap;
     position: relative;
     width: 45%;
     height: 85%;
@@ -74,8 +76,8 @@
 
 
 .cell{
-    width: 12.5vmin;
-    height: 12.5vmin;
+    width: 12.5%;
+    height: 12.5%;
     border: 1px solid black;
     box-sizing: border-box;
     float: left;
