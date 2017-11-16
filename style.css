@@ -104,6 +104,10 @@
     height: 100%;
 }
 
+.available{
+    color: yellow;
+    border: 2px solid blue;
+}
 /*.cell{*/
     /*width: 33vmin;*/
     /*height: 33vmin;*/

@@ -4,23 +4,21 @@ $(document).ready(initializeApplication);
 
 function initializeApplication() {
 
-    window.game = new othello();
+    window.game = new Othello();
     game.createBlocks(8, 8);
 
     initialFourCoins();
-
-    checkAvailableSpace(game.currentPlayer);
-
+    allowClickHandler(checkAvailableSpace(game.currentPlayer));
     playerSelectionModal();
 
 }
-/*********** Othello*************/
-
 function playerSelectionModal (){
     $('#playerSelectModal').modal('show');
 }
 
-function othello(){
+/*********** Othello*************/
+function Othello(){
+    var selfOthello = this;
     this.containerElement = $("#gameBoard");
     this.currentPlayer = 0;
     this.playerTurn = houseList();
@@ -61,48 +59,41 @@ function othello(){
     this.getCurrentPlayerSymbol = function(){
         return this.playerTurn[this.currentPlayer].symbol;
     };
-    this.handleBlockClick = function(cell){
-        var currentSymbol = this.getCurrentPlayerSymbol();
-        if(cell.getCurrentMark()=== undefined){
-            cell.setCurrentMark(currentSymbol);
-            // cell.domElement[0].classList.add("playeruniqueclassName"); // either add class;
-            cell.domElement[0].setAttribute("faction","whatever"); // or either add attribute;
-            $(cell.domElement[0]).removeClass('test')
-            this.toggleCurrentPlayer();
+    this.handleBlockClick = function(){
+        var currentSymbol = game.getCurrentPlayerSymbol();
+        //check if the button has been clicked.
+        if(this.getCurrentMark()=== undefined){
+            this.setCurrentMark(currentSymbol);
+            game.toggleCurrentPlayer();
         }
-
-        checkAvailableSpace(this.currentPlayer);
-
+        var element= document.body.getElementsByClassName('available');
+        $(element).removeClass("available");
+        //need something to remove click handler
+        removeClickHandler();
+        allowClickHandler(checkAvailableSpace(game.currentPlayer));
         score();
         displayOutput();
 
     }
 }
+
 /************  Block  **************/
 function IndBlock(locationObj){
+    this.IndBlockSelf=this;
     this.location = locationObj;
     this.domElement = null;
-    this.parentClickHandler = null;
     this.createDomElement = function(clickCallback){
         this.domElement = $("<div>",{
             'class': 'cell test'
         });
-        this.parentClickHandler = clickCallback;
-        this.domElement.click( this.handleClick.bind(this) );
         return this.domElement;
-    };
-    this.handleClick = function(){
-        this.parentClickHandler(this);
     };
     this.setCurrentMark = function(mark){
         var currentTurnPlayer = game.playerTurn[game.currentPlayer];
         var playerCoin = $("<img>").attr("src", currentTurnPlayer.coinImage);
-        // this.domElement.text(mark);
         var currentElement= this.domElement[0];
         currentElement.setAttribute('box_owned_by', game.currentPlayer);
         $(currentElement).append(playerCoin);
-
-        // this.domElement[0].classList.remove("player2");
     };
     this.getCurrentMark = function(){
         return this.domElement[0].attributes.box_owned_by;
@@ -208,7 +199,6 @@ function initialFourCoins() {
     $(game.cells[4][4].domElement[0]).append(player1coin_2).attr("box_owned_by", "0");
     $(game.cells[3][4].domElement[0]).append(player2coin_1).attr("box_owned_by", "1");
     $(game.cells[4][3].domElement[0]).append(player2coin_2).attr("box_owned_by", "1");
-    console.log("first 4 coins initialized");
 }
 
 
@@ -236,28 +226,25 @@ function checkAvailableSpace(currentPlayer) {
                         if(k > -1 && k < 8 && m > -1 && m < 8 && $(game.cells[k][m].domElement[0]).attr('box_owned_by') === (1-currentPlayer).toString()) {
 
 
-                            var wtf= k-y;
-                            var fff = m-x;
-                            var shit = k+wtf;
-                            var poop = m+fff;
+                            var y_axis= k-y;
+                            var x_axis = m-x;
+                            var y_direction = k+y_axis;
+                            var x_direction = m+x_axis;
 
-                            if(shit > -1 && shit < 8 && poop > -1 && poop < 8 && $(game.cells[shit][poop]).attr('box_owned_by') === undefined){
+                            if(y_direction > -1 && y_direction < 8 && x_direction > -1 && x_direction < 8 && $(game.cells[y_direction][x_direction]).attr('box_owned_by') === undefined){
 
-                                viableSpace.push([k+wtf,m+fff]);
+                                viableSpace.push([k+y_axis,m+x_axis]);
                             }
 
-                            console.log(currentPlayer +' \'s available positions are ' + viableSpace )
                         }
                     }
 
                 }
             }
         }
+
     }
-
-
-
-
+    console.log(currentPlayer +' \'s available positions are ' + viableSpace );
     return(viableSpace);
 }
 
@@ -267,25 +254,21 @@ function displayViable(){
     }
 }
 
-// var counter1=null;
-// var counter2= null;
-// function checkAvailableSpace() {
-// function checkAvailableSpace(cell) {
-    // var isClicked = false;
-    // for (var y = 0; y < game.cells.length; y++) {
-    //     for (var x = 0; x < game.cells[y].length; x++) {
-    //         var currentCell = game.cells[y][x].domElement[0];
-    //
-    //         if(currentCell.innerHTML==="1" && $(currentCell).attr('isClicked') === undefined){
-    //             counter2++;
-    //             // isClicked = true;
-    //             $(currentCell).attr('isClicked', true);
-    //         } else if(currentCell.innerHTML==="0" && $(currentCell).attr('isClicked') === undefined){
-    //             counter1++;
-    //             // isClicked = true;
-    //             $(currentCell).attr('isClicked', true);
-    //         }
-    //     }
-    // }
+function allowClickHandler(locations){
+    for(var i=0; i<locations.length; i++){
+        for(var j=0; j<1; j++){
+            var clickableButton= game.cells[locations[i][j]][locations[i][j+1]];
+            $(clickableButton.domElement[0]).addClass("available");
+            $(clickableButton.domElement[0]).click(game.handleBlockClick.bind(clickableButton));
+        }
+    }return locations;
+}
 
-
+function removeClickHandler(location){
+    for(var i=0; i<locations.length; i++){
+        for(var j=0; j<1; j++){
+            var clickableButton= game.cells[locations[i][j]][locations[i][j+1]];
+            $(clickableButton.domElement[0]).unbind('click');
+        }
+    }
+}
