@@ -16,7 +16,7 @@ function playerSelectionModel (){
 function othello(){
     this.containerElement = $("#gameBoard");
     this.currentPlayer = 0;
-    this.playerTurn = [0,1];
+    this.playerTurn = houseList();
     this.cells = [ ];
 
     this.createBlocks = function(row,column){
@@ -50,17 +50,17 @@ function othello(){
 
     //this function not yet
     this.getCurrentPlayerSymbol = function(){
-        return this.playerTurn[this.currentPlayer];
+        return this.playerTurn[this.currentPlayer].symbol;
     };
     this.handleBlockClick = function(cell){
         var currentSymbol = this.getCurrentPlayerSymbol();
         if(cell.getCurrentMark()===''){
             cell.setCurrentMark(currentSymbol);
-            cell.domElement[0].classList.add("playeruniqueclassName"); // either add class;
+            // cell.domElement[0].classList.add("playeruniqueclassName"); // either add class;
             cell.domElement[0].setAttribute("faction","whatever"); // or either add attribute;
             this.toggleCurrentPlayer();
         }
-        checkAvailableSpace()
+        checkAvailableSpace(cell)
     }
 }
 /************  Block  **************/
@@ -80,8 +80,9 @@ function IndBlock(locationObj){
         this.parentClickHandler(this);
     };
     this.setCurrentMark = function(mark){
+        var currentSymbol = game.playerTurn[game.currentPlayer];
         this.domElement.text(mark);
-        this.domElement[0].classList.add("player1");
+        this.domElement[0].setAttribute('box_owned_by', game.currentPlayer);
 
         // this.domElement[0].classList.remove("player2");
     };
@@ -104,7 +105,8 @@ function houseList (){
         'audio': 'audio/...',
         'flagImage': 'image/flag/...',
         'backgroundImg': 'image/background/...',
-        'score': null
+        'score': null,
+        "symbol": "0"
     }
     var player2 = {
         'house' : 'greyjoy',
@@ -112,8 +114,10 @@ function houseList (){
         'audio': 'audio/...',
         'flagImage': 'image/flag/...',
         'backgroundImg': 'image/background/...',
-        'score': null
-    };
+        'score': null,
+         "symbol": "1"
+
+};
     var lannister = {
         'house' : 'lannister',
         'coinImage': 'image/coin/...',
@@ -141,7 +145,7 @@ function houseList (){
 
 var counter1=null;
 var counter2= null;
-function checkAvailableSpace() {
+function checkAvailableSpace(cell) {
 
     for (var y = 0; y < game.cells.length; y++) {
         for (var x = 0; x < game.cells[y].length; x++) {
