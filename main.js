@@ -39,6 +39,7 @@ function checkPlayerOrder(){
     if (player1 === null) {
         for (var i = 0; i < houses.length; i++){
             if(houses[i].house === this.children[0].alt) {
+                houses[i].symbol = 0;
                 player1 = houses[i];
             }
         }
@@ -46,6 +47,7 @@ function checkPlayerOrder(){
     } else {
         for (var i = 0; i < houses.length; i++){
             if(houses[i].house === this.children[0].alt) {
+                houses[i].symbol = 1;
                 player2 = houses[i];
                 initialFourCoins();
             }
@@ -193,7 +195,7 @@ function houseList() {
       flagImage: "image/flag/...",
       backgroundImg: "image/background/...",
       score: null,
-      symbol: "0"
+    //   symbol: "0"
     };
     var greyjoy = {
       house: "greyjoy",
@@ -202,7 +204,7 @@ function houseList() {
       flagImage: "image/flag/...",
       backgroundImg: "image/background/...",
       score: null,
-      symbol: "1"
+    //   symbol: "1"
     };
     var lannister = {
       house: "lannister",
