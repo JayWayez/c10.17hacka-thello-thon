@@ -6,7 +6,11 @@ function initializeApplication() {
 
     window.game = new othello();
     game.createBlocks(8, 8);
+
     initialFourCoins();
+
+    checkAvailableSpace(game.currentPlayer);
+
     // playerSelectionModel();
 
 }
@@ -59,9 +63,14 @@ function othello(){
             cell.setCurrentMark(currentSymbol);
             // cell.domElement[0].classList.add("playeruniqueclassName"); // either add class;
             cell.domElement[0].setAttribute("faction","whatever"); // or either add attribute;
+            $(cell.domElement[0]).removeClass('test')
             this.toggleCurrentPlayer();
         }
+
+        checkAvailableSpace(this.currentPlayer);
+
         score();
+
     }
 }
 /************  Block  **************/
@@ -71,7 +80,7 @@ function IndBlock(locationObj){
     this.parentClickHandler = null;
     this.createDomElement = function(clickCallback){
         this.domElement = $("<div>",{
-            'class': 'cell'
+            'class': 'cell test'
         });
         this.parentClickHandler = clickCallback;
         this.domElement.click( this.handleClick.bind(this) );
@@ -148,6 +157,8 @@ function houseList (){
 
 
 
+
+
 ///////score/////////////////////////////////////
 var counter1=null;
 var counter2= null;
@@ -175,6 +186,7 @@ function score(){
 
 
 
+
 /************  Init 4 coins  **************/
 
 function initialFourCoins() {
@@ -191,6 +203,61 @@ function initialFourCoins() {
     console.log("first 4 coins initialized");
 }
 
+
+
+
+
+
+// var counter1=null;
+// var counter2= null;
+
+function checkAvailableSpace(currentPlayer) {
+
+    var currentSpaceY = null;
+    var currentSpaceX = null;
+    var currentPosition = [];
+    var viableSpace = [];
+
+    for (var y = 0; y < game.cells.length; y++) {
+        for (var x = 0; x < game.cells[y].length; x++) {
+            if($(game.cells[y][x].domElement[0]).attr('box_owned_by') === currentPlayer.toString()) {
+                currentSpaceY = y;
+                currentSpaceX = x;
+                for( var k = currentSpaceY-1; k <= currentSpaceY+1; k++){
+                    for( var m = currentSpaceX-1; m <= currentSpaceX+1; m++){
+                        if(k > -1 && k < 8 && m > -1 && m < 8 && $(game.cells[k][m].domElement[0]).attr('box_owned_by') === (1-currentPlayer).toString()) {
+
+
+                            var wtf= k-y;
+                            var fff = m-x;
+                            var shit = k+wtf;
+                            var poop = m+fff;
+
+                            if(shit > -1 && shit < 8 && poop > -1 && poop < 8 && $(game.cells[shit][poop]).attr('box_owned_by') === undefined){
+
+                                viableSpace.push([k+wtf,m+fff]);
+                            }
+
+                            console.log(currentPlayer +' \'s available positions are ' + viableSpace )
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+
+
+
+    return(viableSpace);
+}
+
+function displayViable(){
+    if(game.currentPlayer === '1'){
+        checkAvailableSpace()
+    }
+}
 
 // var counter1=null;
 // var counter2= null;
@@ -212,4 +279,5 @@ function initialFourCoins() {
     //         }
     //     }
     // }
+
 
