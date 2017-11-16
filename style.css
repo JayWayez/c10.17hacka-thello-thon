@@ -94,6 +94,10 @@
 .cell:nth-child(8n+1){
     clear: left;
 }
+.cell img {
+    width: 100%;
+    height: 100%;
+}
 
 /*.cell{*/
     /*width: 33vmin;*/

@@ -6,7 +6,8 @@ function initializeApplication() {
 
     window.game = new othello();
     game.createBlocks(8, 8);
-    playerSelectionModel();
+    initialFourCoins();
+    // playerSelectionModel();
 
 }
 /*********** Othello*************/
@@ -100,7 +101,7 @@ function houseList (){
 
     var player1 = {
         'house' : 'stark',
-        'coinImage': 'image/coin/...',
+        'coinImage': 'images/stark.jpeg',
         'audio': 'audio/...',
         'flagImage': 'image/flag/...',
         'backgroundImg': 'image/background/...',
@@ -108,7 +109,7 @@ function houseList (){
     }
     var player2 = {
         'house' : 'greyjoy',
-        'coinImage': 'image/coin/...',
+        'coinImage': 'images/greyjoy.jpeg',
         'audio': 'audio/...',
         'flagImage': 'image/flag/...',
         'backgroundImg': 'image/background/...',
@@ -138,6 +139,22 @@ function houseList (){
 
 
 
+
+/************  Init 4 coins  **************/
+
+function initialFourCoins() {
+    let playerList = houseList();
+    var player1coin_1 = $("<img>").attr("src", playerList[0].coinImage);
+    var player1coin_2 = $("<img>").attr("src", playerList[0].coinImage);
+    var player2coin_1 = $("<img>").attr("src", playerList[1].coinImage);
+    var player2coin_2 = $("<img>").attr("src", playerList[1].coinImage);
+    
+    $(game.cells[3][3].domElement[0]).append(player1coin_1).attr("house", playerList[0].house);
+    $(game.cells[4][4].domElement[0]).append(player1coin_2).attr("house", playerList[0].house);
+    $(game.cells[3][4].domElement[0]).append(player2coin_1).attr("house", playerList[1].house);
+    $(game.cells[4][3].domElement[0]).append(player2coin_2).attr("house", playerList[1].house);
+    console.log("first 4 coins initialized");
+}
 
 var counter1=null;
 var counter2= null;
