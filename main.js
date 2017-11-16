@@ -139,7 +139,7 @@ function houseList (){
 function score(){
     for (var i = 0; i < game.cells.length; i++){
         for (var j = 0; j < game.cells[i].length; i++){
-
+            if(game.cells[i][j].domElement[0].innerHTML === houses.house)
         }
     }
 }
