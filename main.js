@@ -6,13 +6,13 @@ function initializeApplication() {
 
     window.game = new othello();
     game.createBlocks(8, 8);
-    playerSelectionModel();
+    // playerSelectionModel();
 
 }
 /*********** Othello*************/
-function playerSelectionModel (){
-    $('#playerSelection').modal('show');
-}
+// function playerSelectionModel (){
+//     $('#playerSelection').modal('show');
+// }
 function othello(){
     this.containerElement = $("#gameBoard");
     this.currentPlayer = 0;
@@ -142,10 +142,18 @@ function houseList (){
 
 ///////score/////////////////////////////////////
 function score(){
+
+    var isClicked = false;
+
     for (var i = 0; i < game.cells.length; i++){
         for (var j = 0; j < game.cells[i].length; i++){
-            if(game.cells[i][j].domElement[0].innerHTML === houses.house){
-
+            var currentCell = game.cells[i][j].domElement[0];
+            if(currentCell.innerHTML==="1" && $(currentCell).attr('isClicked') === undefined){
+                    isClicked = true;
+                    counter2++;
+            }else if(currentCell.innerHTML==="0" && $(currentCell).attr('isClicked') === undefined){
+                isClicked = true;
+                counter1++;
             }
         }
     }
@@ -155,13 +163,19 @@ function score(){
 var counter1=null;
 var counter2= null;
 function checkAvailableSpace() {
-
+    var isClicked = false;
     for (var y = 0; y < game.cells.length; y++) {
         for (var x = 0; x < game.cells[y].length; x++) {
-            if(game.cells[y][x].domElement[0].innerHTML==="1"){
+            var currentCell = game.cells[y][x].domElement[0];
+
+            if(currentCell.innerHTML==="1" && $(currentCell).attr('isClicked') === undefined){
                 counter2++;
-            } else if(game.cells[y][x].domElement[0].innerHTML==="0"){
+                // isClicked = true;
+                $(currentCell).attr('isClicked', true);
+            } else if(currentCell.innerHTML==="0" && $(currentCell).attr('isClicked') === undefined){
                 counter1++;
+                // isClicked = true;
+                $(currentCell).attr('isClicked', true);
             }
         }
     }
