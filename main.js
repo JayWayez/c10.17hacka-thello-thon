@@ -6,11 +6,13 @@ function initializeApplication() {
 
     window.game = new Othello();
     game.createBlocks(8, 8);
-
     initialFourCoins();
     allowClickHandler(checkAvailableSpace(game.currentPlayer));
     playerSelectionModal();
-
+    playBackgroundMusic();
+    $(".btn.btn-default").click(playBackgroundMusic);
+    $(".btn.btn-default").click(statusBarFlag);
+    $(".btn.btn-default").click(factionOst);
 }
 function playerSelectionModal (){
     $('#playerSelectModal').modal('show');
@@ -73,6 +75,7 @@ function Othello(){
         allowClickHandler(checkAvailableSpace(game.currentPlayer));
         score();
         displayOutput();
+        factionOst();
 
     }
 }
@@ -111,7 +114,7 @@ function houseList (){
     var player1 = {
         'house' : 'stark',
         'coinImage': 'images/stark.png',
-        'audio': 'audio/...',
+        'audio': 'sounds/stark2.mp3',
         'flagImage': 'image/flag/...',
         'backgroundImg': 'image/background/...',
         'score': null,
@@ -120,7 +123,7 @@ function houseList (){
     var player2 = {
         'house' : 'greyjoy',
         'coinImage': 'images/greyjoy.png',
-        'audio': 'audio/...',
+        'audio': 'sounds/greyjoy.mp3',
         'flagImage': 'image/flag/...',
         'backgroundImg': 'image/background/...',
         'score': null,
@@ -182,7 +185,16 @@ function score(){
     }
 }
 
+/*==============================Faction Select==============================*/
+function statusBarFlag() {
+    var playerList = houseList();
+    //put coin image for now, need to change to flag
+    var player1flag = $("<img>").attr("src", playerList[0].coinImage);
+    var player2flag = $("<img>").attr("src", playerList[1].coinImage);
 
+    $('.p1_flag_box').append(player1flag);
+    $('.p2_flag_box').append(player2flag);
+}
 
 
 
@@ -215,6 +227,7 @@ function checkAvailableSpace(currentPlayer) {
     var currentSpaceX = null;
     var currentPosition = [];
     var viableSpace = [];
+
 
     for (var y = 0; y < game.cells.length; y++) {
         for (var x = 0; x < game.cells[y].length; x++) {
@@ -261,6 +274,11 @@ function allowClickHandler(locations){
             $(clickableButton.domElement[0]).addClass("available");
             $(clickableButton.domElement[0]).click(game.handleBlockClick.bind(clickableButton));
         }
+
+    }
+    //when there are no avail spaces to move triggers the no space function.
+    if(locations.length===0){
+        whenNoSpace();
     }
     lastLocations=locations;
     return locations;
@@ -272,5 +290,41 @@ function removeClickHandler(locations){
             var clickableButton= game.cells[locations[i][j]][locations[i][j+1]];
             $(clickableButton.domElement[0]).unbind('click');
         }
+    }
+}
+
+function whenNoSpace(){
+    //need if statement to check if its the end of game or middle of game
+    console.log("no available move");
+    game.toggleCurrentPlayer();
+}
+
+/*==================================Sound=================================*/
+var backgroundMusic= new Audio();
+backgroundMusic.src = "sounds/main_song.mp3";
+
+function playBackgroundMusic(){
+
+    if(OstisPlaying){
+        backgroundMusic.pause();
+        OstisPlaying= false;
+    }else {
+        backgroundMusic.play();
+        OstisPlaying= true;
+    }
+}
+var OstisPlaying;
+
+
+var playerSongPlaying;
+var playerSong= new Audio();
+
+
+function factionOst(){
+    playerSong.src= $(game.playerTurn[game.currentPlayer]).attr("audio");
+    if(game.currentPlayer ==="1"){
+        playerSong.play();
+    }else{
+        playerSong.play();
     }
 }
