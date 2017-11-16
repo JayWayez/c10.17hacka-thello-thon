@@ -61,13 +61,11 @@ function othello(){
             this.setCurrentMark(currentSymbol);
             game.toggleCurrentPlayer();
         }
-
+        var element= document.body.getElementsByClassName('available');
+        $(element).removeClass("available");
         allowClickHandler(checkAvailableSpace(game.currentPlayer));
-
-
         score();
-        var element= document.getElementsByClassName('available');
-            element.className.remove("available");
+
     }
 }
 
@@ -249,10 +247,8 @@ function allowClickHandler(locations){
     for(var i=0; i<locations.length; i++){
         for(var j=0; j<1; j++){
             var clickableButton= game.cells[locations[i][j]][locations[i][j+1]];
-            var indBlockObjectOfCell=clickableButton.IndBlockSelf.IndBlockSelf;
             $(clickableButton.domElement[0]).addClass("available");
             $(clickableButton.domElement[0]).click(game.handleBlockClick.bind(clickableButton));
-            // game.cells[0][0].IndBlockSelf.IndBlockSelf
         }
     }
 }
