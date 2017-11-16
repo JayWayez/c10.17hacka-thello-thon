@@ -69,7 +69,7 @@ function Othello(){
         var element= document.body.getElementsByClassName('available');
         $(element).removeClass("available");
         //need something to remove click handler
-        removeClickHandler();
+        // removeClickHandler();
         allowClickHandler(checkAvailableSpace(game.currentPlayer));
         score();
         displayOutput();
@@ -272,3 +272,4 @@ function removeClickHandler(location){
         }
     }
 }
+
