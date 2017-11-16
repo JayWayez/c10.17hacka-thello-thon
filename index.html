@@ -7,55 +7,61 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <title>Othello</title>
-    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">    
-    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
-    <script src="main.js"></script>
+
+
     <link type="text/css" rel="stylesheet" href="style.css">
-
-
-    <style>
-
-
-    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+   
 </head>
 <body>
 
 
 
-<div class="container">
-    <div class="modal fade" id="playerSelection" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="modal-header">
-                        <h1>Please Select Your House</h1>
-                        <button type="button" class="close" data-dismiss="modal"> CLOSE </button>
-                    </div>
+        <div class="container">
+                <!-- Modal -->
+                <div class="modal fade" id="playerSelectModal" role="dialog">
+                  <div class="modal-dialog">
+                  
+                    <!-- Modal content-->
+                    <div class=“modal-content”>
+                            <div class="modal-header">
+                                <div class="modal-header">
+                                    <h1>Please Select Your House</h1>
+                                    <button type="button" class="close" data-dismiss="modal"> CLOSE </button>
+                                </div>
+                            </div>
+                            <div class="modal-body text-center container">
+        
+                                <div class="col-md-3 stark">
+                                    <img src="images/stark.jpeg" alt="Stark">
+                                    <h2>Stark</h2>
+                                </div>
+                                <div class="col-md-3 lannister">
+                                    <img src="images/lannister.jpeg" alt="Lannister">
+                                    <h2>Lannister</h2>
+                                </div>
+                                <div class="col-md-3 targaryen">
+                                    <img src="images/targaryen.jpeg" alt="Targaryen">
+                                    <h2>Targaryen</h2>
+                                </div>
+                                <div class="col-md-3 greyjoy">
+                                    <img src="images/greyjoy.jpeg" alt="Greyjoy">
+                                    <h2>Greyjoy</h2>
+                                </div>
+        
+                            </div>
+        
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    
+                  </div>
                 </div>
-                <div class="modal-body text-center container">
-
-                        <div class="col-md-3 stark">
-                            <img src="images/stark.jpeg" alt="Stark">
-                            <h2>Stark</h2>
-                        </div>
-                        <div class="col-md-3 lannister">
-                            <img src="images/lannister.jpeg" alt="Lannister">
-                            <h2>Lannister</h2>
-                        </div>
-                        <div class="col-md-3 targaryen">
-                            <img src="images/targaryen.jpeg" alt="Targaryen">
-                            <h2>Targaryen</h2>
-                        </div>
-                        <div class="col-md-3 greyjoy">
-                            <img src="images/greyjoy.jpeg" alt="Greyjoy">
-                            <h2>Greyjoy</h2>
-                        </div>
-
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 

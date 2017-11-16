@@ -11,13 +11,15 @@ function initializeApplication() {
 
     checkAvailableSpace(game.currentPlayer);
 
-    // playerSelectionModel();
+    playerSelectionModal();
 
 }
 /*********** Othello*************/
-// function playerSelectionModel (){
-//     $('#playerSelection').modal('show');
-// }
+
+function playerSelectionModal (){
+    $('#playerSelectModal').modal('show');
+}
+
 function othello(){
     this.containerElement = $("#gameBoard");
     this.currentPlayer = 0;
