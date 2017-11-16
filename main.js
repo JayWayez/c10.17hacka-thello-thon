@@ -6,14 +6,25 @@ function initializeApplication() {
 
     window.game = new othello();
     game.createBlocks(8, 8);
+    $("#testModal").modal("show");
+    
     initialFourCoins();
-    // playerSelectionModel();
+    // playerSelectionModal();
 
 }
 /*********** Othello*************/
-function playerSelectionModel (){
-    $('#playerSelection').modal('show');
+function playerSelectionModal (){
+    // $('#playerSelection').modal();
+    // $(“.modal-body”).children(‘img’).attr(‘src’, $(this).text());
+    // $(“.modal-title”).text(imgUrl.call(this));
+    console.log("modal worked");
 }
+function addModalCloseHandler() {
+    $("#closeButton").on("click", function () {
+        $("#playerSelectModal").modal("hide");
+    });
+ } 
+
 function othello(){
     this.containerElement = $("#gameBoard");
     this.currentPlayer = 0;
@@ -176,4 +187,10 @@ function checkAvailableSpace(cell) {
             }
         }
     }
+}
+
+/************  end modal  **************/
+
+function endModal(){
+
 }
