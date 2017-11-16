@@ -74,6 +74,7 @@ function othello(){
         checkAvailableSpace(this.currentPlayer);
 
         score();
+        displayOutput();
 
     }
 }
@@ -156,7 +157,10 @@ function houseList (){
     return houses;
 }
 
-
+function displayOutput(){
+    $(".p1_stat_box > p").text(counter1);
+    $(".p2_stat_box > p").text(counter2);
+}
 
 
 
@@ -171,8 +175,8 @@ function score(){
 
     var isClicked = false;
 
-    for (var i = 0; i < game.cells.length - 1; i++){
-        for (var j = 0; j < game.cells[i].length - 1; j++){
+    for (var i = 0; i < game.cells.length; i++){
+        for (var j = 0; j < game.cells[i].length; j++){
             var currentCell = game.cells[i][j].domElement[0];
             if($(currentCell).attr('box_owned_by')==="1" && $(currentCell).attr('isClicked') === undefined){
                 isClicked = true;
