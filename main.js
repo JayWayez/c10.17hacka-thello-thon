@@ -3,13 +3,15 @@
 $(document).ready(initializeApplication);
 
 function initializeApplication() {
+
     window.game = new othello();
     game.createBlocks(8, 8);
     playerSelectionModel();
+
 }
 /*********** Othello*************/
 function playerSelectionModel (){
-    $('#playerSelection').modal({backdrop: true});
+    $('#playerSelection').modal('show');
 }
 function othello(){
     this.containerElement = $("#gameBoard");
@@ -88,12 +90,60 @@ function IndBlock(locationObj){
     }
 }
 
+
+
+
+/************  Block  **************/
+
+function houseList (){
+
+
+    var player1 = {
+        'house' : 'stark',
+        'coinImage': 'image/coin/...',
+        'audio': 'audio/...',
+        'flagImage': 'image/flag/...',
+        'backgroundImg': 'image/background/...',
+        'score': null
+    }
+    var player2 = {
+        'house' : 'greyjoy',
+        'coinImage': 'image/coin/...',
+        'audio': 'audio/...',
+        'flagImage': 'image/flag/...',
+        'backgroundImg': 'image/background/...',
+        'score': null
+    };
+    var lannister = {
+        'house' : 'lannister',
+        'coinImage': 'image/coin/...',
+        'audio': 'audio/...',
+        'flagImage': 'image/flag/...',
+        'backgroundImg': 'image/background/...',
+        'score': null
+    }
+    var targaryen= {
+        'house' : 'targaryen',
+        'coinImage': 'image/coin/...',
+        'audio': 'audio/...',
+        'flagImage': 'image/flag/...',
+        'backgroundImg': 'image/background/...',
+        'score': null
+    }
+
+    var houses = [player1, player2];
+    return houses;
+}
+
+
+
+
+
 var counter1=null;
 var counter2= null;
 function checkAvailableSpace() {
 
     for (var y = 0; y < game.cells.length; y++) {
-
         for (var x = 0; x < game.cells[y].length; x++) {
             if(game.cells[y][x].domElement[0].innerHTML==="1"){
                 counter2++;
