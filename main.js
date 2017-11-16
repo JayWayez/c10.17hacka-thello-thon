@@ -51,10 +51,15 @@ function Othello(){
     this.toggleCurrentPlayer = function(){
         this.currentPlayer = 1 - this.currentPlayer;
     };
-    this.checkForWin = function(){
+    /*this.checkForWin = function(){
         //create if statement checking for total coin?
+        if (counter1 === 64 || counter2 === 64){
+            console.log("game over");
+        }else if (counter1 === 32 && counter2 === 32){
+            console.log("this is a draw");
+        }
 
-    };
+    }*/;
 
     //this function not yet
     this.getCurrentPlayerSymbol = function(){
@@ -69,11 +74,14 @@ function Othello(){
         }
         var element= document.body.getElementsByClassName('available');
         $(element).removeClass("available");
-        //need something to remove click handler
-        // removeClickHandler();
+
+        //Removes Click Handler
+        removeClickHandler(lastLocations);
+
         allowClickHandler(checkAvailableSpace(game.currentPlayer));
         score();
         displayOutput();
+        checkForWin();
 
     }
 }
@@ -150,11 +158,9 @@ function houseList (){
 }
 
 function displayOutput(){
-    $(".p1_stat_box > p").text(counter1);
-    $(".p2_stat_box > p").text(counter2);
+    $(".p1_stat_box p:nth-child(2)").text(counter1);
+    $(".p2_stat_box p:nth-child(2)").text(counter2);
 }
-
-
 
 
 
@@ -180,6 +186,15 @@ function score(){
                 $(currentCell).attr('isClicked', true);
             }
         }
+    }
+}
+
+function checkForWin(){
+    //create if statement checking for total coin?
+    if (counter1 === 64 || counter2 === 64) {
+        console.log("game over");
+    } else if (counter1 === 32 && counter2 === 32) {
+        console.log("this is a draw");
     }
 }
 
@@ -232,8 +247,8 @@ function checkAvailableSpace(currentPlayer) {
                             var y_direction = k+y_axis;
                             var x_direction = m+x_axis;
 
-                            if(y_direction > -1 && y_direction < 8 && x_direction > -1 && x_direction < 8 && $(game.cells[y_direction][x_direction]).attr('box_owned_by') === undefined){
-
+                            // if(y_direction > -1 && y_direction < 8 && x_direction > -1 && x_direction < 8 && $(game.cells[y_direction][x_direction]).attr('box_owned_by') === undefined){
+                            if(y_direction > -1 && y_direction < 8 && x_direction > -1 && x_direction < 8 && $(game.cells[y_direction][x_direction].domElement[0]).attr('box_owned_by') === undefined){
                                 viableSpace.push([k+y_axis,m+x_axis]);
                             }
 
@@ -254,7 +269,7 @@ function displayViable(){
         checkAvailableSpace()
     }
 }
-
+var lastLocations;
 function allowClickHandler(locations){
     for(var i=0; i<locations.length; i++){
         for(var j=0; j<1; j++){
@@ -262,10 +277,12 @@ function allowClickHandler(locations){
             $(clickableButton.domElement[0]).addClass("available");
             $(clickableButton.domElement[0]).click(game.handleBlockClick.bind(clickableButton));
         }
-    }return locations;
+    }
+    lastLocations=locations;
+    return locations;
 }
 
-function removeClickHandler(location){
+function removeClickHandler(locations){
     for(var i=0; i<locations.length; i++){
         for(var j=0; j<1; j++){
             var clickableButton= game.cells[locations[i][j]][locations[i][j+1]];
