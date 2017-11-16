@@ -3,10 +3,11 @@
 $(document).ready(initializeApplication);
 
 function initializeApplication() {
-    // playerSelectionModel();
+
     window.game = new othello();
     game.createBlocks(8, 8);
     initialFourCoins();
+    // playerSelectionModel();
 
 }
 /*********** Othello*************/
@@ -60,6 +61,7 @@ function othello(){
             cell.domElement[0].setAttribute("faction","whatever"); // or either add attribute;
             this.toggleCurrentPlayer();
         }
+        checkAvailableSpace()
     }
 }
 /************  Block  **************/
@@ -88,6 +90,8 @@ function IndBlock(locationObj){
         return this.domElement.text();
     }
 }
+
+
 
 
 /************  Block  **************/
@@ -140,10 +144,29 @@ function houseList (){
 
 function initialFourCoins() {
     let playerList = houseList();
-    let player1coin = $("<img>").attr("src", playerList[0].coinImage);
-    $(game.cells[4][4].domElement[0]).append(player1coin).attr("house", playerList[0].house);
-    // $(game.cells[5][5]).attr("house", playerList[0].house);
-    // $(game.cells[4][5]).attr("house", playerList[1].house);
-    // $(game.cells[5][4]).attr("house", playerList[1].house);
-    console.log(player1coin);
+    var player1coin_1 = $("<img>").attr("src", playerList[0].coinImage);
+    var player1coin_2 = $("<img>").attr("src", playerList[0].coinImage);
+    var player2coin_1 = $("<img>").attr("src", playerList[1].coinImage);
+    var player2coin_2 = $("<img>").attr("src", playerList[1].coinImage);
+    
+    $(game.cells[3][3].domElement[0]).append(player1coin_1).attr("house", playerList[0].house);
+    $(game.cells[4][4].domElement[0]).append(player1coin_2).attr("house", playerList[0].house);
+    $(game.cells[3][4].domElement[0]).append(player2coin_1).attr("house", playerList[1].house);
+    $(game.cells[4][3].domElement[0]).append(player2coin_2).attr("house", playerList[1].house);
+    console.log("first 4 coins initialized");
+}
+
+var counter1=null;
+var counter2= null;
+function checkAvailableSpace() {
+
+    for (var y = 0; y < game.cells.length; y++) {
+        for (var x = 0; x < game.cells[y].length; x++) {
+            if(game.cells[y][x].domElement[0].innerHTML==="1"){
+                counter2++;
+            } else if(game.cells[y][x].domElement[0].innerHTML==="0"){
+                counter1++;
+            }
+        }
+    }
 }
