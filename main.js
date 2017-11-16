@@ -72,7 +72,7 @@ function othello(){
             cell.domElement[0].setAttribute("faction","whatever"); // or either add attribute;
             this.toggleCurrentPlayer();
         }
-        checkAvailableSpace(cell)
+        score();
     }
 }
 /************  Block  **************/
@@ -158,6 +158,34 @@ function houseList (){
 
 
 
+
+///////score/////////////////////////////////////
+var counter1=null;
+var counter2= null;
+
+function score(){
+
+    var isClicked = false;
+
+    for (var i = 0; i < game.cells.length - 1; i++){
+        for (var j = 0; j < game.cells[i].length - 1; j++){
+            var currentCell = game.cells[i][j].domElement[0];
+            if($(currentCell).attr('box_owned_by')==="1" && $(currentCell).attr('isClicked') === undefined){
+                isClicked = true;
+                counter2++;
+                $(currentCell).attr('isClicked', true);
+            }else if($(currentCell).attr('box_owned_by')==="0" && $(currentCell).attr('isClicked') === undefined){
+                isClicked = true;
+                counter1++;
+                $(currentCell).attr('isClicked', true);
+            }
+        }
+    }
+}
+
+
+
+
 /************  Init 4 coins  **************/
 
 function initialFourCoins() {
@@ -166,7 +194,7 @@ function initialFourCoins() {
     var player1coin_2 = $("<img>").attr("src", playerList[0].coinImage);
     var player2coin_1 = $("<img>").attr("src", playerList[1].coinImage);
     var player2coin_2 = $("<img>").attr("src", playerList[1].coinImage);
-    
+
     $(game.cells[3][3].domElement[0]).append(player1coin_1).attr("box_owned_by", "0");
     $(game.cells[4][4].domElement[0]).append(player1coin_2).attr("box_owned_by", "0");
     $(game.cells[3][4].domElement[0]).append(player2coin_1).attr("box_owned_by", "1");
@@ -174,23 +202,25 @@ function initialFourCoins() {
     console.log("first 4 coins initialized");
 }
 
-var counter1=null;
-var counter2= null;
-function checkAvailableSpace(cell) {
 
-    for (var y = 0; y < game.cells.length; y++) {
-        for (var x = 0; x < game.cells[y].length; x++) {
-            if(game.cells[y][x].domElement[0].innerHTML==="1"){
-                counter2++;
-            } else if(game.cells[y][x].domElement[0].innerHTML==="0"){
-                counter1++;
-            }
-        }
-    }
-}
+// var counter1=null;
+// var counter2= null;
+// function checkAvailableSpace() {
+// function checkAvailableSpace(cell) {
+    // var isClicked = false;
+    // for (var y = 0; y < game.cells.length; y++) {
+    //     for (var x = 0; x < game.cells[y].length; x++) {
+    //         var currentCell = game.cells[y][x].domElement[0];
+    //
+    //         if(currentCell.innerHTML==="1" && $(currentCell).attr('isClicked') === undefined){
+    //             counter2++;
+    //             // isClicked = true;
+    //             $(currentCell).attr('isClicked', true);
+    //         } else if(currentCell.innerHTML==="0" && $(currentCell).attr('isClicked') === undefined){
+    //             counter1++;
+    //             // isClicked = true;
+    //             $(currentCell).attr('isClicked', true);
+    //         }
+    //     }
+    // }
 
-/************  end modal  **************/
-
-function endModal(){
-
-}
