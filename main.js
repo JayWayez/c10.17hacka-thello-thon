@@ -6,6 +6,7 @@ function initializeApplication() {
     // playerSelectionModel();
     window.game = new othello();
     game.createBlocks(8, 8);
+    initialFourCoins();
 
 }
 /*********** Othello*************/
@@ -96,7 +97,7 @@ function houseList (){
 
     var player1 = {
         'house' : 'stark',
-        'coinImage': 'image/coin/...',
+        'coinImage': 'images/stark.jpeg',
         'audio': 'audio/...',
         'flagImage': 'image/flag/...',
         'backgroundImg': 'image/background/...',
@@ -104,7 +105,7 @@ function houseList (){
     }
     var player2 = {
         'house' : 'greyjoy',
-        'coinImage': 'image/coin/...',
+        'coinImage': 'images/greyjoy.jpeg',
         'audio': 'audio/...',
         'flagImage': 'image/flag/...',
         'backgroundImg': 'image/background/...',
@@ -139,9 +140,10 @@ function houseList (){
 
 function initialFourCoins() {
     let playerList = houseList();
-    let 
-    $(game.cells[4][4]).attr("house", playerList[0].house);
-    $(game.cells[5][5]).attr("house", playerList[0].house);
-    $(game.cells[4][5]).attr("house", playerList[1].house);
-    $(game.cells[5][4]).attr("house", playerList[1].house);
+    let player1coin = $("<img>").attr("src", playerList[0].coinImage);
+    $(game.cells[4][4].domElement[0]).append(player1coin).attr("house", playerList[0].house);
+    // $(game.cells[5][5]).attr("house", playerList[0].house);
+    // $(game.cells[4][5]).attr("house", playerList[1].house);
+    // $(game.cells[5][4]).attr("house", playerList[1].house);
+    console.log(player1coin);
 }
