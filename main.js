@@ -215,14 +215,14 @@ function checkAvailableSpace(currentPlayer) {
                         if(k > -1 && k < 8 && m > -1 && m < 8 && $(game.cells[k][m].domElement[0]).attr('box_owned_by') === (1-currentPlayer).toString()) {
 
 
-                            var wtf= k-y;
-                            var fff = m-x;
-                            var shit = k+wtf;
-                            var poop = m+fff;
+                            var y_axis= k-y;
+                            var x_axis = m-x;
+                            var y_direction = k+y_axis;
+                            var x_direction = m+x_axis;
 
-                            if(shit > -1 && shit < 8 && poop > -1 && poop < 8 && $(game.cells[shit][poop]).attr('box_owned_by') === undefined){
+                            if(y_direction > -1 && y_direction < 8 && x_direction > -1 && x_direction < 8 && $(game.cells[y_direction][x_direction]).attr('box_owned_by') === undefined){
 
-                                viableSpace.push([k+wtf,m+fff]);
+                                viableSpace.push([k+y_axis,m+x_axis]);
                             }
 
                         }
