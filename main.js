@@ -84,7 +84,8 @@ function IndBlock(locationObj){
     this.domElement = null;
     this.createDomElement = function(clickCallback){
         this.domElement = $("<div>",{
-            'class': 'cell test'
+            'class': 'cell test',
+            text: 'x:'+locationObj.x+',y:'+locationObj.y
         });
         return this.domElement;
     };
@@ -104,70 +105,140 @@ function IndBlock(locationObj){
 }
 
 function flipCoin (y, x){
+    var array = [];
+
+    currentSpaceY = y;
+    currentSpaceX = x;
+    for( var k = currentSpaceY-1; k <= currentSpaceY+1; k++){
+        for( var m = currentSpaceX-1; m <= currentSpaceX+1; m++){
+            if(k > -1 && k < 8 && m > -1 && m < 8 && $(game.cells[k][m].domElement[0]).attr('box_owned_by') === (1-game.currentPlayer).toString()) {
+
+                var y_axis= k-y;
+                var x_axis = m-x;
+                var y_direction = k+y_axis;
+                var x_direction = m+x_axis;
+
+                for (var a = y_direction; a <= y; a++) {
+                    for (var b = x_direction; b <= x; b++) {
+                        var currentTurnPlayer = game.playerTurn[game.currentPlayer];
+                        $(game.cells[a][b].domElement[0]).find('img').attr('src', currentTurnPlayer.coinImage);
+                        $(game.cells[a][b].domElement[0]).attr('box_owned_by', game.currentPlayer);
+                    }
+
+                }
+
+                // if(Math.sign(y_axis) === 1 && Math.sign(x_axis) === 0){
+                //     for(var q = y ; q < 8; q ++){
+                //         if($(game.cells[k][m].domElement[0]).attr('box_owned_by') === (game.currentPlayer).toString()){
+                //             var currentTurnPlayer = game.playerTurn[game.currentPlayer];
+                //             $(game.cells[q][b].domElement[0]).find('img').attr('src', currentTurnPlayer.coinImage );
+                //             $(game.cells[q][b].domElement[0]).attr( 'box_owned_by', game.currentPlayer);
+                //         }else{
+                //
+                //         }
+                //     }
+                // }
+
+            }
+
+        }
+    }
 
 
-        // var currentSpaceY = null;
-        // var currentSpaceX = null;
-        // var currentPosition = [];
-        // var viableSpace = [];
+            //
+               //  if(y_axis === 1 && x_axis === 0){
+               //      var b = m
+               //      for(var a = y_direction; a >= y ; a--){
+               //
+               //              var currentTurnPlayer = game.playerTurn[game.currentPlayer];
+               //              $(game.cells[a][b].domElement[0]).find('img').attr('src', currentTurnPlayer.coinImage );
+               //              $(game.cells[a][b].domElement[0]).attr( 'box_owned_by', game.currentPlayer);
+               //
+               //      }
+               //      return;
+               //
+               //  }
+               //
+               //
+               // if(y_axis === 0 && x_axis === -1) {
+               //      var a = k
+               //         for (var b = x_direction; b <= x; b++) {
+               //             var currentTurnPlayer = game.playerTurn[game.currentPlayer];
+               //             $(game.cells[a][b].domElement[0]).find('img').attr('src', currentTurnPlayer.coinImage);
+               //             $(game.cells[a][b].domElement[0]).attr('box_owned_by', game.currentPlayer);
+               //         }
+               //         return;
+               //
+               //
+               // }
+               //
+               //  if(y_axis === -1 && x_axis === 1) {
+               //      for (var a = y_direction; a <= y; a++) {
+               //          for (var b = x_direction; b >= x; b--) {
+               //              var currentTurnPlayer = game.playerTurn[game.currentPlayer];
+               //              $(game.cells[a][b].domElement[0]).find('img').attr('src', currentTurnPlayer.coinImage);
+               //              $(game.cells[a][b].domElement[0]).attr('box_owned_by', game.currentPlayer);
+               //          }
+               //          return;
+               //      }
+               //
+               //  }
+               //  if(y_axis === 0 && x_axis === 1) {
+               //      var a = k;
+               //          for (var b = x_direction; b >= x; b--) {
+               //              var currentTurnPlayer = game.playerTurn[game.currentPlayer];
+               //              $(game.cells[a][b].domElement[0]).find('img').attr('src', currentTurnPlayer.coinImage);
+               //              $(game.cells[a][b].domElement[0]).attr('box_owned_by', game.currentPlayer);
+               //
+               //      }
+               //      return;
+               //
+               //  }
+               //  if(y_axis === 1 && x_axis === 1) {
+               //      for (var a = y_direction; a >= y; a--) {
+               //          for (var b = x_direction; b >= x; b--) {
+               //              var currentTurnPlayer = game.playerTurn[game.currentPlayer];
+               //              $(game.cells[a][b].domElement[0]).find('img').attr('src', currentTurnPlayer.coinImage);
+               //              $(game.cells[a][b].domElement[0]).attr('box_owned_by', game.currentPlayer);
+               //          }
+               //      }
+               //
+               //  }
+               //  if(y_axis === -1 && x_axis === -1) {
+               //      for (var a = y_direction; a <= y; a++) {
+               //          for (var b = x_direction; b <= x; b++) {
+               //              var currentTurnPlayer = game.playerTurn[game.currentPlayer];
+               //              $(game.cells[a][b].domElement[0]).find('img').attr('src', currentTurnPlayer.coinImage);
+               //              $(game.cells[a][b].domElement[0]).attr('box_owned_by', game.currentPlayer);
+               //          }
+               //      }
+               //
+               //  }
+               //  if(y_axis === -1 && x_axis === 0) {
+               //      var b = m;
+               //      for (var a = y_direction; a <= y; a++) {
+               //
+               //              var currentTurnPlayer = game.playerTurn[game.currentPlayer];
+               //              $(game.cells[a][b].domElement[0]).find('img').attr('src', currentTurnPlayer.coinImage);
+               //              $(game.cells[a][b].domElement[0]).attr('box_owned_by', game.currentPlayer);
+               //          }
+               //
+               //  }
+               //  if(y_axis === 1 && x_axis === -1) {
+               //      for (var a = y_direction; a >= y; a--) {
+               //          for (var b = x_direction; b <= x; b++) {
+               //              var currentTurnPlayer = game.playerTurn[game.currentPlayer];
+               //              $(game.cells[a][b].domElement[0]).find('img').attr('src', currentTurnPlayer.coinImage);
+               //              $(game.cells[a][b].domElement[0]).attr('box_owned_by', game.currentPlayer);
+               //          }
+               //      }
+               //
+               //  }
 
-        // for (var y = 0; y < game.cells.length; y++) {
-        //     for (var x = 0; x < game.cells[y].length; x++) {
-        //         if($(game.cells[y][x].domElement[0]).attr('box_owned_by') === currentPlayer.toString()) {
-                    currentSpaceY = y;
-                    currentSpaceX = x;
-                    for( var k = currentSpaceY-1; k <= currentSpaceY+1; k++){
-                        for( var m = currentSpaceX-1; m <= currentSpaceX+1; m++){
-                            if(k > -1 && k < 8 && m > -1 && m < 8 && $(game.cells[k][m].domElement[0]).attr('box_owned_by') === (1-game.currentPlayer).toString()) {
-
-
-                                var y_axis= k-y;
-                                var x_axis = m-x;
-                                var y_direction = k+y_axis;
-                                var x_direction = m+x_axis;
 
 
 
-                                if(y_axis > 0 && x_axis >= 0){
-                                    for(var a = y_direction; a >= y ; a--){
-                                        for(var b = x_direction; b <= x; b++){
-                                            var currentTurnPlayer = game.playerTurn[game.currentPlayer];
-                                            $(game.cells[a][b].domElement[0]).find('img').attr('src', currentTurnPlayer.coinImage );
-                                            $(game.cells[a][b].domElement[0]).attr( 'box_owned_by', game.currentPlayer);
-                                        }
-                                    }
-                                }
 
-
-                               if(y_axis <= 0 && x_axis < 0) {
-                                   for (var a = y_direction; a <= y; a++) {
-                                       for (var b = x_direction; b <= x; b++) {
-                                           var currentTurnPlayer = game.playerTurn[game.currentPlayer];
-                                           $(game.cells[a][b].domElement[0]).find('img').attr('src', currentTurnPlayer.coinImage);
-                                           $(game.cells[a][b].domElement[0]).attr('box_owned_by', game.currentPlayer);
-                                       }
-                                   }
-                               }
-
-                                // if(y_direction > -1 && y_direction < 8 && x_direction > -1 && x_direction < 8 && $(game.cells[y_direction][x_direction]).attr('box_owned_by') === game.currentPlayer){
-                                //
-                                //     var shit = y_axis * -1;
-                                //     var poop = x_axis * -1;
-                                //
-                                //     var ddong = y_direction + shit;
-                                //     var damn = x_direction + poop;
-                                    // while($(game.cells[y][x]))
-
-                                    // viableSpace.push([k+y_axis,m+x_axis]);
-                                }
-
-                            }
-                        }
-
-
-
-        // console.log(currentPlayer +' \'s available positions are ' + viableSpace );
-        // return(viableSpace);
 
 }
 
