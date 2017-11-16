@@ -68,7 +68,7 @@ function Othello(){
         }
         var element= document.body.getElementsByClassName('available');
         $(element).removeClass("available");
-        //need something to remove click handler
+        //Removes Click Handler
         removeClickHandler(lastLocations);
         allowClickHandler(checkAvailableSpace(game.currentPlayer));
         score();
@@ -231,8 +231,8 @@ function checkAvailableSpace(currentPlayer) {
                             var y_direction = k+y_axis;
                             var x_direction = m+x_axis;
 
-                            if(y_direction > -1 && y_direction < 8 && x_direction > -1 && x_direction < 8 && $(game.cells[y_direction][x_direction]).attr('box_owned_by') === undefined){
-
+                            // if(y_direction > -1 && y_direction < 8 && x_direction > -1 && x_direction < 8 && $(game.cells[y_direction][x_direction]).attr('box_owned_by') === undefined){
+                            if(y_direction > -1 && y_direction < 8 && x_direction > -1 && x_direction < 8 && $(game.cells[y_direction][x_direction].domElement[0]).attr('box_owned_by') === undefined){
                                 viableSpace.push([k+y_axis,m+x_axis]);
                             }
 
