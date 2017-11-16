@@ -55,7 +55,7 @@ function othello(){
     };
     this.handleBlockClick = function(cell){
         var currentSymbol = this.getCurrentPlayerSymbol();
-        if(cell.getCurrentMark()===''){
+        if(cell.getCurrentMark()=== undefined){
             cell.setCurrentMark(currentSymbol);
             // cell.domElement[0].classList.add("playeruniqueclassName"); // either add class;
             cell.domElement[0].setAttribute("faction","whatever"); // or either add attribute;
@@ -81,14 +81,17 @@ function IndBlock(locationObj){
         this.parentClickHandler(this);
     };
     this.setCurrentMark = function(mark){
-        var currentSymbol = game.playerTurn[game.currentPlayer];
-        this.domElement.text(mark);
-        this.domElement[0].setAttribute('box_owned_by', game.currentPlayer);
+        var currentTurnPlayer = game.playerTurn[game.currentPlayer];
+        var playerCoin = $("<img>").attr("src", currentTurnPlayer.coinImage);
+        // this.domElement.text(mark);
+        var currentElement= this.domElement[0];
+        currentElement.setAttribute('box_owned_by', game.currentPlayer);
+        $(currentElement).append(playerCoin);
 
         // this.domElement[0].classList.remove("player2");
     };
     this.getCurrentMark = function(){
-        return this.domElement.text();
+        return this.domElement[0].attributes.box_owned_by;
     }
 }
 
@@ -153,10 +156,10 @@ function initialFourCoins() {
     var player2coin_1 = $("<img>").attr("src", playerList[1].coinImage);
     var player2coin_2 = $("<img>").attr("src", playerList[1].coinImage);
     
-    $(game.cells[3][3].domElement[0]).append(player1coin_1).attr("house", playerList[0].house);
-    $(game.cells[4][4].domElement[0]).append(player1coin_2).attr("house", playerList[0].house);
-    $(game.cells[3][4].domElement[0]).append(player2coin_1).attr("house", playerList[1].house);
-    $(game.cells[4][3].domElement[0]).append(player2coin_2).attr("house", playerList[1].house);
+    $(game.cells[3][3].domElement[0]).append(player1coin_1).attr("box_owned_by", "0");
+    $(game.cells[4][4].domElement[0]).append(player1coin_2).attr("box_owned_by", "0");
+    $(game.cells[3][4].domElement[0]).append(player2coin_1).attr("box_owned_by", "1");
+    $(game.cells[4][3].domElement[0]).append(player2coin_2).attr("box_owned_by", "1");
     console.log("first 4 coins initialized");
 }
 
