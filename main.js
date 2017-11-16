@@ -2,10 +2,11 @@
 
 $(document).ready(initializeApplication);
 
-function initializeApplication(){
+function initializeApplication() {
     window.game = new othello();
-    game.createBlocks(8,8);
+    game.createBlocks(8, 8);
     playerSelectionModel();
+}
 /*********** Othello*************/
 function playerSelectionModel (){
     $('#playerSelection').modal({backdrop: true});
@@ -57,6 +58,7 @@ function othello(){
             cell.domElement[0].setAttribute("faction","whatever"); // or either add attribute;
             this.toggleCurrentPlayer();
         }
+        checkAvailableSpace()
     }
 }
 /************  Block  **************/
@@ -84,5 +86,20 @@ function IndBlock(locationObj){
     this.getCurrentMark = function(){
         return this.domElement.text();
     }
-}}
+}
 
+var counter1=null;
+var counter2= null;
+function checkAvailableSpace() {
+
+    for (var y = 0; y < game.cells.length; y++) {
+
+        for (var x = 0; x < game.cells[y].length; x++) {
+            if(game.cells[y][x].domElement[0].innerHTML==="1"){
+                counter2++;
+            } else if(game.cells[y][x].domElement[0].innerHTML==="0"){
+                counter1++;
+            }
+        }
+    }
+}
