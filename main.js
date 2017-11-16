@@ -8,7 +8,6 @@ function initializeApplication() {
     game.createBlocks(8, 8);
 
     initialFourCoins();
-
     allowClickHandler(checkAvailableSpace(game.currentPlayer));
 }
 /*********** Othello*************/
@@ -57,12 +56,15 @@ function Othello(){
     };
     this.handleBlockClick = function(){
         var currentSymbol = game.getCurrentPlayerSymbol();
+        //check if the button has been clicked.
         if(this.getCurrentMark()=== undefined){
             this.setCurrentMark(currentSymbol);
             game.toggleCurrentPlayer();
         }
         var element= document.body.getElementsByClassName('available');
         $(element).removeClass("available");
+        //need something to remove click handler
+        removeClickHandler();
         allowClickHandler(checkAvailableSpace(game.currentPlayer));
         score();
 
@@ -249,6 +251,15 @@ function allowClickHandler(locations){
             var clickableButton= game.cells[locations[i][j]][locations[i][j+1]];
             $(clickableButton.domElement[0]).addClass("available");
             $(clickableButton.domElement[0]).click(game.handleBlockClick.bind(clickableButton));
+        }
+    }return locations;
+}
+
+function removeClickHandler(location){
+    for(var i=0; i<locations.length; i++){
+        for(var j=0; j<1; j++){
+            var clickableButton= game.cells[locations[i][j]][locations[i][j+1]];
+            $(clickableButton.domElement[0]).unbind('click');
         }
     }
 }
