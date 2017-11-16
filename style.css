@@ -86,12 +86,15 @@
 
 
 .cell{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 12.5%;
     height: 12.5%;
     border: 1px solid black;
     box-sizing: border-box;
     float: left;
-    font-size: 8vmin;
+    /* font-size: 8vmin; */
 }
 .cell:nth-child(8n+1){
     clear: left;

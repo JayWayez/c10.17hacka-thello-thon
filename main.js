@@ -11,13 +11,15 @@ function initializeApplication() {
 
     checkAvailableSpace(game.currentPlayer);
 
-    // playerSelectionModel();
+    playerSelectionModal();
 
 }
 /*********** Othello*************/
-// function playerSelectionModel (){
-//     $('#playerSelection').modal('show');
-// }
+
+function playerSelectionModal (){
+    $('#playerSelectModal').modal('show');
+}
+
 function othello(){
     this.containerElement = $("#gameBoard");
     this.currentPlayer = 0;
@@ -36,9 +38,11 @@ function othello(){
 
                 var cellDomElement = cell.createDomElement( this.handleBlockClick.bind(this) );
                 if(y%2===0 && x%2===0){
-                    cell.domElement[0].style.backgroundColor="red";
+                    cell.domElement[0].style.backgroundImage="url('images/bg_2.png')";
                 }else if(y%2!==0 && x%2!==0){
-                    cell.domElement[0].style.backgroundColor="red";
+                    cell.domElement[0].style.backgroundImage="url('images/bg_2.png')";
+                } else {
+                    cell.domElement[0].style.backgroundImage="url('images/bg_1.png')";
                 }
                 row.push(cell);
                 this.containerElement.append(cellDomElement);
@@ -115,7 +119,7 @@ function houseList (){
 
     var player1 = {
         'house' : 'stark',
-        'coinImage': 'images/stark.jpeg',
+        'coinImage': 'images/stark.png',
         'audio': 'audio/...',
         'flagImage': 'image/flag/...',
         'backgroundImg': 'image/background/...',
@@ -124,7 +128,7 @@ function houseList (){
     }
     var player2 = {
         'house' : 'greyjoy',
-        'coinImage': 'images/greyjoy.jpeg',
+        'coinImage': 'images/greyjoy.png',
         'audio': 'audio/...',
         'flagImage': 'image/flag/...',
         'backgroundImg': 'image/background/...',
