@@ -4,7 +4,7 @@ $(document).ready(initializeApplication);
 
 function initializeApplication() {
 
-    window.game = new othello();
+    window.game = new Othello();
     game.createBlocks(8, 8);
 
     initialFourCoins();
@@ -15,7 +15,7 @@ function initializeApplication() {
 // function playerSelectionModel (){
 //     $('#playerSelection').modal('show');
 // }
-function othello(){
+function Othello(){
     var selfOthello = this;
     this.containerElement = $("#gameBoard");
     this.currentPlayer = 0;
