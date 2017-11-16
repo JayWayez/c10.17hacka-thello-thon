@@ -9,11 +9,14 @@ function initializeApplication() {
 
     initialFourCoins();
     allowClickHandler(checkAvailableSpace(game.currentPlayer));
+    playerSelectionModal();
+
 }
+function playerSelectionModal (){
+    $('#playerSelectModal').modal('show');
+}
+
 /*********** Othello*************/
-// function playerSelectionModel (){
-//     $('#playerSelection').modal('show');
-// }
 function Othello(){
     var selfOthello = this;
     this.containerElement = $("#gameBoard");
@@ -33,9 +36,11 @@ function Othello(){
 
                 var cellDomElement = cell.createDomElement( this.handleBlockClick.bind(this) );
                 if(y%2===0 && x%2===0){
-                    cell.domElement[0].style.backgroundColor="red";
+                    cell.domElement[0].style.backgroundImage="url('images/bg_2.png')";
                 }else if(y%2!==0 && x%2!==0){
-                    cell.domElement[0].style.backgroundColor="red";
+                    cell.domElement[0].style.backgroundImage="url('images/bg_2.png')";
+                } else {
+                    cell.domElement[0].style.backgroundImage="url('images/bg_1.png')";
                 }
                 row.push(cell);
                 this.containerElement.append(cellDomElement);
@@ -67,6 +72,7 @@ function Othello(){
         removeClickHandler();
         allowClickHandler(checkAvailableSpace(game.currentPlayer));
         score();
+        displayOutput();
 
     }
 }
@@ -104,7 +110,7 @@ function houseList (){
 
     var player1 = {
         'house' : 'stark',
-        'coinImage': 'images/stark.jpeg',
+        'coinImage': 'images/stark.png',
         'audio': 'audio/...',
         'flagImage': 'image/flag/...',
         'backgroundImg': 'image/background/...',
@@ -113,7 +119,7 @@ function houseList (){
     }
     var player2 = {
         'house' : 'greyjoy',
-        'coinImage': 'images/greyjoy.jpeg',
+        'coinImage': 'images/greyjoy.png',
         'audio': 'audio/...',
         'flagImage': 'image/flag/...',
         'backgroundImg': 'image/background/...',
@@ -142,7 +148,10 @@ function houseList (){
     return houses;
 }
 
-
+function displayOutput(){
+    $(".p1_stat_box > p").text(counter1);
+    $(".p2_stat_box > p").text(counter2);
+}
 
 
 
@@ -157,8 +166,8 @@ function score(){
 
     var isClicked = false;
 
-    for (var i = 0; i < game.cells.length - 1; i++){
-        for (var j = 0; j < game.cells[i].length - 1; j++){
+    for (var i = 0; i < game.cells.length; i++){
+        for (var j = 0; j < game.cells[i].length; j++){
             var currentCell = game.cells[i][j].domElement[0];
             if($(currentCell).attr('box_owned_by')==="1" && $(currentCell).attr('isClicked') === undefined){
                 isClicked = true;
