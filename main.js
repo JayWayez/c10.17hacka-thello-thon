@@ -3,9 +3,10 @@
 $(document).ready(initializeApplication);
 
 function initializeApplication() {
-    // playerSelectionModel();
+
     window.game = new othello();
     game.createBlocks(8, 8);
+    playerSelectionModel();
 
 }
 /*********** Othello*************/
@@ -59,6 +60,7 @@ function othello(){
             cell.domElement[0].setAttribute("faction","whatever"); // or either add attribute;
             this.toggleCurrentPlayer();
         }
+        checkAvailableSpace()
     }
 }
 /************  Block  **************/
@@ -87,6 +89,8 @@ function IndBlock(locationObj){
         return this.domElement.text();
     }
 }
+
+
 
 
 /************  Block  **************/
@@ -135,13 +139,30 @@ function houseList (){
 
 
 
+
 ///////score/////////////////////////////////////
 function score(){
     for (var i = 0; i < game.cells.length; i++){
         for (var j = 0; j < game.cells[i].length; i++){
-            if(game.cells[i][j].domElement[0].innerHTML === houses.house)
+            if(game.cells[i][j].domElement[0].innerHTML === houses.house){
+
+            }
         }
     }
 }
 
 
+var counter1=null;
+var counter2= null;
+function checkAvailableSpace() {
+
+    for (var y = 0; y < game.cells.length; y++) {
+        for (var x = 0; x < game.cells[y].length; x++) {
+            if(game.cells[y][x].domElement[0].innerHTML==="1"){
+                counter2++;
+            } else if(game.cells[y][x].domElement[0].innerHTML==="0"){
+                counter1++;
+            }
+        }
+    }
+}
