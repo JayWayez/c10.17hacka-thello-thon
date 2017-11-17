@@ -432,12 +432,13 @@ function checkAvailableSpace(currentPlayer) {
 
             }
         }
+    }
         // console.log(currentPlayer + " 's available positions are " + viableSpace);
         // return viableSpace;
         console.log(currentPlayer + ' \'s available positions are ' + viableSpace);
         console.log('spaces to be flipped ' + needToBeFlipped);
         return (viableSpace);
-    }
+
 }
 
 
@@ -514,3 +515,7 @@ var OstisPlaying;
 //         playerSong.play();
 //     }
 // }
+
+
+
+
