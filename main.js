@@ -365,8 +365,6 @@ function checkAvailableSpace(currentPlayer) {
                 for (var k = currentSpaceY - 1; k <= currentSpaceY + 1; k++) {
                     for (var m = currentSpaceX - 1; m <= currentSpaceX + 1; m++) {
                         if (k > -1 && k < 8 && m > -1 && m < 8 && $(game.cells[k][m].domElement[0]).attr('box_owned_by') === (1 - currentPlayer).toString()) {
-
-
                             var y_axis = k - y;
                             var x_axis = m - x;
                             var y_direction = k + y_axis;
@@ -384,12 +382,12 @@ function checkAvailableSpace(currentPlayer) {
 
             }
         }
-        // console.log(currentPlayer + " 's available positions are " + viableSpace);
-        // return viableSpace;
-        console.log(currentPlayer + ' \'s available positions are ' + viableSpace);
-        console.log('spaces to be flipped ' + needToBeFlipped);
-        return (viableSpace);
+
     }
+
+    console.log(currentPlayer + ' \'s available positions are ' + viableSpace);
+    console.log('spaces to be flipped ' + needToBeFlipped);
+    return (viableSpace);
 }
 
 
