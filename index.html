@@ -9,31 +9,24 @@
     <title>Othello</title>
 
 
-    <link type="text/css" rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="style.css">
+
     <script type="text/javascript" src="main.js"></script>
     <link href="https://fonts.googleapis.com/css?family=MedievalSharp" rel="stylesheet">
 
 </head>
 
 <body>
-
-
-
-
-
-
-
-
     <div class="game_area">
         <div class="top_row">
-            <div id="got_logo"></div>
+            <div id="got_logo"><img src="images/got_logo.png"></div>
         </div>
         <div class="mid_row">
             <div class="p1_area">
-                <div class="p1_flag_box"></div>
+                <div class="p1_flag_box"><div></div></div>
                 <div class="p1_stat_box">
                     <p>SCORE</p>
                     <p>2</p>
@@ -43,7 +36,7 @@
 
             <div id="gameBoard"></div>
             <div class="p2_area">
-                <div class="p2_flag_box"></div>
+                <div class="p2_flag_box"><div></div></div>
                 <div class="p2_stat_box">
                     <p>SCORE</p>
                     <p>2</p>
@@ -58,42 +51,51 @@
     <div class="container">
         <!-- Modal -->
         <div class="modal fade" id="playerSelectModal" role="dialog">
-            <div class="modal-dialog">
 
-                <!-- Modal content-->
-                <div class=“modal-content”>
-                    
-                        <div class="modal-header">
-                            <h1>Please Select Your House</h1>
-                            <!-- <button type="button" class="close" data-dismiss="modal"> CLOSE </button> -->
-                        </div>
-                    
-                    <div class="modal-body text-center container">
+            <!-- Modal content-->
+            <div class="got_modal_content">
 
-                        <div class="col-md-2 stark">
-                            <img src="images/stark.png" alt="Stark">
-                            <h2>Stark</h2>
-                        </div>
-                        <div class="col-md-3 lannister">
-                            <img src="images/lannister.png" alt="Lannister">
-                            <h2>Lannister</h2>
-                        </div>
-                        <div class="col-md-3 targaryen">
-                            <img src="images/targaryen.png" alt="Targaryen">
-                            <h2>Targaryen</h2>
-                        </div>
-                        <div class="col-md-3 greyjoy">
-                            <img src="images/greyjoy.png" alt="Greyjoy">
-                            <h2>Greyjoy</h2>
-                        </div>
+                <div class="modal-header">
+                    <h1>Please Select Your House</h1>
+                    <!-- <button type="button" class="close" data-dismiss="modal"> CLOSE </button> -->
+                </div>
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
+                <div class="selectHouse">
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
+
+    </div>
+
+    <div id="modal" class="modal fade in">
+        <div class="playerSelectModal modal_content">
+            <div class="col-md-3 stark">
+                <img src="images/stark.png" alt="stark">
+                <h2>Stark</h2>
+            </div>
+            <div class="col-md-3 lannister">
+                <img src="images/lannister.png" alt="lannister">
+                <h2>Lannister</h2>
+            </div>
+            <div class="col-md-3 targaryen">
+                <img src="images/targaryen.png" alt="targaryen">
+                <h2>Targaryen</h2>
+            </div>
+            <div class="col-md-3 greyjoy">
+                <img src="images/greyjoy.png" alt="greyjoy">
+                <h2>Greyjoy</h2>
+            </div>
+            <div>
+                    <button type="button" class="close_modal_button btn btn-info" data-dismiss="modal">Close</button>
+                </div>
+        </div>
+       
     </div>
 
 </body>
