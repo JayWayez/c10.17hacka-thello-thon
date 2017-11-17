@@ -59,37 +59,72 @@ function close_modal_handle() {
 // }
 
 /*********** Othello*************/
-function Othello() {
-  var selfOthello = this;
-  this.containerElement = $("#gameBoard");
-  this.currentPlayer = 0;
-  this.playerTurn = houseList();
-  this.cells = [];
 
-  this.createBlocks = function(row, column) {
-    var width = row;
-    var length = column;
+function Othello(){
+    var selfOthello = this;
+    this.containerElement = $("#gameBoard");
+    this.currentPlayer = 0;
+    this.playerTurn = houseList();
+    this.cells = [ ];
 
-    for (var y = 0; y < width; y++) {
-      var row = [];
+    this.createBlocks = function(row,column){
+        var width= row;
+        var length= column;
 
-      for (var x = 0; x < length; x++) {
-        var cell = new IndBlock({ x: x, y: y });
+        for(var y = 0; y<width; y++){
+            var row = [];
 
-        var cellDomElement = cell.createDomElement(
-          this.handleBlockClick.bind(this)
-        );
-        if (y % 2 === 0 && x % 2 === 0) {
-          cell.domElement[0].style.backgroundImage = "url('images/bg_2.png')";
-        } else if (y % 2 !== 0 && x % 2 !== 0) {
-          cell.domElement[0].style.backgroundImage = "url('images/bg_2.png')";
-        } else {
-          cell.domElement[0].style.backgroundImage = "url('images/bg_1.png')";
+            for(var x =0; x<length; x++){
+                var cell = new IndBlock({'x': x, 'y':y});
+
+                var cellDomElement = cell.createDomElement( this.handleBlockClick.bind(this) );
+                if(y%2===0 && x%2===0){
+                    cell.domElement[0].style.backgroundImage="url('images/bg_2.png')";
+                }else if(y%2!==0 && x%2!==0){
+                    cell.domElement[0].style.backgroundImage="url('images/bg_2.png')";
+                } else {
+                    cell.domElement[0].style.backgroundImage="url('images/bg_1.png')";
+                }
+                row.push(cell);
+                this.containerElement.append(cellDomElement);
+            }
+            this.cells.push(row);
         }
-        row.push(cell);
-        this.containerElement.append(cellDomElement);
-      }
-      this.cells.push(row);
+    };
+    this.toggleCurrentPlayer = function(){
+        this.currentPlayer = 1 - this.currentPlayer;
+    };
+    /*this.checkForWin = function(){
+        //create if statement checking for total coin?
+        if (counter1 === 64 || counter2 === 64){
+            console.log("game over");
+        }else if (counter1 === 32 && counter2 === 32){
+            console.log("this is a draw");
+        }
+
+    }*/;
+
+    //this function not yet
+    this.getCurrentPlayerSymbol = function(){
+        return this.playerTurn[this.currentPlayer].symbol;
+    };
+    this.handleBlockClick = function(){
+        var currentSymbol = game.getCurrentPlayerSymbol();
+        //check if the button has been clicked.
+        if(this.getCurrentMark()=== undefined){
+            this.setCurrentMark(currentSymbol);
+            game.toggleCurrentPlayer();
+        }
+        var element= document.body.getElementsByClassName('available');
+        $(element).removeClass("available");
+
+        //Removes Click Handler
+        removeClickHandler(lastLocations);
+
+        allowClickHandler(checkAvailableSpace(game.currentPlayer));
+        score();
+        displayOutput();
+        checkForWin();
     }
   };
   this.toggleCurrentPlayer = function() {
@@ -119,7 +154,7 @@ function Othello() {
     score();
     displayOutput();
   };
-}
+
 
 /************  Block  **************/
 function IndBlock(locationObj) {
@@ -186,6 +221,15 @@ function houseList() {
   return houses;
 }
 
+function displayOutput(){
+    $(".p1_stat_box p:nth-child(2)").text(counter1);
+    $(".p2_stat_box p:nth-child(2)").text(counter2);
+}
+
+
+
+
+
 // function houseList() {
 //     var stark = {
 //       house: "stark",
@@ -226,11 +270,6 @@ function houseList() {
 //     return houses;
 //   }
 
-function displayOutput() {
-  $(".p1_stat_box > p").text(counter1);
-  $(".p2_stat_box > p").text(counter2);
-}
-
 ///////score/////////////////////////////////////
 var counter1 = null;
 var counter2 = null;
@@ -260,6 +299,15 @@ function score() {
   }
 }
 
+function checkForWin(){
+    //create if statement checking for total coin?
+    if (counter1 === 64 || counter2 === 64) {
+        console.log("game over");
+    } else if (counter1 === 32 && counter2 === 32) {
+        console.log("this is a draw");
+    }
+}
+
 /************  Init 4 coins  **************/
 
 function initialFourCoins() {
@@ -287,53 +335,45 @@ function initialFourCoins() {
 // var counter2= null;
 
 function checkAvailableSpace(currentPlayer) {
-  var currentSpaceY = null;
-  var currentSpaceX = null;
-  var currentPosition = [];
-  var viableSpace = [];
 
-  for (var y = 0; y < game.cells.length; y++) {
-    for (var x = 0; x < game.cells[y].length; x++) {
-      if (
-        $(game.cells[y][x].domElement[0]).attr("box_owned_by") ===
-        currentPlayer.toString()
-      ) {
-        currentSpaceY = y;
-        currentSpaceX = x;
-        for (var k = currentSpaceY - 1; k <= currentSpaceY + 1; k++) {
-          for (var m = currentSpaceX - 1; m <= currentSpaceX + 1; m++) {
-            if (
-              k > -1 &&
-              k < 8 &&
-              m > -1 &&
-              m < 8 &&
-              $(game.cells[k][m].domElement[0]).attr("box_owned_by") ===
-                (1 - currentPlayer).toString()
-            ) {
-              var y_axis = k - y;
-              var x_axis = m - x;
-              var y_direction = k + y_axis;
-              var x_direction = m + x_axis;
+    var currentSpaceY = null;
+    var currentSpaceX = null;
+    var currentPosition = [];
+    var viableSpace = [];
 
-              if (
-                y_direction > -1 &&
-                y_direction < 8 &&
-                x_direction > -1 &&
-                x_direction < 8 &&
-                $(game.cells[y_direction][x_direction]).attr("box_owned_by") ===
-                  undefined
-              ) {
-                viableSpace.push([k + y_axis, m + x_axis]);
-              }
+    for (var y = 0; y < game.cells.length; y++) {
+        for (var x = 0; x < game.cells[y].length; x++) {
+            if ($(game.cells[y][x].domElement[0]).attr('box_owned_by') === currentPlayer.toString()) {
+                currentSpaceY = y;
+                currentSpaceX = x;
+                for (var k = currentSpaceY - 1; k <= currentSpaceY + 1; k++) {
+                    for (var m = currentSpaceX - 1; m <= currentSpaceX + 1; m++) {
+                        if (k > -1 && k < 8 && m > -1 && m < 8 && $(game.cells[k][m].domElement[0]).attr('box_owned_by') === (1 - currentPlayer).toString()) {
+
+
+                            var y_axis = k - y;
+                            var x_axis = m - x;
+                            var y_direction = k + y_axis;
+                            var x_direction = m + x_axis;
+
+                            // if(y_direction > -1 && y_direction < 8 && x_direction > -1 && x_direction < 8 && $(game.cells[y_direction][x_direction]).attr('box_owned_by') === undefined){
+                            if (y_direction > -1 && y_direction < 8 && x_direction > -1 && x_direction < 8 && $(game.cells[y_direction][x_direction].domElement[0]).attr('box_owned_by') === undefined) {
+                                viableSpace.push([k + y_axis, m + x_axis]);
+                            }
+
+                        }
+                    }
+
+                }
+
             }
-          }
         }
-      }
+        console.log(currentPlayer + " 's available positions are " + viableSpace);
+        return viableSpace;
     }
-  }
-  console.log(currentPlayer + " 's available positions are " + viableSpace);
-  return viableSpace;
 }
+
+
 
 function displayViable() {
   if (game.currentPlayer === "1") {
@@ -341,24 +381,25 @@ function displayViable() {
   }
 }
 
-function allowClickHandler(locations) {
-  for (var i = 0; i < locations.length; i++) {
-    for (var j = 0; j < 1; j++) {
-      var clickableButton = game.cells[locations[i][j]][locations[i][j + 1]];
-      $(clickableButton.domElement[0]).addClass("available");
-      $(clickableButton.domElement[0]).click(
-        game.handleBlockClick.bind(clickableButton)
-      );
+var lastLocations;
+function allowClickHandler(locations){
+    for(var i=0; i<locations.length; i++){
+        for(var j=0; j<1; j++){
+            var clickableButton= game.cells[locations[i][j]][locations[i][j+1]];
+            $(clickableButton.domElement[0]).addClass("available");
+            $(clickableButton.domElement[0]).click(game.handleBlockClick.bind(clickableButton));
+        }
     }
-  }
-  return locations;
+    lastLocations=locations;
+    return locations;
 }
 
-function removeClickHandler(location) {
-  for (var i = 0; i < locations.length; i++) {
-    for (var j = 0; j < 1; j++) {
-      var clickableButton = game.cells[locations[i][j]][locations[i][j + 1]];
-      $(clickableButton.domElement[0]).unbind("click");
+function removeClickHandler(locations){
+    for(var i=0; i<locations.length; i++){
+        for(var j=0; j<1; j++){
+            var clickableButton= game.cells[locations[i][j]][locations[i][j+1]];
+            $(clickableButton.domElement[0]).unbind('click');
+        }
+
     }
-  }
 }
