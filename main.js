@@ -4,7 +4,6 @@ function initializeApplication() {
   window.game = new Othello();
   game.createBlocks(8, 8);
     initialFourCoins();
-    debugger
     allowClickHandler(checkAvailableSpace(game.currentPlayer));
     // playerSelectionModal();
     // playBackgroundMusic();
@@ -140,7 +139,7 @@ function IndBlock(locationObj){
     this.createDomElement = function(clickCallback){
         this.domElement = $("<div>",{
             'class': 'cell test',
-           // text: 'x:'+locationObj.x+',y:'+locationObj.y
+           text: 'x:'+locationObj.x+',y:'+locationObj.y
         });
         return this.domElement;
     };
@@ -407,68 +406,87 @@ function initialFourCoins() {
 
 /*===========================================CHECK AVAIL SPACE========================================================*/
 /*====================================================================================================================*/
-function checkAvailableSpace(currentPlayer) {
 
-    var currentSpaceY = null;
-    var currentSpaceX = null;
+function checkAvailableSpace(currentPlayer) {
     var needToBeFlipped = [];
     var viableSpace = [];
+    var currentSpaceY = null;
+    var currentSpaceX = null;
+
 
 
     for (var y = 0; y < game.cells.length; y++) {
-        debugger
         for (var x = 0; x < game.cells[y].length; x++) {
             if ($(game.cells[y][x].domElement[0]).attr('box_owned_by') == currentPlayer) {
                 currentSpaceY = y;
                 currentSpaceX = x;
                 // For -1,-1
-                vectorFindingMachine([-1,-1,y_vector>=-currentSpaceY,x>=-x_vector, y_vector--,x_vector--,currentSpaceY-1,currentSpaceX-1]);
-                // if($(game.cells[currentSpaceY-1][currentSpaceX-1].domElement[0]).attr('box_owned_by') == 1-currentPlayer &&currentSpaceY<8 &&currentSpaceY>-1 && currentSpaceX<8 && currentSpaceX>-1){
-                //     for(var y_vector=-1, x_vector=-1; y_vector>=-currentSpaceY, x>=-x_vector; y_vector--, x_vector--){
-                //         if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') == currentPlayer-1){
-                //             needToBeFlipped.push([[currentSpaceY+y_vector,currentSpaceX+x_vector][currentSpaceY,currentSpaceX]]);
-                //         }else if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') === undefined){
-                //             viableSpace.push([currentSpaceY+y_vector,currentSpaceX+x_vector])
-                //         }
-                //     }
-                // }
+                // vectorFindingMachine([-1,-1,y_vector>=-currentSpaceY,x>=-x_vector, y_vector--,x_vector--,currentSpaceY-1,currentSpaceX-1]);
+                if($(game.cells[currentSpaceY-1][currentSpaceX-1].domElement[0]).attr('box_owned_by') == 1-currentPlayer &&currentSpaceY<8 &&currentSpaceY>-1 && currentSpaceX<8 && currentSpaceX>-1){
+                    for(var y_vector=-1, x_vector=-1; y_vector>=-currentSpaceY && x>=-x_vector; y_vector--, x_vector--){
+                        if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') == 1-currentPlayer){
+                            needToBeFlipped.push([[currentSpaceY+y_vector,currentSpaceX+x_vector],[currentSpaceY,currentSpaceX]]);
+                        }else if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') === undefined){
+                            viableSpace.push([currentSpaceY+y_vector,currentSpaceX+x_vector])
+                        }
+                    }
+                }
 
                 // For -1,0
-                vectorFindingMachine([-1,0,y_vector>=-currentSpaceY,x_vector>=0, y_vector--,x_vector=0,currentSpaceY-1,currentSpaceX]);
+                // vectorFindingMachine([-1,0,y_vector>=-currentSpaceY,x_vector>=0, y_vector--,x_vector=0,currentSpaceY-1,currentSpaceX]);
 
-                // if($(game.cells[currentSpaceY-1][currentSpaceX].domElement[0]).attr('box_owned_by') == 1-currentPlayer &&currentSpaceY<8 &&currentSpaceY>-1 && currentSpaceX<8 && currentSpaceX>-1){
-                //     for(var y_vector=-1, x_vector=0; y_vector>=-currentSpaceY, x_vector=0; y_vector--, x_vector=0){
-                //         if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') == currentPlayer-1){
-                //             needToBeFlipped.push([[currentSpaceY+y_vector,currentSpaceX+x_vector][currentSpaceY,currentSpaceX]]);
-                //         }else if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') === undefined){
-                //             viableSpace.push([currentSpaceY+y_vector,currentSpaceX+x_vector])
-                //         }
-                //     }
-                // }
+                if($(game.cells[currentSpaceY-1][currentSpaceX].domElement[0]).attr('box_owned_by') == 1-currentPlayer &&currentSpaceY<8 &&currentSpaceY>-1 && currentSpaceX<8 && currentSpaceX>-1){
+                    for(var y_vector=-1, x_vector=0; y_vector>=-currentSpaceY && x_vector===0; y_vector--, x_vector=0){
+                        if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') == 1-currentPlayer){
+                            needToBeFlipped.push([[currentSpaceY+y_vector,currentSpaceX+x_vector],[currentSpaceY,currentSpaceX]]);
+                        }else if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') === undefined){
+                            viableSpace.push([currentSpaceY+y_vector,currentSpaceX+x_vector])
+                        }
+                    }
+                }
 
                 // For -1,1
-                vectorFindingMachine([-1,1,y_vector>=-currentSpaceY,Math.abs(currentSpaceX-game.cells.length)>x_vector, y_vector--,x_vector++,currentSpaceY-1,currentSpaceX+1]);
-                //
-                // if($(game.cells[currentSpaceY-1][currentSpaceX+1].domElement[0]).attr('box_owned_by') == 1-currentPlayer &&currentSpaceY<8 &&currentSpaceY>-1 && currentSpaceX<8 && currentSpaceX>-1){
-                //     for(var y_vector=-1, x_vector=1; y_vector>=-currentSpaceY, currentSpaceX-game.cells.length>x_vector; y_vector--, x_vector++){
-                //         if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') == currentPlayer-1){
-                //             needToBeFlipped.push([[currentSpaceY+y_vector,currentSpaceX+x_vector][currentSpaceY,currentSpaceX]]);
-                //         }else if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') === undefined){
-                //             viableSpace.push([currentSpaceY+y_vector,currentSpaceX+x_vector])
-                //         }
-                //     }
-                // }
+                // vectorFindingMachine([-1,1,y_vector>=-currentSpaceY,Math.abs(currentSpaceX-game.cells.length)>x_vector, y_vector--,x_vector++,currentSpaceY-1,currentSpaceX+1]);
+
+                if($(game.cells[currentSpaceY-1][currentSpaceX+1].domElement[0]).attr('box_owned_by') == 1-currentPlayer &&currentSpaceY<8 &&currentSpaceY>-1 && currentSpaceX<8 && currentSpaceX>-1){
+                    for(var y_vector=-1, x_vector=1; y_vector>=-currentSpaceY&& Math.abs(currentSpaceX-game.cells.length)>x_vector; y_vector--, x_vector++){
+                        if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') == 1-currentPlayer){
+                            needToBeFlipped.push([[currentSpaceY+y_vector,currentSpaceX+x_vector],[currentSpaceY,currentSpaceX]]);
+                        }else if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') === undefined){
+                            viableSpace.push([currentSpaceY+y_vector,currentSpaceX+x_vector])
+                        }
+                    }
+                }
 
                 // For 0,-1
-                vectorFindingMachine([0,-1,y_vector>=0,x>=-x_vector, y_vector=0,x_vector--,currentSpaceY,currentSpaceX-1]);
+                // vectorFindingMachine([0,-1,y_vector>=0,x>=-x_vector, y_vector=0,x_vector--,currentSpaceY,currentSpaceX-1]);
 
+                if($(game.cells[currentSpaceY][currentSpaceX-1].domElement[0]).attr('box_owned_by') == 1-currentPlayer &&currentSpaceY<8 &&currentSpaceY>-1 && currentSpaceX<8 && currentSpaceX>-1){
+                    for(var y_vector=0, x_vector=-1; y_vector>=0 && x>=-x_vector; y_vector=0, x_vector--){
+                        if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') == 1-currentPlayer){
+                            //object containing boxes to be flipped, current location, and vector direction
+                            needToBeFlipped.push([[currentSpaceY+y_vector,currentSpaceX+x_vector],[currentSpaceY,currentSpaceX],[y_vector,x_vector]]);
+                        }else if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') === undefined){
+                            viableSpace.push([currentSpaceY+y_vector,currentSpaceX+x_vector])
+                        }
+                    }
+                }
                 // For 0,+1
-                vectorFindingMachine([0,1,y_vector>=0,Math.abs(currentSpaceX-game.cells.length)>x_vector, y_vector=0,x_vector++,currentSpaceY,currentSpaceX+1]);
+                // vectorFindingMachine([0,1,y_vector>=0,Math.abs(currentSpaceX-game.cells.length)>x_vector, y_vector=0,x_vector++,currentSpaceY,currentSpaceX+1]);
+                if($(game.cells[currentSpaceY][currentSpaceX+1].domElement[0]).attr('box_owned_by') == 1-currentPlayer &&currentSpaceY<8 &&currentSpaceY>-1 && currentSpaceX<8 && currentSpaceX>-1){
+                    for(var y_vector=0, x_vector=1; y_vector>=0 && Math.abs(currentSpaceX-game.cells.length)>x_vector; y_vector=0, x_vector++){
+                        if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') == 1-currentPlayer){
+                            needToBeFlipped.push([[currentSpaceY+y_vector,currentSpaceX+x_vector],[currentSpaceY,currentSpaceX],[y_vector,x_vector]]);
+                        }else if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') === undefined){
+                            viableSpace.push([currentSpaceY+y_vector,currentSpaceX+x_vector])
+                        }
+                    }
+                }
                 // For 1,-1
                 if($(game.cells[currentSpaceY+1][currentSpaceX-1].domElement[0]).attr('box_owned_by') == 1-currentPlayer &&currentSpaceY<8 &&currentSpaceY>-1 && currentSpaceX<8 && currentSpaceX>-1){
-                    for(var y_vector=1, x_vector=-1; y_vector<currentSpaceY.game.cells.length, x>=-x_vector; y_vector++, x_vector--){
-                        if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') == currentPlayer-1){
-                            needToBeFlipped.push([[currentSpaceY+y_vector,currentSpaceX+x_vector][currentSpaceY,currentSpaceX]]);
+                    for(var y_vector=1, x_vector=-1; y_vector<game.cells.length-currentSpaceY && x_vector<=currentSpaceX; y_vector++, x_vector--){
+                        if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') == 1-currentPlayer){
+                            needToBeFlipped.push([[currentSpaceY+y_vector,currentSpaceX+x_vector],[currentSpaceY,currentSpaceX],[y_vector,x_vector]]);
                         }else if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') === undefined){
                             viableSpace.push([currentSpaceY+y_vector,currentSpaceX+x_vector])
                         }
@@ -476,9 +494,9 @@ function checkAvailableSpace(currentPlayer) {
                 }
                 // For 1,0
                 if($(game.cells[currentSpaceY+1][currentSpaceX].domElement[0]).attr('box_owned_by') == 1-currentPlayer &&currentSpaceY<8 &&currentSpaceY>-1 && currentSpaceX<8 && currentSpaceX>-1){
-                    for(var y_vector=1, x_vector=0; y_vector>=-currentSpaceY,x_vector=0; y_vector--, x_vector=0){
-                        if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') == currentPlayer-1){
-                            needToBeFlipped.push([[currentSpaceY+y_vector,currentSpaceX+x_vector][currentSpaceY,currentSpaceX]]);
+                    for(var y_vector=1, x_vector=0; y_vector<game.cells.length-currentSpaceY && x_vector===0; y_vector++, x_vector=0){
+                        if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') == 1-currentPlayer){
+                            needToBeFlipped.push([[currentSpaceY+y_vector,currentSpaceX+x_vector],[currentSpaceY,currentSpaceX],[y_vector,x_vector]]);
                         }else if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') === undefined){
                             viableSpace.push([currentSpaceY+y_vector,currentSpaceX+x_vector])
                         }
@@ -486,9 +504,9 @@ function checkAvailableSpace(currentPlayer) {
                 }
                 // For  1,1
                 if($(game.cells[currentSpaceY+1][currentSpaceX+1].domElement[0]).attr('box_owned_by') == 1-currentPlayer  &&currentSpaceY<8 &&currentSpaceY>-1 && currentSpaceX<8 && currentSpaceX>-1){
-                    for(var y_vector=1, x_vector=1; y_vector>=-currentSpaceY, currentSpaceX-game.cells.length>x_vector; y_vector++, x_vector++){
-                        if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') == currentPlayer-1){
-                            needToBeFlipped.push([[currentSpaceY+y_vector,currentSpaceX+x_vector][currentSpaceY,currentSpaceX]]);
+                    for(var y_vector=1, x_vector=1; y_vector>=Math.abs(game.cells.length-currentSpaceY) && currentSpaceX-game.cells.length>x_vector; y_vector++, x_vector++){
+                        if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') == 1-currentPlayer){
+                            needToBeFlipped.push([[currentSpaceY+y_vector,currentSpaceX+x_vector],[currentSpaceY,currentSpaceX],[y_vector,x_vector]]);
                         }else if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') === undefined){
                             viableSpace.push([currentSpaceY+y_vector,currentSpaceX+x_vector])
                         }
@@ -496,24 +514,27 @@ function checkAvailableSpace(currentPlayer) {
                 }
             }
         }
+        // vectorFindingMachine([0,1,y_vector>=0,Math.abs(currentSpaceX-game.cells.length)>x_vector, y_vector=0,x_vector++,currentSpaceY,currentSpaceX+1]);
+        //
+        // function vectorFindingMachine(param1){
+        //     var param=param1;
+        //     if($(game.cells[param[6]][param[7]].domElement[0]).attr('box_owned_by') == 1-currentPlayer &&currentSpaceY<8 &&currentSpaceY>-1 && currentSpaceX<8 && currentSpaceX>-1) {
+        //         for (var y_vector = param[0], x_vector = param[1]; param[2], param[3]; param[4], param[5]) {
+        //             if ($(game.cells[currentSpaceY + y_vector][currentSpaceX + x_vector].domElement[0]).attr('box_owned_by') == 1 - currentPlayer) {
+        //                 needToBeFlipped.push([[currentSpaceY + y_vector, currentSpaceX + x_vector],[currentSpaceY, currentSpaceX],[param[0],param[1]]]);
+        //             } else if ($(game.cells[currentSpaceY + y_vector][currentSpaceX + x_vector].domElement[0]).attr('box_owned_by') === undefined) {
+        //                 viableSpace.push([currentSpaceY + y_vector, currentSpaceX + x_vector])
+        //             }
+        //         }
+        //     }
+        // }
     }
-    // function vectorFindingMachine(param){
-    //     if($(game.cells[param[6]][param[7]].domElement[0]).attr('box_owned_by') == 1-currentPlayer &&currentSpaceY<8 &&currentSpaceY>-1 && currentSpaceX<8 && currentSpaceX>-1) {
-    //         for (var y_vector = param[0], x_vector = param[1]; param[2], param[3]; param[4], param[5]) {
-    //             if ($(game.cells[currentSpaceY + y_vector][currentSpaceX + x_vector].domElement[0]).attr('box_owned_by') == 1 - currentPlayer) {
-    //                 needToBeFlipped.push([[currentSpaceY + y_vector, currentSpaceX + x_vector],[currentSpaceY, currentSpaceX],[param[0],param[1]]]);
-    //             } else if ($(game.cells[currentSpaceY + y_vector][currentSpaceX + x_vector].domElement[0]).attr('box_owned_by') === undefined) {
-    //                 viableSpace.push([currentSpaceY + y_vector, currentSpaceX + x_vector])
-    //             }
-    //         }
-    //     }
-    // }
+
     console.log(currentPlayer + ' \'s available positions are ' + viableSpace);
     console.log('spaces to be flipped ' + needToBeFlipped);
     return (viableSpace);
-
-
 }
+
 /*==============================================FLIP COIN=============================================================*/
 /*====================================================================================================================*/
 
