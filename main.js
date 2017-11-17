@@ -3,10 +3,13 @@ $(document).ready(initializeApplication);
 function initializeApplication() {
   window.game = new Othello();
   game.createBlocks(8, 8);
-
-  initialFourCoins();
-  allowClickHandler(checkAvailableSpace(game.currentPlayer));
+    initialFourCoins();
+    allowClickHandler(checkAvailableSpace(game.currentPlayer));
     // playerSelectionModal();
+    playBackgroundMusic();
+    $(".btn.btn-default").click(playBackgroundMusic);
+    $(".btn.btn-default").click(statusBarFlag);
+    // $(".btn.btn-default").click(factionOst);
 }
 
 function playerSelectionModal() {
@@ -125,35 +128,36 @@ function Othello(){
         score();
         displayOutput();
         checkForWin();
+        // factionOst();
     }
-  };
-  this.toggleCurrentPlayer = function() {
-    this.currentPlayer = 1 - this.currentPlayer;
-  };
-  this.checkForWin = function() {
-    //create if statement checking for total coin?
-  };
+}
 
-  //this function not yet
-  this.getCurrentPlayerSymbol = function() {
-    return this.playerTurn[this.currentPlayer].symbol;
-  };
+/************  Block  **************/
+function IndBlock(locationObj){
+    this.IndBlockSelf=this;
+    this.location = locationObj;
+    this.domElement = null;
+    this.createDomElement = function(clickCallback){
+        this.domElement = $("<div>",{
+            'class': 'cell test'
+        });
+        return this.domElement;
+    };
+    this.setCurrentMark = function(mark){
+        var currentTurnPlayer = game.playerTurn[game.currentPlayer];
+        var playerCoin = $("<img>").attr("src", currentTurnPlayer.coinImage);
+        var currentElement= this.domElement[0];
+        currentElement.setAttribute('box_owned_by', game.currentPlayer);
+        $(currentElement).append(playerCoin);
+        // flipCoin(this.location.y, this.location.x);
+        // console.log(this.location.y, this.location.x);
 
-  this.handleBlockClick = function() {
-    var currentSymbol = game.getCurrentPlayerSymbol();
-    //check if the button has been clicked.
-    if (this.getCurrentMark() === undefined) {
-      this.setCurrentMark(currentSymbol);
-      game.toggleCurrentPlayer();
+    };
+    this.getCurrentMark = function(){
+        return this.domElement[0].attributes.box_owned_by;
     }
-    var element = document.body.getElementsByClassName("available");
-    $(element).removeClass("available");
-    //need something to remove click handler
-    removeClickHandler();
-    allowClickHandler(checkAvailableSpace(game.currentPlayer));
-    score();
-    displayOutput();
-  };
+}
+
 
 
 /************  Block  **************/
@@ -178,8 +182,6 @@ function IndBlock(locationObj) {
     return this.domElement[0].attributes.box_owned_by;
   };
 }
-
-/************  Block  **************/
 
 function houseList() {
   var player1 = {
@@ -299,6 +301,18 @@ function score() {
   }
 }
 
+
+/*==============================Faction Select==============================*/
+function statusBarFlag() {
+    var playerList = houseList();
+    //put coin image for now, need to change to flag
+    var player1flag = $("<img>").attr("src", playerList[0].coinImage);
+    var player2flag = $("<img>").attr("src", playerList[1].coinImage);
+
+    $('.p1_flag_box').append(player1flag);
+    $('.p2_flag_box').append(player2flag);
+}
+
 function checkForWin(){
     //create if statement checking for total coin?
     if (counter1 === 64 || counter2 === 64) {
@@ -307,6 +321,7 @@ function checkForWin(){
         console.log("this is a draw");
     }
 }
+
 
 /************  Init 4 coins  **************/
 
@@ -338,8 +353,9 @@ function checkAvailableSpace(currentPlayer) {
 
     var currentSpaceY = null;
     var currentSpaceX = null;
-    var currentPosition = [];
+    var needToBeFlipped = [];
     var viableSpace = [];
+
 
     for (var y = 0; y < game.cells.length; y++) {
         for (var x = 0; x < game.cells[y].length; x++) {
@@ -368,10 +384,16 @@ function checkAvailableSpace(currentPlayer) {
 
             }
         }
-        console.log(currentPlayer + " 's available positions are " + viableSpace);
-        return viableSpace;
+        // console.log(currentPlayer + " 's available positions are " + viableSpace);
+        // return viableSpace;
+        console.log(currentPlayer + ' \'s available positions are ' + viableSpace);
+        console.log('spaces to be flipped ' + needToBeFlipped);
+        return (viableSpace);
     }
 }
+
+
+
 
 
 
@@ -389,6 +411,11 @@ function allowClickHandler(locations){
             $(clickableButton.domElement[0]).addClass("available");
             $(clickableButton.domElement[0]).click(game.handleBlockClick.bind(clickableButton));
         }
+
+    }
+    //when there are no avail spaces to move triggers the no space function.
+    if(locations.length===0){
+        whenNoSpace();
     }
     lastLocations=locations;
     return locations;
@@ -403,3 +430,39 @@ function removeClickHandler(locations){
 
     }
 }
+
+function whenNoSpace(){
+    //need if statement to check if its the end of game or middle of game
+    console.log("no available move");
+    game.toggleCurrentPlayer();
+}
+
+/*==================================Sound=================================*/
+var backgroundMusic= new Audio();
+backgroundMusic.src = "sounds/main_song.mp3";
+
+function playBackgroundMusic(){
+
+    if(OstisPlaying){
+        backgroundMusic.pause();
+        OstisPlaying= false;
+    }else {
+        backgroundMusic.play();
+        OstisPlaying= true;
+    }
+}
+var OstisPlaying;
+
+
+// var playerSongPlaying;
+// var playerSong= new Audio();
+//
+//
+// function factionOst(){
+//     playerSong.src= $(game.playerTurn[game.currentPlayer]).attr("audio");
+//     if(game.currentPlayer ==="1"){
+//         playerSong.play();
+//     }else{
+//         playerSong.play();
+//     }
+// }
