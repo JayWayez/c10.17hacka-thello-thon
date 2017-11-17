@@ -111,37 +111,28 @@ function flipCoin (y, x){
     var totalCellsToFlip = [];
     for( var k = currentSpaceY-1; k <= currentSpaceY+1; k++){
         for( var m = currentSpaceX-1; m <= currentSpaceX+1; m++){
-            $(".highlight").removeClass('highlight');
-            $(game.cells[k][m].domElement[0]).addClass('highlight');
+
             if(k > -1 && k < 8 && m > -1 && m < 8 && $(game.cells[k][m].domElement[0]).attr('box_owned_by') === (1-game.currentPlayer).toString()) {
 
-                var y_axis= k-y;
-                var x_axis = m-x;
-                var y_direction = k+y_axis;
-                var x_direction = m+x_axis;
+
 
 
                 var possibleCells = []
                 var a = y+y_axis, b=x+x_axis;
-                while($(game.cells[a][b].domElement[0]).attr('box_owned_by')==(1-game.currentPlayer)){
-                    possibleCells.push($(game.cells[a][b].domElement[0]));
-                    a+=y_axis;
-                    b+=x_axis;
-                }
-                if($(game.cells[a][b].domElement[0]).attr('box_owned_by')==game.currentPlayer){
-                    totalCellsToFlip = totalCellsToFlip.concat(possibleCells);
-                }
+                // if(a > -1 && a < 8 && b > -1 && b < 8 ) {
 
-                // if(Math.sign(y_axis) === 1 && Math.sign(x_axis) === 0){
-                //     for(var q = y ; q < 8; q ++){
-                //         if($(game.cells[k][m].domElement[0]).attr('box_owned_by') === (game.currentPlayer).toString()){
-                //             var currentTurnPlayer = game.playerTurn[game.currentPlayer];
-                //             $(game.cells[q][b].domElement[0]).find('img').attr('src', currentTurnPlayer.coinImage );
-                //             $(game.cells[q][b].domElement[0]).attr( 'box_owned_by', game.currentPlayer);
-                //         }else{
-                //
-                //         }
-                //     }
+                    while ($(game.cells[a][b].domElement[0]).attr('box_owned_by') == (1 - game.currentPlayer)) {
+
+
+                        possibleCells.push($(game.cells[a][b].domElement[0]));
+                        a += y_axis;
+                        b += x_axis;
+
+                    }
+                    if ($(game.cells[a][b].domElement[0]).attr('box_owned_by') == game.currentPlayer) {
+                        totalCellsToFlip = totalCellsToFlip.concat(possibleCells);
+                    }
+
                 // }
 
             }
@@ -152,100 +143,6 @@ function flipCoin (y, x){
         var currentTurnPlayer = game.playerTurn[game.currentPlayer];
         totalCellsToFlip[flipIndex].attr('box_owned_by', game.currentPlayer).find('img').attr('src', currentTurnPlayer.coinImage);
     }
-
-
-
-            //
-               //  if(y_axis === 1 && x_axis === 0){
-               //      var b = m
-               //      for(var a = y_direction; a >= y ; a--){
-               //
-               //              var currentTurnPlayer = game.playerTurn[game.currentPlayer];
-               //              $(game.cells[a][b].domElement[0]).find('img').attr('src', currentTurnPlayer.coinImage );
-               //              $(game.cells[a][b].domElement[0]).attr( 'box_owned_by', game.currentPlayer);
-               //
-               //      }
-               //      return;
-               //
-               //  }
-               //
-               //
-               // if(y_axis === 0 && x_axis === -1) {
-               //      var a = k
-               //         for (var b = x_direction; b <= x; b++) {
-               //             var currentTurnPlayer = game.playerTurn[game.currentPlayer];
-               //             $(game.cells[a][b].domElement[0]).find('img').attr('src', currentTurnPlayer.coinImage);
-               //             $(game.cells[a][b].domElement[0]).attr('box_owned_by', game.currentPlayer);
-               //         }
-               //         return;
-               //
-               //
-               // }
-               //
-               //  if(y_axis === -1 && x_axis === 1) {
-               //      for (var a = y_direction; a <= y; a++) {
-               //          for (var b = x_direction; b >= x; b--) {
-               //              var currentTurnPlayer = game.playerTurn[game.currentPlayer];
-               //              $(game.cells[a][b].domElement[0]).find('img').attr('src', currentTurnPlayer.coinImage);
-               //              $(game.cells[a][b].domElement[0]).attr('box_owned_by', game.currentPlayer);
-               //          }
-               //          return;
-               //      }
-               //
-               //  }
-               //  if(y_axis === 0 && x_axis === 1) {
-               //      var a = k;
-               //          for (var b = x_direction; b >= x; b--) {
-               //              var currentTurnPlayer = game.playerTurn[game.currentPlayer];
-               //              $(game.cells[a][b].domElement[0]).find('img').attr('src', currentTurnPlayer.coinImage);
-               //              $(game.cells[a][b].domElement[0]).attr('box_owned_by', game.currentPlayer);
-               //
-               //      }
-               //      return;
-               //
-               //  }
-               //  if(y_axis === 1 && x_axis === 1) {
-               //      for (var a = y_direction; a >= y; a--) {
-               //          for (var b = x_direction; b >= x; b--) {
-               //              var currentTurnPlayer = game.playerTurn[game.currentPlayer];
-               //              $(game.cells[a][b].domElement[0]).find('img').attr('src', currentTurnPlayer.coinImage);
-               //              $(game.cells[a][b].domElement[0]).attr('box_owned_by', game.currentPlayer);
-               //          }
-               //      }
-               //
-               //  }
-               //  if(y_axis === -1 && x_axis === -1) {
-               //      for (var a = y_direction; a <= y; a++) {
-               //          for (var b = x_direction; b <= x; b++) {
-               //              var currentTurnPlayer = game.playerTurn[game.currentPlayer];
-               //              $(game.cells[a][b].domElement[0]).find('img').attr('src', currentTurnPlayer.coinImage);
-               //              $(game.cells[a][b].domElement[0]).attr('box_owned_by', game.currentPlayer);
-               //          }
-               //      }
-               //
-               //  }
-               //  if(y_axis === -1 && x_axis === 0) {
-               //      var b = m;
-               //      for (var a = y_direction; a <= y; a++) {
-               //
-               //              var currentTurnPlayer = game.playerTurn[game.currentPlayer];
-               //              $(game.cells[a][b].domElement[0]).find('img').attr('src', currentTurnPlayer.coinImage);
-               //              $(game.cells[a][b].domElement[0]).attr('box_owned_by', game.currentPlayer);
-               //          }
-               //
-               //  }
-               //  if(y_axis === 1 && x_axis === -1) {
-               //      for (var a = y_direction; a >= y; a--) {
-               //          for (var b = x_direction; b <= x; b++) {
-               //              var currentTurnPlayer = game.playerTurn[game.currentPlayer];
-               //              $(game.cells[a][b].domElement[0]).find('img').attr('src', currentTurnPlayer.coinImage);
-               //              $(game.cells[a][b].domElement[0]).attr('box_owned_by', game.currentPlayer);
-               //          }
-               //      }
-               //
-               //  }
-
-
 
 
 
