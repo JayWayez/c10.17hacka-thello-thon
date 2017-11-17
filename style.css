@@ -111,7 +111,6 @@ h2{
     font-size: 3.0vw;
 }
 
-
 .cell{
     display: flex;
     justify-content: center;
@@ -122,6 +121,7 @@ h2{
     box-sizing: border-box;
     float: left;
     /* font-size: 8vmin; */
+    color:limegreen;
 }
 .cell:nth-child(8n+1){
     clear: left;
