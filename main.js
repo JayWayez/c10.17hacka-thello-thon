@@ -4,9 +4,9 @@ function initializeApplication() {
   window.game = new Othello();
   game.createBlocks(8, 8);
 
-
+  initialFourCoins();
   allowClickHandler(checkAvailableSpace(game.currentPlayer));
-  playerSelectionModal();
+    // playerSelectionModal();
 }
 
 function playerSelectionModal() {
@@ -29,36 +29,34 @@ function close_modal_handle() {
     modal.style.display = "none";
   });
 }
-var player1 = null;
-var player2 = null;
+// var player1 = null;
+// var player2 = null;
 
-function checkPlayerOrder(){
-    var houses = houseList();
-   
+// function checkPlayerOrder(){
+//     var houses = houseList();
 
-    if (player1 === null) {
-        for (var i = 0; i < houses.length; i++){
-            if(houses[i].house === this.children[0].alt) {
-                houses[i].symbol = 0;
-                player1 = houses[i];
-            }
-        }
-        
-    } else {
-        for (var i = 0; i < houses.length; i++){
-            if(houses[i].house === this.children[0].alt) {
-                houses[i].symbol = 1;
-                player2 = houses[i];
-                initialFourCoins();
-            }
-        }
-    } 
-    
-    console.log(player1, player2);
-    // var activePlayers = (player1, player2)
-    // return activePlayers;
-}
+//     if (player1 === null) {
+//         for (var i = 0; i < houses.length; i++){
+//             if(houses[i].house === this.children[0].alt) {
+//                 houses[i].symbol = 0;
+//                 player1 = houses[i];
+//             }
+//         }
 
+//     } else {
+//         for (var i = 0; i < houses.length; i++){
+//             if(houses[i].house === this.children[0].alt) {
+//                 houses[i].symbol = 1;
+//                 player2 = houses[i];
+//                 initialFourCoins();
+//             }
+//         }
+//     }
+
+//     console.log(player1, player2);
+//     // var activePlayers = (player1, player2)
+//     // return activePlayers;
+// }
 
 /*********** Othello*************/
 function Othello() {
@@ -105,6 +103,7 @@ function Othello() {
   this.getCurrentPlayerSymbol = function() {
     return this.playerTurn[this.currentPlayer].symbol;
   };
+
   this.handleBlockClick = function() {
     var currentSymbol = game.getCurrentPlayerSymbol();
     //check if the button has been clicked.
@@ -147,85 +146,85 @@ function IndBlock(locationObj) {
 
 /************  Block  **************/
 
-// function houseList() {
-//   var player1 = {
-//     house: "stark",
-//     coinImage: "images/stark.png",
-//     audio: "audio/...",
-//     flagImage: "image/flag/...",
-//     backgroundImg: "image/background/...",
-//     score: null,
-//     symbol: "0"
-//   };
-//   var player2 = {
-//     house: "greyjoy",
-//     coinImage: "images/greyjoy.png",
-//     audio: "audio/...",
-//     flagImage: "image/flag/...",
-//     backgroundImg: "image/background/...",
-//     score: null,
-//     symbol: "1"
-//   };
-//   var lannister = {
-//     house: "lannister",
-//     coinImage: "image/coin/...",
-//     audio: "audio/...",
-//     flagImage: "image/flag/...",
-//     backgroundImg: "image/background/...",
-//     score: null
-//   };
-//   var targaryen = {
-//     house: "targaryen",
-//     coinImage: "image/coin/...",
-//     audio: "audio/...",
-//     flagImage: "image/flag/...",
-//     backgroundImg: "image/background/...",
-//     score: null
-//   };
-
-//   var houses = [player1, player2];
-//   return houses;
-// }
-
 function houseList() {
-    var stark = {
-      house: "stark",
-      coinImage: "images/stark.png",
-      audio: "audio/...",
-      flagImage: "image/flag/...",
-      backgroundImg: "image/background/...",
-      score: null,
-    //   symbol: "0"
-    };
-    var greyjoy = {
-      house: "greyjoy",
-      coinImage: "images/greyjoy.png",
-      audio: "audio/...",
-      flagImage: "image/flag/...",
-      backgroundImg: "image/background/...",
-      score: null,
-    //   symbol: "1"
-    };
-    var lannister = {
-      house: "lannister",
-      coinImage: "images/lannister.png",
-      audio: "audio/...",
-      flagImage: "image/flag/...",
-      backgroundImg: "image/background/...",
-      score: null
-    };
-    var targaryen = {
-      house: "targaryen",
-      coinImage: "images/targaryen.png",
-      audio: "audio/...",
-      flagImage: "image/flag/...",
-      backgroundImg: "image/background/...",
-      score: null
-    };
-  
-    var houses = [stark, lannister, targaryen, greyjoy];
-    return houses;
-  }
+  var player1 = {
+    house: "stark",
+    coinImage: "images/stark.png",
+    audio: "audio/...",
+    flagImage: "image/flag/...",
+    backgroundImg: "image/background/...",
+    score: null,
+    symbol: "0"
+  };
+  var player2 = {
+    house: "greyjoy",
+    coinImage: "images/greyjoy.png",
+    audio: "audio/...",
+    flagImage: "image/flag/...",
+    backgroundImg: "image/background/...",
+    score: null,
+    symbol: "1"
+  };
+  var lannister = {
+    house: "lannister",
+    coinImage: "image/coin/...",
+    audio: "audio/...",
+    flagImage: "image/flag/...",
+    backgroundImg: "image/background/...",
+    score: null
+  };
+  var targaryen = {
+    house: "targaryen",
+    coinImage: "image/coin/...",
+    audio: "audio/...",
+    flagImage: "image/flag/...",
+    backgroundImg: "image/background/...",
+    score: null
+  };
+
+  var houses = [player1, player2];
+  return houses;
+}
+
+// function houseList() {
+//     var stark = {
+//       house: "stark",
+//       coinImage: "images/stark.png",
+//       audio: "audio/...",
+//       flagImage: "image/flag/...",
+//       backgroundImg: "image/background/...",
+//       score: null,
+//     //   symbol: "0"
+//     };
+//     var greyjoy = {
+//       house: "greyjoy",
+//       coinImage: "images/greyjoy.png",
+//       audio: "audio/...",
+//       flagImage: "image/flag/...",
+//       backgroundImg: "image/background/...",
+//       score: null,
+//     //   symbol: "1"
+//     };
+//     var lannister = {
+//       house: "lannister",
+//       coinImage: "images/lannister.png",
+//       audio: "audio/...",
+//       flagImage: "image/flag/...",
+//       backgroundImg: "image/background/...",
+//       score: null
+//     };
+//     var targaryen = {
+//       house: "targaryen",
+//       coinImage: "images/targaryen.png",
+//       audio: "audio/...",
+//       flagImage: "image/flag/...",
+//       backgroundImg: "image/background/...",
+//       score: null
+//     };
+
+//     var houses = [stark, lannister, targaryen, greyjoy];
+//     return houses;
+//   }
 
 function displayOutput() {
   $(".p1_stat_box > p").text(counter1);
@@ -264,11 +263,11 @@ function score() {
 /************  Init 4 coins  **************/
 
 function initialFourCoins() {
-//   let playerList = checkPlayerOrder();
-  var player1coin_1 = $("<img>").attr("src", player1.coinImage);
-  var player1coin_2 = $("<img>").attr("src", player1.coinImage);
-  var player2coin_1 = $("<img>").attr("src", player2.coinImage);
-  var player2coin_2 = $("<img>").attr("src", player2.coinImage);
+  let playerList = houseList();
+  var player1coin_1 = $("<img>").attr("src", playerList[0].coinImage);
+  var player1coin_2 = $("<img>").attr("src", playerList[0].coinImage);
+  var player2coin_1 = $("<img>").attr("src", playerList[1].coinImage);
+  var player2coin_2 = $("<img>").attr("src", playerList[1].coinImage);
 
   $(game.cells[3][3].domElement[0])
     .append(player1coin_1)
