@@ -65,7 +65,7 @@ h2{
     /* position: absolute; */
     display: flex;
     flex-direction: column;
-    background-color: pink;
+    /* background-color: pink; */
     width: 20%;
     height: 85%;
 }
@@ -73,42 +73,62 @@ h2{
     /* position: relative; */
     display: flex;
     flex-direction: column;
-    background-color: blueviolet;
+    /* background-color: blueviolet; */
     width: 20%;
     height: 85%;
 }
 .p1_flag_box {
     display: flex;
     justify-content: center;
-    background-color: blue;
+    background-color: #15160b;
     height: 75%;
+    border: 1px solid rgba(255, 255, 255, 0.486);
 }
 .p1_flag_box :nth-child(1){
-    width: 40%;
+    width: 33%;
     height: 83%;
     background-image: url("images/stark_flag.png");
     background-size: auto;
     background-repeat: no-repeat;
+    margin: 0;
 }
 .p2_flag_box {
-    background-color: blue;
+    display: flex;
+    justify-content: center;
+    background-color: #15160b;
     height: 75%;
+    border: 1px solid rgba(255, 255, 255, 0.486);
+    
+}
+.p2_flag_box :nth-child(1){
+    width: 33%;
+    height: 83%;
+    background-image: url("images/greyjoy_flag.png");
+    background-size: auto;
+    background-repeat: no-repeat;
+    margin: 0;
 }
 .p1_stat_box {
-    background-color: rgb(0, 140, 255);
+    color: white;
+    background-color: rgba(7, 7, 7, 0.384);
     height: 25%;
     text-align: center;
     font-family: 'MedievalSharp', cursive;
     font-size: 50px;
     font-size: 3.0vw;
+    border: 1px solid rgba(255, 255, 255, 0.486);
+    
 }
 .p2_stat_box {
-    background-color: rgb(157, 255, 0);
+    color: white;
+    background-color: rgba(7, 7, 7, 0.384);
     height: 25%;
     text-align: center;
     font-family: 'MedievalSharp', cursive;
     font-size: 50px;
     font-size: 3.0vw;
+    border: 1px solid rgba(255, 255, 255, 0.486);
+    
 }
 
 .cell{
