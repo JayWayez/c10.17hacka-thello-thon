@@ -84,6 +84,9 @@
     text-align: center;
 }
 
+.highlight{
+    color: white!important;
+}
 
 .cell{
     display: flex;

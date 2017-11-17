@@ -85,7 +85,7 @@ function IndBlock(locationObj){
     this.createDomElement = function(clickCallback){
         this.domElement = $("<div>",{
             'class': 'cell test',
-            text: 'x:'+locationObj.x+',y:'+locationObj.y
+           // text: 'x:'+locationObj.x+',y:'+locationObj.y
         });
         return this.domElement;
     };
@@ -105,12 +105,14 @@ function IndBlock(locationObj){
 }
 
 function flipCoin (y, x){
-    var array = [];
 
     currentSpaceY = y;
     currentSpaceX = x;
+    var totalCellsToFlip = [];
     for( var k = currentSpaceY-1; k <= currentSpaceY+1; k++){
         for( var m = currentSpaceX-1; m <= currentSpaceX+1; m++){
+            $(".highlight").removeClass('highlight');
+            $(game.cells[k][m].domElement[0]).addClass('highlight');
             if(k > -1 && k < 8 && m > -1 && m < 8 && $(game.cells[k][m].domElement[0]).attr('box_owned_by') === (1-game.currentPlayer).toString()) {
 
                 var y_axis= k-y;
@@ -118,13 +120,16 @@ function flipCoin (y, x){
                 var y_direction = k+y_axis;
                 var x_direction = m+x_axis;
 
-                for (var a = y_direction; a <= y; a++) {
-                    for (var b = x_direction; b <= x; b++) {
-                        var currentTurnPlayer = game.playerTurn[game.currentPlayer];
-                        $(game.cells[a][b].domElement[0]).find('img').attr('src', currentTurnPlayer.coinImage);
-                        $(game.cells[a][b].domElement[0]).attr('box_owned_by', game.currentPlayer);
-                    }
 
+                var possibleCells = []
+                var a = y+y_axis, b=x+x_axis;
+                while($(game.cells[a][b].domElement[0]).attr('box_owned_by')==(1-game.currentPlayer)){
+                    possibleCells.push($(game.cells[a][b].domElement[0]));
+                    a+=y_axis;
+                    b+=x_axis;
+                }
+                if($(game.cells[a][b].domElement[0]).attr('box_owned_by')==game.currentPlayer){
+                    totalCellsToFlip = totalCellsToFlip.concat(possibleCells);
                 }
 
                 // if(Math.sign(y_axis) === 1 && Math.sign(x_axis) === 0){
@@ -143,6 +148,11 @@ function flipCoin (y, x){
 
         }
     }
+    for(var flipIndex=0; flipIndex<totalCellsToFlip.length; flipIndex++){
+        var currentTurnPlayer = game.playerTurn[game.currentPlayer];
+        totalCellsToFlip[flipIndex].attr('box_owned_by', game.currentPlayer).find('img').attr('src', currentTurnPlayer.coinImage);
+    }
+
 
 
             //
