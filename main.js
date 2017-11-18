@@ -348,7 +348,6 @@ function checkAvailableSpace(currentPlayer) {
                 //looks around the found player coin for enemy coins
                 for(var xDelta=-1; xDelta<2; xDelta++){
                     for(var yDelta=-1; yDelta<2; yDelta++){
-                        //is current cellX,Y >-1 necessary?
                         // if($(game.cells[currentSpaceY+yDelta][currentSpaceX+xDelta].domElement[0]).attr('box_owned_by') == 1-currentPlayer &&currentSpaceY<game.cells.length &&currentSpaceY>-1 && currentSpaceX<game.cells.length && currentSpaceX>-1){
                         //initial four conditions for corners
                         if(currentSpaceY+yDelta>-1 && currentSpaceX+xDelta>-1 &&currentSpaceX+xDelta<game.cells.length&&currentSpaceY+yDelta<game.cells.length&&  $(game.cells[currentSpaceY+yDelta][currentSpaceX+xDelta].domElement[0]).attr('box_owned_by') == 1-currentPlayer){
@@ -398,23 +397,22 @@ function flipCoin (y, x){
     currentSpaceY = y;
     currentSpaceX = x;
     var totalCellsToFlip = [];
-    if(currentSpaceY > -1 && currentSpaceY < 8 && currentSpaceX > -1 && currentSpaceX < 8) {
+    if(currentSpaceY > -1 && currentSpaceY < game.cells.length && currentSpaceX > -1 && currentSpaceX < game.cells.length) {
         for (var k = currentSpaceY - 1; k <= currentSpaceY + 1; k++) {
             for (var m = currentSpaceX - 1; m <= currentSpaceX + 1; m++) {
                 // $(".highlight").removeClass('highlight');
                 // $(game.cells[k][m].domElement[0]).addClass('highlight');
-                if (k > -1 && k < 8 && m > -1 && m < 8 && $(game.cells[k][m].domElement[0]).attr('box_owned_by') === (1 - game.currentPlayer).toString()) {
+                // if (k > -1 && k < 8 && m > -1 && m < 8 && $(game.cells[k][m].domElement[0]).attr('box_owned_by') === (1 - game.currentPlayer).toString()) {
+                if (k > -1 && k < game.cells.length && m > -1 && m < game.cells.length && $(game.cells[k][m].domElement[0]).attr('box_owned_by') == (1 - game.currentPlayer)) {
 
                     var y_axis = k - y;
                     var x_axis = m - x;
                     var y_direction = k + y_axis;
                     var x_direction = m + x_axis;
-
-
-                    var possibleCells = []
+                    var possibleCells = [];
                     var a = y + y_axis, b = x + x_axis;
-                    if (a > -1 && a < 8 && b > -1 && b < 8) {
-                        while (a > -1 && a < 8 && b > -1 && b < 8 && $(game.cells[a][b].domElement[0]).attr('box_owned_by') == (1 - game.currentPlayer) && $(game.cells[a][b].domElement[0]).attr('box_owned_by') !== undefined) {
+                    if (a > -1 && a < game.cells.length && b > -1 && b < game.cells.length) {
+                        while (a > -1 && a < game.cells.length && b > -1 && b < game.cells.length && $(game.cells[a][b].domElement[0]).attr('box_owned_by') == (1 - game.currentPlayer) && $(game.cells[a][b].domElement[0]).attr('box_owned_by') !== undefined) {
                             if ($(game.cells[a][b].domElement[0]).attr('box_owned_by') !== undefined) {
                                 possibleCells.push($(game.cells[a][b].domElement[0]));
 
@@ -422,7 +420,7 @@ function flipCoin (y, x){
                                 b += x_axis;
                             }
                         }
-                        if (a > -1 && a < 8 && b > -1 && b < 8 && $(game.cells[a][b].domElement[0]).attr('box_owned_by') == game.currentPlayer && $(game.cells[a][b].domElement[0]).attr('box_owned_by') !== undefined) {
+                        if (a > -1 && a < game.cells.length && b > -1 && b < game.cells.length && $(game.cells[a][b].domElement[0]).attr('box_owned_by') == game.currentPlayer && $(game.cells[a][b].domElement[0]).attr('box_owned_by') !== undefined) {
                             totalCellsToFlip = totalCellsToFlip.concat(possibleCells);
                         }
                     }
@@ -453,6 +451,7 @@ function displayViable() {
 }
 
 var lastLocations;
+
 function allowClickHandler(locations){
     for(var i=0; i<locations.length; i++){
         for(var j=0; j<1; j++){
