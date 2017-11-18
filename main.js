@@ -120,18 +120,17 @@ function Othello(){
         }
         var element= document.body.getElementsByClassName('available');
         $(element).removeClass("available");
-
-        //Removes Click Handler
         removeClickHandler(lastLocations);
         allowClickHandler(checkAvailableSpace(game.currentPlayer));
-        score();
-        displayOutput();
-        checkForWin();
+        displayOutput(score());
+        // checkForWin();
         // factionOst();
     }
 }
 
-/************  Block  **************/
+/*==================================================== Block  ========================================================*/
+/*====================================================================================================================*/
+
 function IndBlock(locationObj){
     this.IndBlockSelf=this;
     this.location = locationObj;
@@ -159,85 +158,55 @@ function IndBlock(locationObj){
 }
 
 
-function flipCoin (y, x){
-
-    currentSpaceY = y;
-    currentSpaceX = x;
-    var totalCellsToFlip = [];
-    for( var k = currentSpaceY-1; k <= currentSpaceY+1; k++){
-        for( var m = currentSpaceX-1; m <= currentSpaceX+1; m++){
-            $(".highlight").removeClass('highlight');
-            $(game.cells[k][m].domElement[0]).addClass('highlight');
-            if(k > -1 && k < 8 && m > -1 && m < 8 && $(game.cells[k][m].domElement[0]).attr('box_owned_by') === (1-game.currentPlayer).toString()) {
-
-                var y_axis= k-y;
-                var x_axis = m-x;
-                var y_vector = k+y_axis;
-                var x_vector = m+x_axis;
-
-
-                var possibleCells = []
-                var a = y+y_axis, b=x+x_axis;
-                while($(game.cells[a][b].domElement[0]).attr('box_owned_by')==(1-game.currentPlayer)){
-                    possibleCells.push($(game.cells[a][b].domElement[0]));
-                    a+=y_axis;
-                    b+=x_axis;
-                }
-                if($(game.cells[a][b].domElement[0]).attr('box_owned_by')==game.currentPlayer){
-                    totalCellsToFlip = totalCellsToFlip.concat(possibleCells);
-                }
-
-                // if(Math.sign(y_axis) === 1 && Math.sign(x_axis) === 0){
-                //     for(var q = y ; q < 8; q ++){
-                //         if($(game.cells[k][m].domElement[0]).attr('box_owned_by') === (game.currentPlayer).toString()){
-                //             var currentTurnPlayer = game.playerTurn[game.currentPlayer];
-                //             $(game.cells[q][b].domElement[0]).find('img').attr('src', currentTurnPlayer.coinImage );
-                //             $(game.cells[q][b].domElement[0]).attr( 'box_owned_by', game.currentPlayer);
-                //         }else{
-                //
-                //         }
-                //     }
-                // }
-
-            }
-
-        }
-    }
-    for(var flipIndex=0; flipIndex<totalCellsToFlip.length; flipIndex++){
-        var currentTurnPlayer = game.playerTurn[game.currentPlayer];
-        totalCellsToFlip[flipIndex].attr('box_owned_by', game.currentPlayer).find('img').attr('src', currentTurnPlayer.coinImage);
-    }
-
-
-
-}
-
-
-
-
-/************  Block  **************/
-// function IndBlock(locationObj) {
-//   this.IndBlockSelf = this;
-//   this.location = locationObj;
-//   this.domElement = null;
-//   this.createDomElement = function(clickCallback) {
-//     this.domElement = $("<div>", {
-//       class: "cell test"
-//     });
-//     return this.domElement;
-//   };
-//   this.setCurrentMark = function(mark) {
-//     var currentTurnPlayer = game.playerTurn[game.currentPlayer];
-//     var playerCoin = $("<img>").attr("src", currentTurnPlayer.coinImage);
-//     var currentElement = this.domElement[0];
-//     currentElement.setAttribute("box_owned_by", game.currentPlayer);
-//     $(currentElement).append(playerCoin);
-//   };
-//   this.getCurrentMark = function() {
-//     return this.domElement[0].attributes.box_owned_by;
-//   };
+// function flipCoin (y, x) {
+//
+//     currentSpaceY = y;
+//     currentSpaceX = x;
+//     var totalCellsToFlip = [];
+//     for (var k = currentSpaceY - 1; k <= currentSpaceY + 1; k++) {
+//         for (var m = currentSpaceX - 1; m <= currentSpaceX + 1; m++) {
+//             $(".highlight").removeClass('highlight');
+//             $(game.cells[k][m].domElement[0]).addClass('highlight');
+//             if (k > -1 && k < 8 && m > -1 && m < 8 && $(game.cells[k][m].domElement[0]).attr('box_owned_by') === (1 - game.currentPlayer).toString()) {
+//
+//                 var y_axis = k - y;
+//                 var x_axis = m - x;
+//                 var y_vector = k + y_axis;
+//                 var x_vector = m + x_axis;
+//
+//
+//                 var possibleCells = []
+//                 var a = y + y_axis, b = x + x_axis;
+//                 while ($(game.cells[a][b].domElement[0]).attr('box_owned_by') == (1 - game.currentPlayer)) {
+//                     possibleCells.push($(game.cells[a][b].domElement[0]));
+//                     a += y_axis;
+//                     b += x_axis;
+//                 }
+//                 if ($(game.cells[a][b].domElement[0]).attr('box_owned_by') == game.currentPlayer) {
+//                     totalCellsToFlip = totalCellsToFlip.concat(possibleCells);
+//                 }
+//
+//                 // if(Math.sign(y_axis) === 1 && Math.sign(x_axis) === 0){
+//                 //     for(var q = y ; q < 8; q ++){
+//                 //         if($(game.cells[k][m].domElement[0]).attr('box_owned_by') === (game.currentPlayer).toString()){
+//                 //             var currentTurnPlayer = game.playerTurn[game.currentPlayer];
+//                 //             $(game.cells[q][b].domElement[0]).find('img').attr('src', currentTurnPlayer.coinImage );
+//                 //             $(game.cells[q][b].domElement[0]).attr( 'box_owned_by', game.currentPlayer);
+//                 //         }else{
+//                 //
+//                 //         }
+//                 //     }
+//                 // }
+//
+//             }
+//
+//         }
+//     }
+//     for (var flipIndex = 0; flipIndex < totalCellsToFlip.length; flipIndex++) {
+//         var currentTurnPlayer = game.playerTurn[game.currentPlayer];
+//         totalCellsToFlip[flipIndex].attr('box_owned_by', game.currentPlayer).find('img').attr('src', currentTurnPlayer.coinImage);
+//     }
 // }
-
 function houseList() {
   var player1 = {
     house: "stark",
@@ -278,82 +247,38 @@ function houseList() {
   return houses;
 }
 
-function displayOutput(){
-    $(".p1_stat_box p:nth-child(2)").text(counter1);
-    $(".p2_stat_box p:nth-child(2)").text(counter2);
+function displayOutput(counters){
+    var counter=counters;
+    $(".p1_stat_box p:nth-child(2)").text(counter[0]);
+    $(".p2_stat_box p:nth-child(2)").text(counter[1]);
 }
 
 
-
-
-
-// function houseList() {
-//     var stark = {
-//       house: "stark",
-//       coinImage: "images/stark.png",
-//       audio: "audio/...",
-//       flagImage: "image/flag/...",
-//       backgroundImg: "image/background/...",
-//       score: null,
-//     //   symbol: "0"
-//     };
-//     var greyjoy = {
-//       house: "greyjoy",
-//       coinImage: "images/greyjoy.png",
-//       audio: "audio/...",
-//       flagImage: "image/flag/...",
-//       backgroundImg: "image/background/...",
-//       score: null,
-//     //   symbol: "1"
-//     };
-//     var lannister = {
-//       house: "lannister",
-//       coinImage: "images/lannister.png",
-//       audio: "audio/...",
-//       flagImage: "image/flag/...",
-//       backgroundImg: "image/background/...",
-//       score: null
-//     };
-//     var targaryen = {
-//       house: "targaryen",
-//       coinImage: "images/targaryen.png",
-//       audio: "audio/...",
-//       flagImage: "image/flag/...",
-//       backgroundImg: "image/background/...",
-//       score: null
-//     };
-
-//     var houses = [stark, lannister, targaryen, greyjoy];
-//     return houses;
-//   }
-
 ///////score/////////////////////////////////////
-var counter1 = null;
-var counter2 = null;
+//if you leave global previous count stays and overlaps
+// var counter1 = null;
+// var counter2 = null;
 
 function score() {
-  var isClicked = false;
+//Do we need isClicked?
+    var isClicked = false;
+    var counter1 = null;
+    var counter2 = null;
 
+//just adding, needs to substract
   for (var i = 0; i < game.cells.length; i++) {
     for (var j = 0; j < game.cells[i].length; j++) {
       var currentCell = game.cells[i][j].domElement[0];
-      if (
-        $(currentCell).attr("box_owned_by") === "1" &&
-        $(currentCell).attr("isClicked") === undefined
-      ) {
-        isClicked = true;
-        counter2++;
-        $(currentCell).attr("isClicked", true);
-      } else if (
-        $(currentCell).attr("box_owned_by") === "0" &&
-        $(currentCell).attr("isClicked") === undefined
-      ) {
-        isClicked = true;
-        counter1++;
-        $(currentCell).attr("isClicked", true);
+      if($(currentCell).attr("box_owned_by") === "1"){
+          counter2++
+      }
+      else if(($(currentCell).attr("box_owned_by") === "0")){
+          counter1++
       }
     }
   }
+  var output=[counter1, counter2];
+  return(output);
 }
 
 
@@ -368,14 +293,14 @@ function statusBarFlag() {
     $('.p2_flag_box').append(player2flag);
 }
 
-function checkForWin(){
-    //create if statement checking for total coin?
-    if (counter1 === 64 || counter2 === 64) {
-        console.log("game over");
-    } else if (counter1 === 32 && counter2 === 32) {
-        console.log("this is a draw");
-    }
-}
+// function checkForWin(){
+//     //create if statement checking for total coin?
+//     if (counter1 === 64 || counter2 === 64) {
+//         console.log("game over");
+//     } else if (counter1 === 32 && counter2 === 32) {
+//         console.log("this is a draw");
+//     }
+// }
 
 
 /************  Init 4 coins  **************/
@@ -414,138 +339,51 @@ function checkAvailableSpace(currentPlayer) {
     var currentSpaceX = null;
 
 
-
+    //search for all boxes owned by player
     for (var y = 0; y < game.cells.length; y++) {
         for (var x = 0; x < game.cells[y].length; x++) {
             if ($(game.cells[y][x].domElement[0]).attr('box_owned_by') == currentPlayer) {
                 currentSpaceY = y;
                 currentSpaceX = x;
+                //looks around the found player coin for enemy coins
                 for(var xDelta=-1; xDelta<2; xDelta++){
                     for(var yDelta=-1; yDelta<2; yDelta++){
                         //is current cellX,Y >-1 necessary?
-                        if($(game.cells[currentSpaceY+yDelta][currentSpaceX+xDelta].domElement[0]).attr('box_owned_by') == 1-currentPlayer &&currentSpaceY<game.cells.length &&currentSpaceY>-1 && currentSpaceX<game.cells.length && currentSpaceX>-1){
-                            //y,x vector conditional has to be dynamic.
-                            for(var y_vector=yDelta, x_vector=xDelta; y_vector<game.cells.length&& y_vector>-1 && x_vector<game.cells.length&&x_vector>-1; y_vector=y_vector+y_vector, x_vector=x_vector+x_vector){
-                                if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') == 1-currentPlayer){
-                                    //pushing as object enemy cell found location, current location, and vector direction.
-                                    needToBeFlipped.push([[currentSpaceY+y_vector,currentSpaceX+x_vector],[currentSpaceY,currentSpaceX],[yDelta, xDelta]]);
-                                }else if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') === undefined){
-                                    viableSpace.push([currentSpaceY+y_vector,currentSpaceX+x_vector]);
-                                    y_vector=game.cells.length;
-                                    x_vector=game.cells.length;
+                        // if($(game.cells[currentSpaceY+yDelta][currentSpaceX+xDelta].domElement[0]).attr('box_owned_by') == 1-currentPlayer &&currentSpaceY<game.cells.length &&currentSpaceY>-1 && currentSpaceX<game.cells.length && currentSpaceX>-1){
+                        //initial four conditions for corners
+                        if(currentSpaceY+yDelta>-1 && currentSpaceX+xDelta>-1 &&currentSpaceX+xDelta<game.cells.length&&currentSpaceY+yDelta<game.cells.length&&  $(game.cells[currentSpaceY+yDelta][currentSpaceX+xDelta].domElement[0]).attr('box_owned_by') == 1-currentPlayer){
+                            //if enemy coin found, searches all spaces through the same direction.
+                            for(var y_vector=yDelta, x_vector=xDelta; y_vector<game.cells.length&& y_vector>-game.cells.length && x_vector<game.cells.length&&x_vector>-game.cells.length; y_vector=y_vector+yDelta, x_vector=x_vector+xDelta) {
+                                if (currentSpaceY + y_vector > -1 && currentSpaceY + y_vector<game.cells.length && currentSpaceX + x_vector> - 1 &&currentSpaceX + x_vector<game.cells.length) {
+
+                                    $(game.cells[currentSpaceY + y_vector][currentSpaceX + x_vector].domElement[0]).addClass('highlight');
+
+                                    if ($(game.cells[currentSpaceY + y_vector][currentSpaceX + x_vector].domElement[0]).attr('box_owned_by') == 1 - currentPlayer) {
+                                        //pushing as object enemy cell found location, current location, and vector direction.
+                                        needToBeFlipped.push({
+                                            "enemy_cell_found": [currentSpaceY + y_vector, currentSpaceX + x_vector],
+                                            "current_location": [currentSpaceY, currentSpaceX],
+                                            "vector_direction": [yDelta, xDelta]
+                                        });
+                                    } else if ($(game.cells[currentSpaceY + y_vector][currentSpaceX + x_vector].domElement[0]).attr('box_owned_by') == currentPlayer) {
+                                        //to stop the loop if value found
+                                        y_vector = game.cells.length + 8;
+                                        x_vector = game.cells.length + 8;
+                                    } else if ($(game.cells[currentSpaceY + y_vector][currentSpaceX + x_vector].domElement[0]).attr('box_owned_by') === undefined) {
+                                        viableSpace.push([currentSpaceY + y_vector, currentSpaceX + x_vector]);
+                                        y_vector = game.cells.length + 8;
+                                        x_vector = game.cells.length + 8;
+                                    }
+                                    $(".highlight").removeClass('highlight');
+
                                 }
                             }
                         }
                     }
                 }
-                // // For -1,-1
-                // // vectorFindingMachine([-1,-1,y_vector>=-currentSpaceY,x>=-x_vector, y_vector--,x_vector--,currentSpaceY-1,currentSpaceX-1]);
-                // if($(game.cells[currentSpaceY-1][currentSpaceX-1].domElement[0]).attr('box_owned_by') == 1-currentPlayer &&currentSpaceY<8 &&currentSpaceY>-1 && currentSpaceX<8 && currentSpaceX>-1){
-                //     for(var y_vector=-1, x_vector=-1; y_vector>=-currentSpaceY && x>=-x_vector; y_vector--, x_vector--){
-                //         if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') == 1-currentPlayer){
-                //             needToBeFlipped.push([[currentSpaceY+y_vector,currentSpaceX+x_vector],[currentSpaceY,currentSpaceX]]);
-                //         }else if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') === undefined){
-                //             viableSpace.push([currentSpaceY+y_vector,currentSpaceX+x_vector])
-                //         }
-                //     }
-                // }
-                //
-                // // For -1,0
-                // // vectorFindingMachine([-1,0,y_vector>=-currentSpaceY,x_vector>=0, y_vector--,x_vector=0,currentSpaceY-1,currentSpaceX]);
-                //
-                // if($(game.cells[currentSpaceY-1][currentSpaceX].domElement[0]).attr('box_owned_by') == 1-currentPlayer &&currentSpaceY<8 &&currentSpaceY>-1 && currentSpaceX<8 && currentSpaceX>-1){
-                //     for(var y_vector=-1, x_vector=0; y_vector>=-currentSpaceY && x_vector===0; y_vector--, x_vector=0){
-                //         if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') == 1-currentPlayer){
-                //             needToBeFlipped.push([[currentSpaceY+y_vector,currentSpaceX+x_vector],[currentSpaceY,currentSpaceX]]);
-                //         }else if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') === undefined){
-                //             viableSpace.push([currentSpaceY+y_vector,currentSpaceX+x_vector])
-                //         }
-                //     }
-                // }
-                //
-                // // For -1,1
-                // // vectorFindingMachine([-1,1,y_vector>=-currentSpaceY,Math.abs(currentSpaceX-game.cells.length)>x_vector, y_vector--,x_vector++,currentSpaceY-1,currentSpaceX+1]);
-                //
-                // if($(game.cells[currentSpaceY-1][currentSpaceX+1].domElement[0]).attr('box_owned_by') == 1-currentPlayer &&currentSpaceY<8 &&currentSpaceY>-1 && currentSpaceX<8 && currentSpaceX>-1){
-                //     for(var y_vector=-1, x_vector=1; y_vector>=-currentSpaceY&& Math.abs(currentSpaceX-game.cells.length)>x_vector; y_vector--, x_vector++){
-                //         if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') == 1-currentPlayer){
-                //             needToBeFlipped.push([[currentSpaceY+y_vector,currentSpaceX+x_vector],[currentSpaceY,currentSpaceX]]);
-                //         }else if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') === undefined){
-                //             viableSpace.push([currentSpaceY+y_vector,currentSpaceX+x_vector])
-                //         }
-                //     }
-                // }
-                //
-                // // For 0,-1
-                // // vectorFindingMachine([0,-1,y_vector>=0,x>=-x_vector, y_vector=0,x_vector--,currentSpaceY,currentSpaceX-1]);
-                //
-                // if($(game.cells[currentSpaceY][currentSpaceX-1].domElement[0]).attr('box_owned_by') == 1-currentPlayer &&currentSpaceY<8 &&currentSpaceY>-1 && currentSpaceX<8 && currentSpaceX>-1){
-                //     for(var y_vector=0, x_vector=-1; y_vector>=0 && x>=-x_vector; y_vector=0, x_vector--){
-                //         if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') == 1-currentPlayer){
-                //             //object containing boxes to be flipped, current location, and vector direction
-                //             needToBeFlipped.push([[currentSpaceY+y_vector,currentSpaceX+x_vector],[currentSpaceY,currentSpaceX],[y_vector,x_vector]]);
-                //         }else if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') === undefined){
-                //             viableSpace.push([currentSpaceY+y_vector,currentSpaceX+x_vector])
-                //         }
-                //     }
-                // }
-                // // For 0,+1
-                // // vectorFindingMachine([0,1,y_vector>=0,Math.abs(currentSpaceX-game.cells.length)>x_vector, y_vector=0,x_vector++,currentSpaceY,currentSpaceX+1]);
-                // if($(game.cells[currentSpaceY][currentSpaceX+1].domElement[0]).attr('box_owned_by') == 1-currentPlayer &&currentSpaceY<8 &&currentSpaceY>-1 && currentSpaceX<8 && currentSpaceX>-1){
-                //     for(var y_vector=0, x_vector=1; y_vector>=0 && Math.abs(currentSpaceX-game.cells.length)>x_vector; y_vector=0, x_vector++){
-                //         if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') == 1-currentPlayer){
-                //             needToBeFlipped.push([[currentSpaceY+y_vector,currentSpaceX+x_vector],[currentSpaceY,currentSpaceX],[y_vector,x_vector]]);
-                //         }else if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') === undefined){
-                //             viableSpace.push([currentSpaceY+y_vector,currentSpaceX+x_vector])
-                //         }
-                //     }
-                // }
-                // // For 1,-1
-                // if($(game.cells[currentSpaceY+1][currentSpaceX-1].domElement[0]).attr('box_owned_by') == 1-currentPlayer &&currentSpaceY<8 &&currentSpaceY>-1 && currentSpaceX<8 && currentSpaceX>-1){
-                //     for(var y_vector=1, x_vector=-1; y_vector<game.cells.length-currentSpaceY && x_vector<=currentSpaceX; y_vector++, x_vector--){
-                //         if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') == 1-currentPlayer){
-                //             needToBeFlipped.push([[currentSpaceY+y_vector,currentSpaceX+x_vector],[currentSpaceY,currentSpaceX],[y_vector,x_vector]]);
-                //         }else if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') === undefined){
-                //             viableSpace.push([currentSpaceY+y_vector,currentSpaceX+x_vector])
-                //         }
-                //     }
-                // }
-                // // For 1,0
-                // if($(game.cells[currentSpaceY+1][currentSpaceX].domElement[0]).attr('box_owned_by') == 1-currentPlayer &&currentSpaceY<8 &&currentSpaceY>-1 && currentSpaceX<8 && currentSpaceX>-1){
-                //     for(var y_vector=1, x_vector=0; y_vector<game.cells.length-currentSpaceY && x_vector===0; y_vector++, x_vector=0){
-                //         if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') == 1-currentPlayer){
-                //             needToBeFlipped.push([[currentSpaceY+y_vector,currentSpaceX+x_vector],[currentSpaceY,currentSpaceX],[y_vector,x_vector]]);
-                //         }else if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') === undefined){
-                //             viableSpace.push([currentSpaceY+y_vector,currentSpaceX+x_vector])
-                //         }
-                //     }
-                // }
-                // // For  1,1
-                // if($(game.cells[currentSpaceY+1][currentSpaceX+1].domElement[0]).attr('box_owned_by') == 1-currentPlayer  &&currentSpaceY<8 &&currentSpaceY>-1 && currentSpaceX<8 && currentSpaceX>-1){
-                //     for(var y_vector=1, x_vector=1; y_vector>=Math.abs(game.cells.length-currentSpaceY) && currentSpaceX-game.cells.length>x_vector; y_vector++, x_vector++){
-                //         if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') == 1-currentPlayer){
-                //             needToBeFlipped.push([[currentSpaceY+y_vector,currentSpaceX+x_vector],[currentSpaceY,currentSpaceX],[y_vector,x_vector]]);
-                //         }else if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') === undefined){
-                //             viableSpace.push([currentSpaceY+y_vector,currentSpaceX+x_vector])
-                //         }
-                //     }
-                // }
+
             }
         }
-        // vectorFindingMachine([0,1,y_vector>=0,Math.abs(currentSpaceX-game.cells.length)>x_vector, y_vector=0,x_vector++,currentSpaceY,currentSpaceX+1]);
-        //
-        // function vectorFindingMachine(param1){
-        //     var param=param1;
-        //     if($(game.cells[param[6]][param[7]].domElement[0]).attr('box_owned_by') == 1-currentPlayer &&currentSpaceY<8 &&currentSpaceY>-1 && currentSpaceX<8 && currentSpaceX>-1) {
-        //         for (var y_vector = param[0], x_vector = param[1]; param[2], param[3]; param[4], param[5]) {
-        //             if ($(game.cells[currentSpaceY + y_vector][currentSpaceX + x_vector].domElement[0]).attr('box_owned_by') == 1 - currentPlayer) {
-        //                 needToBeFlipped.push([[currentSpaceY + y_vector, currentSpaceX + x_vector],[currentSpaceY, currentSpaceX],[param[0],param[1]]]);
-        //             } else if ($(game.cells[currentSpaceY + y_vector][currentSpaceX + x_vector].domElement[0]).attr('box_owned_by') === undefined) {
-        //                 viableSpace.push([currentSpaceY + y_vector, currentSpaceX + x_vector])
-        //             }
-        //         }
-        //     }
-        // }
     }
 
     console.log(currentPlayer + ' \'s available positions are ' + viableSpace);
@@ -555,101 +393,54 @@ function checkAvailableSpace(currentPlayer) {
 
 /*==============================================FLIP COIN=============================================================*/
 /*====================================================================================================================*/
-
 function flipCoin (y, x){
 
     currentSpaceY = y;
     currentSpaceX = x;
     var totalCellsToFlip = [];
-    for( var k = currentSpaceY-1; k <= currentSpaceY+1; k++){
-        for( var m = currentSpaceX-1; m <= currentSpaceX+1; m++){
-            $(".highlight").removeClass('highlight');
-            $(game.cells[k][m].domElement[0]).addClass('highlight');
-            if(k > -1 && k < 8 && m > -1 && m < 8 && $(game.cells[k][m].domElement[0]).attr('box_owned_by') === (1-game.currentPlayer).toString()) {
+    if(currentSpaceY > -1 && currentSpaceY < 8 && currentSpaceX > -1 && currentSpaceX < 8) {
+        for (var k = currentSpaceY - 1; k <= currentSpaceY + 1; k++) {
+            for (var m = currentSpaceX - 1; m <= currentSpaceX + 1; m++) {
+                // $(".highlight").removeClass('highlight');
+                // $(game.cells[k][m].domElement[0]).addClass('highlight');
+                if (k > -1 && k < 8 && m > -1 && m < 8 && $(game.cells[k][m].domElement[0]).attr('box_owned_by') === (1 - game.currentPlayer).toString()) {
 
-                var y_axis= k-y;
-                var x_axis = m-x;
-                var y_vector = k+y_axis;
-                var x_vector = m+x_axis;
+                    var y_axis = k - y;
+                    var x_axis = m - x;
+                    var y_direction = k + y_axis;
+                    var x_direction = m + x_axis;
 
 
-                var possibleCells = [];
-                var a = y+y_axis, b=x+x_axis;
-                while($(game.cells[a][b].domElement[0]).attr('box_owned_by')==(1-game.currentPlayer)){
-                    possibleCells.push($(game.cells[a][b].domElement[0]));
-                    a+=y_axis;
-                    b+=x_axis;
+                    var possibleCells = []
+                    var a = y + y_axis, b = x + x_axis;
+                    if (a > -1 && a < 8 && b > -1 && b < 8) {
+                        while (a > -1 && a < 8 && b > -1 && b < 8 && $(game.cells[a][b].domElement[0]).attr('box_owned_by') == (1 - game.currentPlayer) && $(game.cells[a][b].domElement[0]).attr('box_owned_by') !== undefined) {
+                            if ($(game.cells[a][b].domElement[0]).attr('box_owned_by') !== undefined) {
+                                possibleCells.push($(game.cells[a][b].domElement[0]));
+
+                                a += y_axis;
+                                b += x_axis;
+                            }
+                        }
+                        if (a > -1 && a < 8 && b > -1 && b < 8 && $(game.cells[a][b].domElement[0]).attr('box_owned_by') == game.currentPlayer && $(game.cells[a][b].domElement[0]).attr('box_owned_by') !== undefined) {
+                            totalCellsToFlip = totalCellsToFlip.concat(possibleCells);
+                        }
+                    }
+
                 }
-                if($(game.cells[a][b].domElement[0]).attr('box_owned_by')==game.currentPlayer){
-                    totalCellsToFlip = totalCellsToFlip.concat(possibleCells);
-                }
-
-                // if(Math.sign(y_axis) === 1 && Math.sign(x_axis) === 0){
-                //     for(var q = y ; q < 8; q ++){
-                //         if($(game.cells[k][m].domElement[0]).attr('box_owned_by') === (game.currentPlayer).toString()){
-                //             var currentTurnPlayer = game.playerTurn[game.currentPlayer];
-                //             $(game.cells[q][b].domElement[0]).find('img').attr('src', currentTurnPlayer.coinImage );
-                //             $(game.cells[q][b].domElement[0]).attr( 'box_owned_by', game.currentPlayer);
-                //         }else{
-                //
-                //         }
-                //     }
-                // }
 
             }
-
         }
-    }
-    for(var flipIndex=0; flipIndex<totalCellsToFlip.length; flipIndex++){
-        var currentTurnPlayer = game.playerTurn[game.currentPlayer];
-        totalCellsToFlip[flipIndex].attr('box_owned_by', game.currentPlayer).find('img').attr('src', currentTurnPlayer.coinImage);
-    }
+        for (var flipIndex = 0; flipIndex < totalCellsToFlip.length; flipIndex++) {
+            var currentTurnPlayer = game.playerTurn[game.currentPlayer];
+            totalCellsToFlip[flipIndex].attr('box_owned_by', game.currentPlayer).find('img').attr('src', currentTurnPlayer.coinImage);
+        }
 
 
+    }
 
 }
-// function checkAvailableSpace(currentPlayer) {
-//
-//     var currentSpaceY = null;
-//     var currentSpaceX = null;
-//     var needToBeFlipped = [];
-//     var viableSpace = [];
-//
-//
-//     for (var y = 0; y < game.cells.length; y++) {
-//         for (var x = 0; x < game.cells[y].length; x++) {
-//             if ($(game.cells[y][x].domElement[0]).attr('box_owned_by') === currentPlayer.toString()) {
-//                 currentSpaceY = y;
-//                 currentSpaceX = x;
-//                 for (var k = currentSpaceY - 1; k <= currentSpaceY + 1; k++) {
-//                     for (var m = currentSpaceX - 1; m <= currentSpaceX + 1; m++) {
-//                         if (k > -1 && k < 8 && m > -1 && m < 8 && $(game.cells[k][m].domElement[0]).attr('box_owned_by') === (1 - currentPlayer).toString()) {
-//                             var y_axis = k - y;
-//                             var x_axis = m - x;
-//                             var y_vector = k + y_axis;
-//                             var x_vector = m + x_axis;
-//
-//                             // if(y_vector > -1 && y_vector < 8 && x_vector > -1 && x_vector < 8 && $(game.cells[y_vector][x_vector]).attr('box_owned_by') === undefined){
-//                             if (y_vector > -1 && y_vector < 8 && x_vector > -1 && x_vector < 8 && $(game.cells[y_vector][x_vector].domElement[0]).attr('box_owned_by') === undefined) {
-//                                 viableSpace.push([k + y_axis, m + x_axis]);
-//                             }
-//
-//                         }
-//                     }
-//
-//                 }
-//
-//             }
-//         }
-//
-//     }
-//     // console.log(currentPlayer + " 's available positions are " + viableSpace);
-//     // return viableSpace;
-//     console.log(currentPlayer + ' \'s available positions are ' + viableSpace);
-//     console.log('spaces to be flipped ' + needToBeFlipped);
-//     return (viableSpace);
-//
-// }
+
 
 
 
