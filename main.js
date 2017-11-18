@@ -89,6 +89,7 @@ function IndBlock(locationObj) {
         currentElement.setAttribute('box_owned_by', game.currentPlayer);
         $(currentElement).append(playerCoin);
         flipCoin(this.location.y, this.location.x);
+        // this.checkForWin()
     };
     this.getCurrentMark = function () {
         return this.domElement[0].attributes.box_owned_by;
