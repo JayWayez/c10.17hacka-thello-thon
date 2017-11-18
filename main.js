@@ -422,13 +422,17 @@ function checkAvailableSpace(currentPlayer) {
                 currentSpaceX = x;
                 for(var xDelta=-1; xDelta<2; xDelta++){
                     for(var yDelta=-1; yDelta<2; yDelta++){
+                        //is current cellX,Y >-1 necessary?
                         if($(game.cells[currentSpaceY+yDelta][currentSpaceX+xDelta].domElement[0]).attr('box_owned_by') == 1-currentPlayer &&currentSpaceY<game.cells.length &&currentSpaceY>-1 && currentSpaceX<game.cells.length && currentSpaceX>-1){
                             //y,x vector conditional has to be dynamic.
-                            for(var y_vector=yDelta, x_vector=xDelta; y_vector>=-currentSpaceY && x>=-x_vector; y_vector--, x_vector--){
+                            for(var y_vector=yDelta, x_vector=xDelta; y_vector<game.cells.length&& y_vector>-1 && x_vector<game.cells.length&&x_vector>-1; y_vector=y_vector+y_vector, x_vector=x_vector+x_vector){
                                 if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') == 1-currentPlayer){
-                                    needToBeFlipped.push([[currentSpaceY+y_vector,currentSpaceX+x_vector],[currentSpaceY,currentSpaceX]]);
+                                    //pushing as object enemy cell found location, current location, and vector direction.
+                                    needToBeFlipped.push([[currentSpaceY+y_vector,currentSpaceX+x_vector],[currentSpaceY,currentSpaceX],[yDelta, xDelta]]);
                                 }else if($(game.cells[currentSpaceY+y_vector][currentSpaceX+x_vector].domElement[0]).attr('box_owned_by') === undefined){
-                                    viableSpace.push([currentSpaceY+y_vector,currentSpaceX+x_vector])
+                                    viableSpace.push([currentSpaceY+y_vector,currentSpaceX+x_vector]);
+                                    y_vector=game.cells.length;
+                                    x_vector=game.cells.length;
                                 }
                             }
                         }
@@ -569,7 +573,7 @@ function flipCoin (y, x){
                 var x_vector = m+x_axis;
 
 
-                var possibleCells = []
+                var possibleCells = [];
                 var a = y+y_axis, b=x+x_axis;
                 while($(game.cells[a][b].domElement[0]).attr('box_owned_by')==(1-game.currentPlayer)){
                     possibleCells.push($(game.cells[a][b].domElement[0]));
