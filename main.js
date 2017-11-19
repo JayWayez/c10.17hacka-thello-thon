@@ -2,6 +2,7 @@ $(document).ready(initializeApplication);
 
 function initializeApplication() {
   window.game = new Othello();
+  game.initialize();
   game.createBlocks(8, 8);
     initialFourCoins();
     allowClickHandler(checkAvailableSpace(game.currentPlayer));
@@ -12,6 +13,15 @@ function initializeApplication() {
     $(".btn.btn-default").click(factionOst);
 }
 
+/*===========================================Global Variables=========================================================*/
+var lastLocations;
+var playerSongPlaying;
+var playerSong1= new Audio();
+var playerSong2= new Audio();
+playerSong1Src=$(game.modal.houseList()[0]).attr("audio");
+playerSong2Src=$(game.modal.houseList()[1]).attr("audio");
+playerSong1.src= playerSong1Src;
+playerSong2.src= playerSong2Src;
 // function playerSelectionModal() {
 //   modal = document.getElementById("modal");
 //   modal.style.display = "block";
@@ -67,9 +77,13 @@ function Othello(){
     var selfOthello = this;
     this.containerElement = $("#gameBoard");
     this.currentPlayer = 0;
-    this.playerTurn = houseList();
+    this.playerTurn = modal.houseList;
     this.cells = [ ];
-
+    this.initialize= function(){
+        this.view= new View(selfOthello);
+        this.modal= new Modal()
+    }
+    ;
     this.createBlocks = function(row,column){
         var width= row;
         var length= column;
@@ -97,15 +111,17 @@ function Othello(){
     this.toggleCurrentPlayer = function(){
         this.currentPlayer = 1 - this.currentPlayer;
     };
-    /*this.checkForWin = function(){
+    this.checkForWin = function(value){
         //create if statement checking for total coin?
         if (counter1 === 64 || counter2 === 64){
             console.log("game over");
         }else if (counter1 === 32 && counter2 === 32){
             console.log("this is a draw");
+        }else if(value === 0){
+
         }
 
-    }*/;
+    };
 
     //this function not yet
     this.getCurrentPlayerSymbol = function(){
@@ -114,7 +130,10 @@ function Othello(){
     this.handleBlockClick = function(){
         var currentSymbol = game.getCurrentPlayerSymbol();
         //check if the button has been clicked.
-        if(this.getCurrentMark()=== undefined){
+        if(this.getCurrentMark()=== 'noOne'){
+            //chung's version flipCoin handler
+            // flipCoin(checkAvailableSpace(game.currentPlayer),this.location.y,this.location.x, game.currentPlayer);
+            flipCoin(this.location.y,this.location.x);
             this.setCurrentMark(currentSymbol);
             game.toggleCurrentPlayer();
         }
@@ -123,11 +142,55 @@ function Othello(){
         removeClickHandler(lastLocations);
         allowClickHandler(checkAvailableSpace(game.currentPlayer));
         displayOutput(score());
-        // checkForWin();
-        // factionOst();
+        game.checkForWin;
+        factionOst();
     }
 }
 
+function Modal(){
+    this.houseList= function() {
+        var player1 = {
+            house: "stark",
+            coinImage: "images/stark.png",
+            audio: "sounds/lanister.mp3",
+            flagImage: "image/flag/...",
+            backgroundImg: "image/background/...",
+            score: null,
+            symbol: "0"
+        };
+        var player2 = {
+            house: "greyjoy",
+            coinImage: "images/greyjoy.png",
+            audio: "sounds/greyjoy.mp3",
+            flagImage: "image/flag/...",
+            backgroundImg: "image/background/...",
+            score: null,
+            symbol: "1"
+        };
+        var lannister = {
+            house: "lannister",
+            coinImage: "image/coin/...",
+            audio: "audio/...",
+            flagImage: "image/flag/...",
+            backgroundImg: "image/background/...",
+            score: null
+        };
+        var targaryen = {
+            house: "targaryen",
+            coinImage: "image/coin/...",
+            audio: "audio/...",
+            flagImage: "image/flag/...",
+            backgroundImg: "image/background/...",
+            score: null
+        };
+
+        var houses = [player1, player2];
+        return houses;
+    }
+}
+function View(){
+
+}
 /*==================================================== Block  ========================================================*/
 /*====================================================================================================================*/
 
@@ -138,6 +201,7 @@ function IndBlock(locationObj){
     this.createDomElement = function(clickCallback){
         this.domElement = $("<div>",{
             'class': 'cell test',
+            'box_owned_by': 'noOne',
            text: 'x:'+locationObj.x+',y:'+locationObj.y
         });
         return this.domElement;
@@ -148,104 +212,16 @@ function IndBlock(locationObj){
         var currentElement= this.domElement[0];
         currentElement.setAttribute('box_owned_by', game.currentPlayer);
         $(currentElement).append(playerCoin);
-        flipCoin(this.location.y, this.location.x);
-        console.log(this.location.y, this.location.x);
+        // flipCoin(checkAvailableSpace(game.currentPlayer),this.location.y, this.location.x);
 
     };
     this.getCurrentMark = function(){
-        return this.domElement[0].attributes.box_owned_by;
+        return $(this.domElement[0]).attr("box_owned_by")
     }
 }
 
 
-// function flipCoin (y, x) {
-//
-//     currentSpaceY = y;
-//     currentSpaceX = x;
-//     var totalCellsToFlip = [];
-//     for (var k = currentSpaceY - 1; k <= currentSpaceY + 1; k++) {
-//         for (var m = currentSpaceX - 1; m <= currentSpaceX + 1; m++) {
-//             $(".highlight").removeClass('highlight');
-//             $(game.cells[k][m].domElement[0]).addClass('highlight');
-//             if (k > -1 && k < 8 && m > -1 && m < 8 && $(game.cells[k][m].domElement[0]).attr('box_owned_by') === (1 - game.currentPlayer).toString()) {
-//
-//                 var y_axis = k - y;
-//                 var x_axis = m - x;
-//                 var y_vector = k + y_axis;
-//                 var x_vector = m + x_axis;
-//
-//
-//                 var possibleCells = []
-//                 var a = y + y_axis, b = x + x_axis;
-//                 while ($(game.cells[a][b].domElement[0]).attr('box_owned_by') == (1 - game.currentPlayer)) {
-//                     possibleCells.push($(game.cells[a][b].domElement[0]));
-//                     a += y_axis;
-//                     b += x_axis;
-//                 }
-//                 if ($(game.cells[a][b].domElement[0]).attr('box_owned_by') == game.currentPlayer) {
-//                     totalCellsToFlip = totalCellsToFlip.concat(possibleCells);
-//                 }
-//
-//                 // if(Math.sign(y_axis) === 1 && Math.sign(x_axis) === 0){
-//                 //     for(var q = y ; q < 8; q ++){
-//                 //         if($(game.cells[k][m].domElement[0]).attr('box_owned_by') === (game.currentPlayer).toString()){
-//                 //             var currentTurnPlayer = game.playerTurn[game.currentPlayer];
-//                 //             $(game.cells[q][b].domElement[0]).find('img').attr('src', currentTurnPlayer.coinImage );
-//                 //             $(game.cells[q][b].domElement[0]).attr( 'box_owned_by', game.currentPlayer);
-//                 //         }else{
-//                 //
-//                 //         }
-//                 //     }
-//                 // }
-//
-//             }
-//
-//         }
-//     }
-//     for (var flipIndex = 0; flipIndex < totalCellsToFlip.length; flipIndex++) {
-//         var currentTurnPlayer = game.playerTurn[game.currentPlayer];
-//         totalCellsToFlip[flipIndex].attr('box_owned_by', game.currentPlayer).find('img').attr('src', currentTurnPlayer.coinImage);
-//     }
-// }
-function houseList() {
-  var player1 = {
-    house: "stark",
-    coinImage: "images/stark.png",
-    audio: "audio/...",
-    flagImage: "image/flag/...",
-    backgroundImg: "image/background/...",
-    score: null,
-    symbol: "0"
-  };
-  var player2 = {
-    house: "greyjoy",
-    coinImage: "images/greyjoy.png",
-    audio: "audio/...",
-    flagImage: "image/flag/...",
-    backgroundImg: "image/background/...",
-    score: null,
-    symbol: "1"
-  };
-  var lannister = {
-    house: "lannister",
-    coinImage: "image/coin/...",
-    audio: "audio/...",
-    flagImage: "image/flag/...",
-    backgroundImg: "image/background/...",
-    score: null
-  };
-  var targaryen = {
-    house: "targaryen",
-    coinImage: "image/coin/...",
-    audio: "audio/...",
-    flagImage: "image/flag/...",
-    backgroundImg: "image/background/...",
-    score: null
-  };
 
-  var houses = [player1, player2];
-  return houses;
-}
 
 function displayOutput(counters){
     var counter=counters;
@@ -284,7 +260,7 @@ function score() {
 
 /*==============================Faction Select==============================*/
 function statusBarFlag() {
-    var playerList = houseList();
+    var playerList = game.modal.houseList();
     //put coin image for now, need to change to flag
     var player1flag = $("<img>").attr("src", playerList[0].coinImage);
     var player2flag = $("<img>").attr("src", playerList[1].coinImage);
@@ -293,20 +269,10 @@ function statusBarFlag() {
     $('.p2_flag_box').append(player2flag);
 }
 
-// function checkForWin(){
-//     //create if statement checking for total coin?
-//     if (counter1 === 64 || counter2 === 64) {
-//         console.log("game over");
-//     } else if (counter1 === 32 && counter2 === 32) {
-//         console.log("this is a draw");
-//     }
-// }
-
-
 /************  Init 4 coins  **************/
 
 function initialFourCoins() {
-  var playerList = houseList();
+  var playerList = game.modal.houseList();
   var player1coin_1 = $("<img>").attr("src", playerList[0].coinImage);
   var player1coin_2 = $("<img>").attr("src", playerList[0].coinImage);
   var player2coin_1 = $("<img>").attr("src", playerList[1].coinImage);
@@ -348,7 +314,6 @@ function checkAvailableSpace(currentPlayer) {
                 //looks around the found player coin for enemy coins
                 for(var xDelta=-1; xDelta<2; xDelta++){
                     for(var yDelta=-1; yDelta<2; yDelta++){
-                        // if($(game.cells[currentSpaceY+yDelta][currentSpaceX+xDelta].domElement[0]).attr('box_owned_by') == 1-currentPlayer &&currentSpaceY<game.cells.length &&currentSpaceY>-1 && currentSpaceX<game.cells.length && currentSpaceX>-1){
                         //initial four conditions for corners
                         if(currentSpaceY+yDelta>-1 && currentSpaceX+xDelta>-1 &&currentSpaceX+xDelta<game.cells.length&&currentSpaceY+yDelta<game.cells.length&&  $(game.cells[currentSpaceY+yDelta][currentSpaceX+xDelta].domElement[0]).attr('box_owned_by') == 1-currentPlayer){
                             //if enemy coin found, searches all spaces through the same direction.
@@ -359,16 +324,12 @@ function checkAvailableSpace(currentPlayer) {
 
                                     if ($(game.cells[currentSpaceY + y_vector][currentSpaceX + x_vector].domElement[0]).attr('box_owned_by') == 1 - currentPlayer) {
                                         //pushing as object enemy cell found location, current location, and vector direction.
-                                        needToBeFlipped.push({
-                                            "enemy_cell_found": [currentSpaceY + y_vector, currentSpaceX + x_vector],
-                                            "current_location": [currentSpaceY, currentSpaceX],
-                                            "vector_direction": [yDelta, xDelta]
-                                        });
+                                        viableSpace.push([currentSpaceY + y_vector, currentSpaceX + x_vector]);
                                     } else if ($(game.cells[currentSpaceY + y_vector][currentSpaceX + x_vector].domElement[0]).attr('box_owned_by') == currentPlayer) {
                                         //to stop the loop if value found
                                         y_vector = game.cells.length + 8;
                                         x_vector = game.cells.length + 8;
-                                    } else if ($(game.cells[currentSpaceY + y_vector][currentSpaceX + x_vector].domElement[0]).attr('box_owned_by') === undefined) {
+                                    } else if ($(game.cells[currentSpaceY + y_vector][currentSpaceX + x_vector].domElement[0]).attr('box_owned_by') === 'noOne') {
                                         viableSpace.push([currentSpaceY + y_vector, currentSpaceX + x_vector]);
                                         y_vector = game.cells.length + 8;
                                         x_vector = game.cells.length + 8;
@@ -387,83 +348,103 @@ function checkAvailableSpace(currentPlayer) {
 
     console.log(currentPlayer + ' \'s available positions are ' + viableSpace);
     console.log('spaces to be flipped ' + needToBeFlipped);
+    //viableSpace contains both available moves and probable flip locations.
     return (viableSpace);
 }
 
 /*==============================================FLIP COIN=============================================================*/
 /*====================================================================================================================*/
+//Chung's version, still needs to be fixed;
+// function flipCoin (location,y,x, currentPlayer){
+//     var locations=location;
+//     var currentY=y;
+//     var currentX=x;
+//     var totalCellsToFlip = [];
+//     var possibleCells = [];
+//     for(var i=locations.length-1; i>=0; i--){
+//         for(var j=0; j<1;j++){
+//             if(locations[i][j]=== currentY &&locations[i][j+1]===currentX){
+//                 locations.splice(i,locations.length-i);
+//                 i=locations.length-1;
+//                 j=0;
+//                 for(var arraylocation_i=locations.length-1; arraylocation_i>=0; arraylocation_i--){
+//                     for(var arrayIndex_j=0; arrayIndex_j<1; arrayIndex_j++){
+//                         if($(game.cells[locations[arraylocation_i][arrayIndex_j]][locations[arraylocation_i][arrayIndex_j+1]].domElement[0]).attr('box_owned_by')==1-currentPlayer){
+//                             possibleCells.push($(game.cells[locations[arraylocation_i][arrayIndex_j]][locations[arraylocation_i][arrayIndex_j+1]].domElement[0]));
+//                             locations.pop();
+//                         } else{
+//                             //temporary patch;
+//                             arraylocation_i=-1
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//
+//     }
+//     totalCellsToFlip = totalCellsToFlip.concat(possibleCells);
+//     for (var flipIndex = 0; flipIndex < totalCellsToFlip.length; flipIndex++) {
+//         var currentTurnPlayer = game.playerTurn[game.currentPlayer];
+//         totalCellsToFlip[flipIndex].attr('box_owned_by', currentPlayer).find('img').attr('src', currentTurnPlayer.coinImage);
+//     }
+//
+//
+// }
+
 function flipCoin (y, x){
 
-    currentSpaceY = y;
-    currentSpaceX = x;
+    var currentSpaceY = y;
+    var currentSpaceX = x;
     var totalCellsToFlip = [];
-    if(currentSpaceY > -1 && currentSpaceY < game.cells.length && currentSpaceX > -1 && currentSpaceX < game.cells.length) {
-        for (var k = currentSpaceY - 1; k <= currentSpaceY + 1; k++) {
-            for (var m = currentSpaceX - 1; m <= currentSpaceX + 1; m++) {
-                // $(".highlight").removeClass('highlight');
-                // $(game.cells[k][m].domElement[0]).addClass('highlight');
-                // if (k > -1 && k < 8 && m > -1 && m < 8 && $(game.cells[k][m].domElement[0]).attr('box_owned_by') === (1 - game.currentPlayer).toString()) {
-                if (k > -1 && k < game.cells.length && m > -1 && m < game.cells.length && $(game.cells[k][m].domElement[0]).attr('box_owned_by') == (1 - game.currentPlayer)) {
 
+    for( var k = currentSpaceY-1; k <= currentSpaceY+1; k++){
+        for( var m = currentSpaceX-1; m <= currentSpaceX+1; m++){
+            if(k !== -1 && k !== 8 && m !== -1 && m !== 8) {
+                // $(".checkFlip").removeClass('checkFlip');
+                // $(game.cells[k][m].domElement[0]).addClass('checkFlip');
+                if (k > -1 && k < 8 && m > -1 && m < 8 && $(game.cells[k][m].domElement[0]).attr('box_owned_by') === (1 - game.currentPlayer).toString()) {
                     var y_axis = k - y;
                     var x_axis = m - x;
-                    var y_direction = k + y_axis;
-                    var x_direction = m + x_axis;
-                    var possibleCells = [];
+                    var possibleCells = []
                     var a = y + y_axis, b = x + x_axis;
-                    if (a > -1 && a < game.cells.length && b > -1 && b < game.cells.length) {
-                        while (a > -1 && a < game.cells.length && b > -1 && b < game.cells.length && $(game.cells[a][b].domElement[0]).attr('box_owned_by') == (1 - game.currentPlayer) && $(game.cells[a][b].domElement[0]).attr('box_owned_by') !== undefined) {
-                            if ($(game.cells[a][b].domElement[0]).attr('box_owned_by') !== undefined) {
-                                possibleCells.push($(game.cells[a][b].domElement[0]));
-
-                                a += y_axis;
-                                b += x_axis;
-                            }
+                    if(a !== -1 && a !== 8 && b !== -1 && b !== 8) {
+                        while (a !== -1 && a !== 8 && b !== -1 && b !== 8 && $(game.cells[a][b].domElement[0]) !== undefined && $(game.cells[a][b].domElement[0]).attr('box_owned_by') == (1 - game.currentPlayer)) {
+                            // $(".checkFlip2").removeClass('checkFlip2');
+                            // $(game.cells[a][b].domElement[0]).addClass('checkFlip2');
+                            possibleCells.push($(game.cells[a][b].domElement[0]));
+                            a += y_axis;
+                            b += x_axis;
                         }
-                        if (a > -1 && a < game.cells.length && b > -1 && b < game.cells.length && $(game.cells[a][b].domElement[0]).attr('box_owned_by') == game.currentPlayer && $(game.cells[a][b].domElement[0]).attr('box_owned_by') !== undefined) {
+                        if (a !== -1 && a !== 8 && b !== -1 && b !== 8 && $(game.cells[a][b].domElement[0]).attr('box_owned_by') == game.currentPlayer) {
                             totalCellsToFlip = totalCellsToFlip.concat(possibleCells);
                         }
                     }
-
                 }
-
             }
         }
-        for (var flipIndex = 0; flipIndex < totalCellsToFlip.length; flipIndex++) {
-            var currentTurnPlayer = game.playerTurn[game.currentPlayer];
-            totalCellsToFlip[flipIndex].attr('box_owned_by', game.currentPlayer).find('img').attr('src', currentTurnPlayer.coinImage);
-        }
-
-
     }
-
+    for(var flipIndex=0; flipIndex<totalCellsToFlip.length; flipIndex++){
+        var currentTurnPlayer = game.playerTurn[game.currentPlayer];
+        totalCellsToFlip[flipIndex].attr('box_owned_by', game.currentPlayer).find('img').attr('src', currentTurnPlayer.coinImage);
+    }
 }
 
-
-
-
-
-
-function displayViable() {
-  if (game.currentPlayer === "1") {
-    checkAvailableSpace();
-  }
-}
-
-var lastLocations;
 
 function allowClickHandler(locations){
     for(var i=0; i<locations.length; i++){
         for(var j=0; j<1; j++){
-            var clickableButton= game.cells[locations[i][j]][locations[i][j+1]];
-            $(clickableButton.domElement[0]).addClass("available");
-            $(clickableButton.domElement[0]).click(game.handleBlockClick.bind(clickableButton));
+            if( $(game.cells[locations[i][j]][locations[i][j+1]].domElement[0]).attr('box_owned_by') == 'noOne'){
+                var clickableButton = game.cells[locations[i][j]][locations[i][j + 1]];
+                $(clickableButton.domElement[0]).addClass("available");
+                $(clickableButton.domElement[0]).click(game.handleBlockClick.bind(clickableButton));
+            }
         }
 
     }
     //when there are no avail spaces to move triggers the no space function.
     if(locations.length===0){
         whenNoSpace();
+        game.checkForWin(locations.length)
     }
     lastLocations=locations;
     return locations;
@@ -481,7 +462,7 @@ function removeClickHandler(locations){
 
 function whenNoSpace(){
     //need if statement to check if its the end of game or middle of game
-    console.log("no available move");
+    console.log("no available move for Current Player");
     game.toggleCurrentPlayer();
 }
 
@@ -502,16 +483,14 @@ function playBackgroundMusic(){
 var OstisPlaying;
 
 
-var playerSongPlaying;
-var playerSong= new Audio();
-
 
 function factionOst(){
-    playerSong.src= $(game.playerTurn[game.currentPlayer]).attr("audio");
-    if(game.currentPlayer ==="1"){
-        playerSong.play();
+    if(game.currentPlayer === 1){
+        playerSong1.pause();
+        playerSong2.play();
     }else{
-        playerSong.play();
+        playerSong2.pause();
+        playerSong1.play();
     }
 }
 
