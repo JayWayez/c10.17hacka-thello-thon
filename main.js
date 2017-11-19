@@ -138,13 +138,16 @@ function Othello(){
         $(element).removeClass("available");
         removeClickHandler(lastLocations);
         allowClickHandler(checkAvailableSpace(game.currentPlayer));
-        displayOutput(score());
+        displayOutput([game.modal.currentScore1, game.modal.currentScore2]);
         game.checkForWin;
         factionOst();
     }
 }
 
 function Modal(){
+    this.currentScore1= null;
+    this.currentScore2= null;
+
     this.initialize= function(){
         this.lastLocations;
         this.playerSongPlaying;
@@ -190,7 +193,36 @@ function Modal(){
             backgroundImg: "image/background/...",
             score: null
         }
+    };
+    ///////score/////////////////////////////////////
+//if you leave global previous count stays and overlaps
+// var counter1 = null;
+// var counter2 = null;
+
+    this.score= function () {
+// //Do we need isClicked?
+//         var isClicked = false;
+        var counter1 = null;
+        var counter2 = null;
+
+//just adding, needs to substract
+        for (var i = 0; i < game.cells.length; i++) {
+            for (var j = 0; j < game.cells[i].length; j++) {
+                var currentCell = game.cells[i][j].domElement[0];
+                if($(currentCell).attr("box_owned_by") === "1"){
+                    counter2++
+                }
+                else if(($(currentCell).attr("box_owned_by") === "0")){
+                    counter1++
+                }
+            }
+        }
+        this.currentScore1= counter1;
+        this.currentScore2= counter2;
+        // var output=[counter1, counter2];
+        // return(output);
     }
+
 }
 function View(){
 
@@ -234,32 +266,6 @@ function displayOutput(counters){
 }
 
 
-///////score/////////////////////////////////////
-//if you leave global previous count stays and overlaps
-// var counter1 = null;
-// var counter2 = null;
-
-function score() {
-//Do we need isClicked?
-    var isClicked = false;
-    var counter1 = null;
-    var counter2 = null;
-
-//just adding, needs to substract
-  for (var i = 0; i < game.cells.length; i++) {
-    for (var j = 0; j < game.cells[i].length; j++) {
-      var currentCell = game.cells[i][j].domElement[0];
-      if($(currentCell).attr("box_owned_by") === "1"){
-          counter2++
-      }
-      else if(($(currentCell).attr("box_owned_by") === "0")){
-          counter1++
-      }
-    }
-  }
-  var output=[counter1, counter2];
-  return(output);
-}
 
 
 /*==============================Faction Select==============================*/
