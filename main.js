@@ -11,17 +11,11 @@ function initializeApplication() {
     // $(".btn.btn-default").click(playBackgroundMusic);
     $(".btn.btn-default").click(statusBarFlag);
     $(".btn.btn-default").click(factionOst);
-    var lastLocations;
-    var playerSongPlaying;
-    var playerSong1= new Audio();
-    var playerSong2= new Audio();
-    playerSong1Src=$(game.modal.houseList()[0]).attr("audio");
-    playerSong2Src=$(game.modal.houseList()[1]).attr("audio");
-    playerSong1.src= playerSong1Src;
-    playerSong2.src= playerSong2Src;
+    /*===========================================Global Variables=========================================================*/
+
+
 }
 
-/*===========================================Global Variables=========================================================*/
 
 // function playerSelectionModal() {
 //   modal = document.getElementById("modal");
@@ -78,11 +72,13 @@ function Othello(){
     var selfOthello = this;
     this.containerElement = $("#gameBoard");
     this.currentPlayer = 0;
-    this.playerTurn = modal.houseList;
     this.cells = [ ];
     this.initialize= function(){
         this.view= new View(selfOthello);
-        this.modal= new Modal()
+        this.modal= new Modal();
+        this.modal.initialize();
+        this.playerTurn = [this.modal.houseList.player1, this.modal.houseList.player2];
+
     }
     ;
     this.createBlocks = function(row,column){
@@ -149,8 +145,18 @@ function Othello(){
 }
 
 function Modal(){
-    this.houseList= function() {
-        var player1 = {
+    this.initialize= function(){
+        this.lastLocations;
+        this.playerSongPlaying;
+        this.playerSong1= new Audio();
+        this.playerSong2= new Audio();
+        this.playerSong1Src=$(this.houseList.player1).attr("audio");
+        this.playerSong2Src=$(this.houseList.player2).attr("audio");
+        this.playerSong1.src= this.playerSong1Src;
+        this.playerSong2.src= this.playerSong2Src;
+    };
+    this.houseList={
+         player1 : {
             house: "stark",
             coinImage: "images/stark.png",
             audio: "sounds/lanister.mp3",
@@ -158,8 +164,8 @@ function Modal(){
             backgroundImg: "image/background/...",
             score: null,
             symbol: "0"
-        };
-        var player2 = {
+        },
+        player2 : {
             house: "greyjoy",
             coinImage: "images/greyjoy.png",
             audio: "sounds/greyjoy.mp3",
@@ -167,26 +173,23 @@ function Modal(){
             backgroundImg: "image/background/...",
             score: null,
             symbol: "1"
-        };
-        var lannister = {
+        },
+        lannister : {
             house: "lannister",
             coinImage: "image/coin/...",
             audio: "audio/...",
             flagImage: "image/flag/...",
             backgroundImg: "image/background/...",
             score: null
-        };
-        var targaryen = {
+        },
+        targaryen : {
             house: "targaryen",
             coinImage: "image/coin/...",
             audio: "audio/...",
             flagImage: "image/flag/...",
             backgroundImg: "image/background/...",
             score: null
-        };
-
-        var houses = [player1, player2];
-        return houses;
+        }
     }
 }
 function View(){
@@ -273,11 +276,12 @@ function statusBarFlag() {
 /************  Init 4 coins  **************/
 
 function initialFourCoins() {
-  var playerList = game.modal.houseList();
-  var player1coin_1 = $("<img>").attr("src", playerList[0].coinImage);
-  var player1coin_2 = $("<img>").attr("src", playerList[0].coinImage);
-  var player2coin_1 = $("<img>").attr("src", playerList[1].coinImage);
-  var player2coin_2 = $("<img>").attr("src", playerList[1].coinImage);
+  var playerList = game.modal.houseList.player1;
+  var playerList2=game.modal.houseList.player2;
+  var player1coin_1 = $("<img>").attr("src", playerList.coinImage);
+  var player1coin_2 = $("<img>").attr("src", playerList.coinImage);
+  var player2coin_1 = $("<img>").attr("src", playerList2.coinImage);
+  var player2coin_2 = $("<img>").attr("src", playerList2.coinImage);
 
   $(game.cells[3][3].domElement[0])
     .append(player1coin_1)
@@ -487,11 +491,11 @@ var OstisPlaying;
 
 function factionOst(){
     if(game.currentPlayer === 1){
-        playerSong1.pause();
-        playerSong2.play();
+        game.modal.playerSong1.pause();
+        game.modal.playerSong2.play();
     }else{
-        playerSong2.pause();
-        playerSong1.play();
+        game.modal.playerSong2.pause();
+        game.modal.playerSong1.play();
     }
 }
 
