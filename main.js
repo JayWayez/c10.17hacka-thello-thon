@@ -3,25 +3,35 @@ $(document).ready(initializeApplication);
 function initializeApplication() {
 
     window.game = new Othello();
+    game.playerSelectionModal();
     game.createBlocks(8, 8);
-
-    initialFourCoins();
+    // IndBlock.playerSelectionModal();
+    // initialFourCoins();
     allowClickHandler(checkAvailableSpace(game.currentPlayer));
+
+    // $(".stark").on("click", game.players('stark').bind(this));
+    // $(".lannister").on("click", game.players('lannister').bind(this));
+    // $(".targaryen").on("click", game.players('targaryen').bind(this));
+    // $(".greyjoy").on("click", game.players('greyjoy').bind(this));
+
+
+
     $(".btn.btn-default").click(statusBarFlag);
     $(".btn.btn-default").click(factionOst);
 
 
-    playBackgroundMusic();
-    $(".btn.btn-default").click(playBackgroundMusic);
+    // playBackgroundMusic();
+    // $(".btn.btn-default").click(playBackgroundMusic);
 
 }
 var counter = true;
 /*********** Othello*************/
 
 function Othello(){
+    var selfOthello = this;
     this.containerElement = $("#gameBoard");
     this.currentPlayer = 0;
-    this.playerTurn = houseList();
+    this.playerTurn = [];
     this.cells = [ ];
 
     this.createBlocks = function(row,column){
@@ -44,11 +54,94 @@ function Othello(){
             }
             this.cells.push(row);
         }
+
+
     };
 
+
+    this.initialFourCoins = function() {
+
+        var player1coin_1 = $("<img>").attr("src", this.playerTurn[0].coinImage);
+        var player1coin_2 = $("<img>").attr("src", this.playerTurn[0].coinImage);
+        var player2coin_1 = $("<img>").attr("src", this.playerTurn[1].coinImage);
+        var player2coin_2 = $("<img>").attr("src", this.playerTurn[1].coinImage);
+
+        $(game.cells[3][3].domElement[0])
+            .attr("box_owned_by", "0")
+            .append(player1coin_1)
+
+        $(game.cells[4][4].domElement[0])
+            .attr("box_owned_by", "0")
+            .append(player1coin_2)
+
+        $(game.cells[3][4].domElement[0])
+            .attr("box_owned_by", "1")
+            .append(player2coin_1)
+
+        $(game.cells[4][3].domElement[0])
+            .attr("box_owned_by", "1")
+            .append(player2coin_2)
+
+    }
+
+    this.playerSelectionModal = function() {
+        var modal = document.getElementById("modal");
+        modal.style.display = "block";
+        $(".stark").on("click", this.players.bind(this,'stark'));
+        $(".lannister").on("click", this.players.bind(this,'lannister'));
+        $(".targaryen").on("click", this.players.bind(this,'targaryen'));
+        $(".greyjoy").on("click", this.players.bind(this,'greyjoy'));
+        // close_modal_handle();
+    }
+
+    this.players = function(playerSelected){
+
+
+        if(counter){
+            game.playerTurn.push(game.houseList[playerSelected]);
+            counter = false;
+        }else {
+            game.playerTurn.push(game.houseList[playerSelected]);
+            $(".close_modal_button").on("click", function() {
+                modal.style.display = "none";
+                game.initialFourCoins();
+            });
+        }
+    }
+    this.houseList = {
+        stark : {
+            house: "stark",
+            coinImage: "images/stark.png",
+            audio: "audio/...",
+            flagImage: "image/flag/...",
+            backgroundImg: "image/background/...",
+        },
+        greyjoy : {
+            house: "greyjoy",
+            coinImage: "images/greyjoy.png",
+            audio: "audio/...",
+            flagImage: "image/flag/...",
+            backgroundImg: "image/background/...",
+        },
+        lannister : {
+            house: "lannister",
+            coinImage: "images/lannister.png",
+            audio: "audio/...",
+            flagImage: "image/flag/...",
+            backgroundImg: "image/background/...",
+        },
+        targaryen : {
+            house: "targaryen",
+            coinImage: "images/targaryen.png",
+            audio: "audio/...",
+            flagImage: "image/flag/...",
+            backgroundImg: "image/background/...",
+        }
+    }
     this.toggleCurrentPlayer = function(){
         this.currentPlayer = 1 - this.currentPlayer;
     };
+    //this function not yet
     this.getCurrentPlayerSymbol = function(){
         return this.playerTurn[this.currentPlayer].symbol;
     };
@@ -62,12 +155,12 @@ function Othello(){
         var element= document.body.getElementsByClassName('available');
         $(element).removeClass("available");
 
+        //Removes Click Handler
         this.score();
         this.checkForWin();
         removeClickHandler(lastLocations);
 
         allowClickHandler(checkAvailableSpace(game.currentPlayer));
-
     }
 }
 
@@ -89,7 +182,8 @@ function IndBlock(locationObj) {
         currentElement.setAttribute('box_owned_by', game.currentPlayer);
         $(currentElement).append(playerCoin);
         flipCoin(this.location.y, this.location.x);
-        // this.checkForWin()
+        console.log(this.location.y, this.location.x);
+
     };
     this.getCurrentMark = function () {
         return this.domElement[0].attributes.box_owned_by;
@@ -110,7 +204,7 @@ function IndBlock(locationObj) {
         $(".p2_stat_box p:nth-child(2)").text(this.player2Score);
     }
     this.checkForWin = function () {
-        if (this.player1Score+this.player2Score === 64) {
+        if (this.player1Score + this.player2Score === 64) {
             if (this.player1Score > this.player2Score) {
                 alert('Player1 is the Winner!!!')
             } else if (this.player1Score < this.player2Score) {
@@ -120,6 +214,7 @@ function IndBlock(locationObj) {
 
     }
 }
+
 
 /*************** flipCoin **************/
 
@@ -159,48 +254,6 @@ function flipCoin (y, x){
         var currentTurnPlayer = game.playerTurn[game.currentPlayer];
         totalCellsToFlip[flipIndex].attr('box_owned_by', game.currentPlayer).find('img').attr('src', currentTurnPlayer.coinImage);
     }
-}
-
-/***************  player selection ******************/
-
-function houseList() {
-    var player1 = {
-        house: "stark",
-        coinImage: "images/stark.png",
-        audio: "audio/...",
-        flagImage: "image/flag/...",
-        backgroundImg: "image/background/...",
-        score: null,
-        symbol: "0"
-    };
-    var player2 = {
-        house: "greyjoy",
-        coinImage: "images/greyjoy.png",
-        audio: "audio/...",
-        flagImage: "image/flag/...",
-        backgroundImg: "image/background/...",
-        score: null,
-        symbol: "1"
-    };
-    var lannister = {
-        house: "lannister",
-        coinImage: "image/coin/...",
-        audio: "audio/...",
-        flagImage: "image/flag/...",
-        backgroundImg: "image/background/...",
-        score: null
-    };
-    var targaryen = {
-        house: "targaryen",
-        coinImage: "image/coin/...",
-        audio: "audio/...",
-        flagImage: "image/flag/...",
-        backgroundImg: "image/background/...",
-        score: null
-    };
-
-    var houses = [player1, player2];
-    return houses;
 }
 
 
@@ -245,7 +298,7 @@ function initialFourCoins() {
 }
 
 
-/*************** CHECK AVAILABLE SPACES *************/
+
 
 function checkAvailableSpace(currentPlayer) {
     var currentSpaceY = null;
@@ -286,7 +339,11 @@ function checkAvailableSpace(currentPlayer) {
     return (viableSpace);
 }
 
-/********* ALLOW CLICK HANDLER *************/
+function displayViable() {
+    if (game.currentPlayer === "1") {
+        checkAvailableSpace();
+    }
+}
 
 var lastLocations;
 function allowClickHandler(locations){
@@ -306,8 +363,6 @@ function allowClickHandler(locations){
     return locations;
 }
 
-/*********** REMOVE CLICK HANDLER ***************/
-
 function removeClickHandler(locations){
     for(var i=0; i<locations.length; i++){
         for(var j=0; j<1; j++){
@@ -321,7 +376,7 @@ function removeClickHandler(locations){
 function whenNoSpace(){
     //need if statement to check if its the end of game or middle of game
     console.log("no available move");
-    // game.toggleCurrentPlayer();
+    game.toggleCurrentPlayer();
 }
 
 /******************** SOUND ***********************/
@@ -351,133 +406,3 @@ function factionOst(){
         playerSong.play();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-// function playerSelectionModal() {
-//     var modal = document.getElementById("modal");
-//     modal.style.display = "block";
-//     $(".stark").on("click", game.players.bind(this,'stark'));
-//     $(".lannister").on("click", game.players.bind(this,'lannister'));
-//     $(".targaryen").on("click", game.players.bind(this,'targaryen'));
-//     $(".greyjoy").on("click", game.players.bind(this,'greyjoy'));
-//     // close_modal_handle();
-// }
-
-
-//
-//
-
-//
-
-// var player1 = null;
-// var player2 = null;
-
-
-
-
-
-
-
-
-
-// var isClicked = false;
-// var currentCell = game.cells[i][j].domElement[0];
-// if (
-//     $(currentCell).attr("box_owned_by") === "1" &&
-//     $(currentCell).attr("isClicked") === undefined
-// ) {
-//     isClicked = true;
-//     counter2++;
-//     $(currentCell).attr("isClicked", true);
-// } else if (
-//     $(currentCell).attr("box_owned_by") === "0" &&
-//     $(currentCell).attr("isClicked") === undefined
-// ) {
-//     isClicked = true;
-//     counter1++;
-//     $(currentCell).attr("isClicked", true);
-// }
-
-
-
-
-// this.playerSelectionModal = function() {
-//     var modal = document.getElementById("modal");
-//     modal.style.display = "block";
-//     $(".stark").on("click", this.players('stark'));
-//     $(".lannister").on("click", this.players('lannister'));
-//     $(".targaryen").on("click", this.players('targaryen'));
-//     $(".greyjoy").on("click", this.players('greyjoy'));
-//     close_modal_handle();
-// }
-//
-// this.players = function(playerSelected){
-//     var counter = true;
-//
-//     if(counter){
-//         this.playerTurn.push(this.houseList[playerSelected]);
-//     }else{
-//         this.playerTurn.push(this.houseList[playerSelected]);
-//     }
-// }
-//
-//
-// this.houseList = {
-//     stark : {
-//         house: "stark",
-//         coinImage: "images/stark.png",
-//         audio: "audio/...",
-//         flagImage: "image/flag/...",
-//         backgroundImg: "image/background/...",
-//     },
-//     greyjoy : {
-//         house: "greyjoy",
-//         coinImage: "images/greyjoy.png",
-//         audio: "audio/...",
-//         flagImage: "image/flag/...",
-//         backgroundImg: "image/background/...",
-//     },
-//     lannister : {
-//         house: "lannister",
-//         coinImage: "image/coin/...",
-//         audio: "audio/...",
-//         flagImage: "image/flag/...",
-//         backgroundImg: "image/background/...",
-//     },
-//     targaryen : {
-//         house: "targaryen",
-//         coinImage: "image/coin/...",
-//         audio: "audio/...",
-//         flagImage: "image/flag/...",
-//         backgroundImg: "image/background/...",
-//     }
-// }
-
-
-
-// function playerSelectionModal() {
-//     var modal = document.getElementById("modal");
-//     modal.style.display = "block";
-//     $(".stark").on("click", checkPlayerOrder('stark'));
-//     $(".lannister").on("click", checkPlayerOrder('lannister'));
-//     $(".targaryen").on("click", checkPlayerOrder('targaryen'));
-//     $(".greyjoy").on("click", checkPlayerOrder('greyjoy'));
-//     close_modal_handle();
-// }
-
-
-//
-// function displayViable() {
-//     if (game.currentPlayer === "1") {
-//         checkAvailableSpace();
-//     }
-// }
