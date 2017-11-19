@@ -5,7 +5,7 @@
     width: 25%;
 }
 
-h2{
+h1, h2, h3{
     color: white;
 }
 
@@ -59,56 +59,47 @@ h2{
     position: relative;
     width: 45%;
     height: 85%;
-    background-color: white;
+    background-color: black;
+
 }
-.p1_area {
-    /* position: absolute; */
+.player{
+    height: 15%;
+    text-align: center;
+}
+
+.p1_area, .p2_area {
     display: flex;
     flex-direction: column;
-    background-color: pink;
-    width: 20%;
     height: 85%;
+
 }
-.p2_area {
-    /* position: relative; */
-    display: flex;
-    flex-direction: column;
-    background-color: blueviolet;
-    width: 20%;
-    height: 85%;
-}
-.p1_flag_box {
+
+.p1_flag_box, .p2_flag_box {
     display: flex;
     justify-content: center;
-    background-color: blue;
-    height: 75%;
+    width: 100%;
+    height: 70%;
+    position: relative;
+    /*background-color: black;*/
 }
-.p1_flag_box :nth-child(1){
-    width: 40%;
-    height: 83%;
-    background-image: url("images/stark_flag.png");
-    background-size: auto;
+
+.p1_flag_box :first-child, .p2_flag_box :first-child{
+    width: 100%;
+    height: 100%;
+    background-size: 100%;
     background-repeat: no-repeat;
+    background-color: rgba(0,0,0,0);
+
 }
-.p2_flag_box {
-    background-color: blue;
-    height: 75%;
-}
-.p1_stat_box {
-    background-color: rgb(0, 140, 255);
-    height: 25%;
+
+.p1_stat_box, .p2_stat_box {
+    background-color: rgba(0,0,0, 0);
+    width: 100%;
+    height: 15%;
     text-align: center;
     font-family: 'MedievalSharp', cursive;
-    font-size: 50px;
     font-size: 3.0vw;
-}
-.p2_stat_box {
-    background-color: rgb(157, 255, 0);
-    height: 25%;
-    text-align: center;
-    font-family: 'MedievalSharp', cursive;
-    font-size: 50px;
-    font-size: 3.0vw;
+    color: #effbed;
 }
 
 .cell{
@@ -121,7 +112,7 @@ h2{
     box-sizing: border-box;
     float: left;
     /* font-size: 8vmin; */
-    color:limegreen;
+
 }
 .cell:nth-child(8n+1){
     clear: left;
@@ -131,18 +122,16 @@ h2{
     height: 100%;
 }
 
-.available{
-    color: yellow;
-    border: 2px solid blue;
-}
+/*.available{*/
+    /*border: 2px solid lightgrey;*/
+/*}*/
 #modal_content {
     display: flex;
     justify-content: center;
 }
 
 .modal {
-    background-color: rgb(0,0,0); 
-    background-color: rgba(0,0,0,0.4); 
+    background-color: black;
 }
 
 .modal_content :nth-child(5) {
@@ -153,15 +142,11 @@ h2{
 .modal_content {
     position: relative;
     text-align: center;
-    background-color:rgba(0, 0, 0, 0.562);
+    background-color:rgba(0, 0, 0, 0);
     margin: auto;
-    margin-top: 10%;
-    padding-top: 5%;
-    border: 0;
-    /* border: 1px solid #888; */
+    font-family: 'MedievalSharp', cursive;
     width: 60%;
     height: 50%;
-    /* box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19); */
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
     animation-name: animatetop;
@@ -178,15 +163,85 @@ h2{
     from {top:-300px; opacity:0}
     to {top:0; opacity:1}
 } 
-/*.cell{*/
-    /*width: 33vmin;*/
-    /*height: 33vmin;*/
-    /*border: 1px solid black;*/
-    /*box-sizing: border-box;*/
-    /*float: left;*/
-    /*font-size: 8vmin;*/
-/*}*/
-/*.cell:nth-child(3n+1){*/
-    /*clear: left;*/
-/*}*/
+
+@keyframes borderBlink{
+    50%{border-color: lightGrey}
+}
+
+.selection{
+    border: 3px solid;
+    animation: borderBlink .5s step-end infinite alternate;
+
+}
+
+.start{
+    font-family: 'MedievalSharp', cursive;
+    font-size: 3.0vw;
+}
+
+.selected{
+    border: 5px solid #9f00ff;
+}
+
+.modal-header{
+    border: none;
+}
+
+.playerNumShow{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.imgDiv{
+    position: relative;
+    text-align: center;
+}
+
+.currentPlayerShow_stark{
+    border: 5px solid;
+    animation: borderBlink_stark .5s step-end infinite alternate;
+}
+.currentPlayerShow_lannister{
+    border: 5px solid;
+    animation: borderBlink_lannister .5s step-end infinite alternate;
+}
+.currentPlayerShow_targaryen{
+    border: 5px solid;
+    animation: borderBlink_targaryen .5s step-end infinite alternate;
+}
+.currentPlayerShow_greyjoy{
+    border: 5px solid;
+    animation: borderBlink_greyjoy .5s step-end infinite alternate;
+}
+
+@keyframes borderBlink_stark{
+    50%{border-color: #dad4ca}
+}
+@keyframes borderBlink_lannister{
+    50%{border-color: #88723a}
+}
+@keyframes borderBlink_targaryen{
+    50%{border-color: #810002}
+}
+@keyframes borderBlink_greyjoy{
+     50%{border-color: #8f4a00}
+}
+
+
+.available_stark{
+    border: 2px solid #dad4ca
+}
+.available_lannister{
+    border: 2px solid #88723a
+}
+.available_targaryen{
+    border: 2px solid #810002
+}
+.available_greyjoy{
+    border: 2px solid #8f4a00
+}
+
+
 

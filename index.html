@@ -26,7 +26,12 @@
         </div>
         <div class="mid_row">
             <div class="p1_area">
-                <div class="p1_flag_box"><div></div></div>
+                <div class="player">
+                    <h3>Player 1</h3>
+                </div>
+                <div class="p1_flag_box">
+                    <div></div>
+                </div>
                 <div class="p1_stat_box">
                     <p>SCORE</p>
                     <p>2</p>
@@ -36,7 +41,12 @@
 
             <div id="gameBoard"></div>
             <div class="p2_area">
-                <div class="p2_flag_box"><div></div></div>
+                <div class="player">
+                    <h3>Player 2</h3>
+                </div>
+                <div class="p2_flag_box">
+                    <div></div>
+                </div>
                 <div class="p2_stat_box">
                     <p>SCORE</p>
                     <p>2</p>
@@ -47,53 +57,38 @@
     </div>
 
 
-
-    <div class="container">
-        <!-- Modal -->
-        <div class="modal fade" id="playerSelectModal" role="dialog">
-
-            <!-- Modal content-->
-            <div class="got_modal_content">
-
-                <div class="modal-header">
-                    <h1>Please Select Your House</h1>
-                    <!-- <button type="button" class="close" data-dismiss="modal"> CLOSE </button> -->
-                </div>
-
-                <div class="selectHouse">
-
-
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
     <div id="modal" class="modal fade in">
         <div class="playerSelectModal modal_content">
-            <div class="col-md-3 stark">
-                <img src="images/stark.png" alt="stark">
-                <h2>Stark</h2>
-            </div>
-            <div class="col-md-3 lannister">
-                <img src="images/lannister.png" alt="lannister">
-                <h2>Lannister</h2>
-            </div>
-            <div class="col-md-3 targaryen">
-                <img src="images/targaryen.png" alt="targaryen">
-                <h2>Targaryen</h2>
-            </div>
-            <div class="col-md-3 greyjoy">
-                <img src="images/greyjoy.png" alt="greyjoy">
-                <h2>Greyjoy</h2>
-            </div>
-            <div>
-                    <button type="button" class="close_modal_button btn btn-info" data-dismiss="modal">Close</button>
+            <div class="modal-header">
+                <div class="modal-header">
+                    <h1>Please Select your house</h1>
                 </div>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-3 col-xs-3 col-sm-3 imgDiv">
+                    <img src="images/stark.png" alt="stark" class="selection stark">
+                    <h2>Stark</h2>
+                    <h3 class="playerNumShow"></h3>
+                </div>
+                <div class="col-md-3 col-xs-3 col-sm-3 imgDiv">
+                    <img src="images/lannister.png" alt="lannister" class="selection lannister">
+                    <h2>Lannister</h2>
+                    <h3 class="playerNumShow"></h3>
+                </div>
+                <div class="col-md-3 col-xs-3 col-sm-3 imgDiv">
+                    <img src="images/targaryen.png" alt="targaryen" class="selection targaryen">
+                    <h2>Targaryen</h2>
+                    <h3 class="playerNumShow"></h3>
+                </div>
+                <div class="col-md-3 col-xs-3 col-sm-3 imgDiv">
+                    <img src="images/greyjoy.png" alt="greyjoy" class="selection greyjoy">
+                    <h2>Greyjoy</h2>
+                    <h3 class="playerNumShow"></h3>
+                </div>
+                <div>
+                    <button type="button" class="close_modal_button btn start" data-dismiss="modal">START</button>
+                </div>
+            </div>
         </div>
        
     </div>
