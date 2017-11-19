@@ -11,17 +11,18 @@ function initializeApplication() {
     // $(".btn.btn-default").click(playBackgroundMusic);
     $(".btn.btn-default").click(statusBarFlag);
     $(".btn.btn-default").click(factionOst);
+    var lastLocations;
+    var playerSongPlaying;
+    var playerSong1= new Audio();
+    var playerSong2= new Audio();
+    playerSong1Src=$(game.modal.houseList()[0]).attr("audio");
+    playerSong2Src=$(game.modal.houseList()[1]).attr("audio");
+    playerSong1.src= playerSong1Src;
+    playerSong2.src= playerSong2Src;
 }
 
 /*===========================================Global Variables=========================================================*/
-var lastLocations;
-var playerSongPlaying;
-var playerSong1= new Audio();
-var playerSong2= new Audio();
-playerSong1Src=$(game.modal.houseList()[0]).attr("audio");
-playerSong2Src=$(game.modal.houseList()[1]).attr("audio");
-playerSong1.src= playerSong1Src;
-playerSong2.src= playerSong2Src;
+
 // function playerSelectionModal() {
 //   modal = document.getElementById("modal");
 //   modal.style.display = "block";
