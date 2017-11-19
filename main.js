@@ -192,7 +192,7 @@ function Othello(){
         var element= document.body.getElementsByClassName('available_' + game.playerTurn[1 - game.currentPlayer].house);
         $(element).removeClass('available_' + game.playerTurn[1 - game.currentPlayer].house);
 
-        //Removes Click Handler
+
         this.score();
         this.checkForWin();
         removeClickHandler(lastLocations);
@@ -200,9 +200,6 @@ function Othello(){
         allowClickHandler(checkAvailableSpace(game.currentPlayer));
         game.showCurrentPlayer()
 
-        // displayOutput();
-
-        // factionOst();
     }
 
 
@@ -213,14 +210,14 @@ function IndBlock(locationObj) {
     this.IndBlockSelf = this;
     this.location = locationObj;
     this.domElement = null;
-    this.createDomElement = function (clickCallback) {
+    this.createDomElement = function () {
         this.domElement = $("<div>", {
             'class': 'cell test',
             // text: 'x:'+locationObj.x+',y:'+locationObj.y
         });
         return this.domElement;
     };
-    this.setCurrentMark = function (mark) {
+    this.setCurrentMark = function () {
         var currentTurnPlayer = game.playerTurn[game.currentPlayer];
         var playerCoin = $("<img>").attr("src", currentTurnPlayer.coinImage);
         var currentElement = this.domElement[0];
