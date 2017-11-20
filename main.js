@@ -146,7 +146,7 @@ function Othello(){
             house: "stark",
             coinImage: "images/stark.png",
             audio: "audio/...",
-            flagImage: "images/start_flag.png",
+            flagImage: "images/stark_flag.png",
             backgroundImg: "image/background/...",
         },
         greyjoy : {
