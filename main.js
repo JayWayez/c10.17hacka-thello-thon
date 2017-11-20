@@ -42,7 +42,9 @@ function Othello(){
         game.initialFourCoins();
         game.statusBarFlag();
         allowClickHandler(checkAvailableSpace(game.currentPlayer));
-        $('.p1_flag_box :first-child').addClass('currentPlayerShow_' + game.playerTurn[0].house)
+        $('.p1_flag_box :first-child').addClass('currentPlayerShow_' + game.playerTurn[0].house);
+        $('.player1 > h3').text(game.playerTurn[0].house.toUpperCase());
+        $('.player2 > h3').text(game.playerTurn[1].house.toUpperCase());
 
     }
 
@@ -372,6 +374,11 @@ function whenNoSpace(){
     game.toggleCurrentPlayer();
 }
 
+
+function restart(){
+    $('#gameBoard').empty();
+
+}
 
 
 
