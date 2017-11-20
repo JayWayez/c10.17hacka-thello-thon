@@ -199,21 +199,9 @@ h1, h2, h3{
     text-align: center;
 }
 
-.currentPlayerShow_stark{
+.currentPlayerShow_stark, .currentPlayerShow_lannister, .currentPlayerShow_targaryen, .currentPlayerShow_greyjoy{
     border: 5px solid;
     animation: borderBlink_stark .5s step-end infinite alternate;
-}
-.currentPlayerShow_lannister{
-    border: 5px solid;
-    animation: borderBlink_lannister .5s step-end infinite alternate;
-}
-.currentPlayerShow_targaryen{
-    border: 5px solid;
-    animation: borderBlink_targaryen .5s step-end infinite alternate;
-}
-.currentPlayerShow_greyjoy{
-    border: 5px solid;
-    animation: borderBlink_greyjoy .5s step-end infinite alternate;
 }
 
 

@@ -9,9 +9,6 @@ function initializeApplication() {
 
 }
 
-function winModal(){
-    $("#starkWin").modal({backdrop: true});
-}
 
 
 /*********** GLOBAL VARIABLE ***************/
@@ -96,44 +93,19 @@ function Othello(){
     this.players = function(playerSelected){
         if(counter){
             game.playerTurn.push(game.houseList[playerSelected]);
-            if(playerSelected === 'stark'){
-                $('.stark').addClass('selected').removeClass('selection');
-                $('.stark').siblings('.playerNumShow').text('Player1');
-                $('.stark').unbind('click')
-            }else if(playerSelected === 'lannister'){
-                $('.lannister').addClass('selected').removeClass('selection');
-                $('.lannister').siblings('.playerNumShow').text('Player1')
-                $('.lannister').unbind('click')
-            }else if(playerSelected === 'targaryen'){
-                $('.targaryen').addClass('selected').removeClass('selection');
-                $('.targaryen').siblings('.playerNumShow').text('Player1')
-                $('.targaryen').unbind('click')
-            }else if(playerSelected === 'greyjoy'){
-                $('.greyjoy').addClass('selected').removeClass('selection');
-                $('.greyjoy').siblings('.playerNumShow').text('Player1')
-                $('.greyjoy').unbind('click');
-            }
 
+            $('.'+playerSelected).addClass('selected').removeClass('selection').siblings('.playerNumShow').text('Player1');
+            $('.'+playerSelected).unbind('click');
             counter = false;
         }else {
             game.playerTurn.push(game.houseList[playerSelected]);
-            if(playerSelected === 'stark'){
-                $('.stark').addClass('selected').removeClass('selection');
-                $('.stark').siblings('.playerNumShow').text('Player2');
-            }else if(playerSelected === 'lannister'){
-                $('.lannister').addClass('selected').removeClass('selection');
-                $('.lannister').siblings('.playerNumShow').text('Player2')
-            }else if(playerSelected === 'targaryen'){
-                $('.targaryen').addClass('selected').removeClass('selection');
-                $('.targaryen').siblings('.playerNumShow').text('Player2')
-            }else if(playerSelected === 'greyjoy'){
-                $('.greyjoy').addClass('selected').removeClass('selection');
-                $('.greyjoy').siblings('.playerNumShow').text('Player2')
-            }
+            $('.'+playerSelected).addClass('selected').removeClass('selection').siblings('.playerNumShow').text('Player2');
+            $('.'+playerSelected).unbind('click');
+
             $('.selection').unbind('click');
             $('.selection').removeClass();
 
-            $("button").prop('disabled', false)
+            $("button").prop('disabled', false);
             $(".close_modal_button").on("click", function() {
                 modal.style.display = "none";
                 game.init();
@@ -243,6 +215,7 @@ function IndBlock(locationObj) {
     this.score = function () {
         this.player1Score = 0;
         this.player2Score = 0;
+        console.log(this);
         for (var y_axis = 0; y_axis < game.cells.length; y_axis++) {
             for (var x_axis = 0; x_axis < game.cells[y_axis].length; x_axis++) {
                 if ($(game.cells[y_axis][x_axis].domElement[0]).attr('box_owned_by') == '0') {
@@ -258,12 +231,11 @@ function IndBlock(locationObj) {
     this.checkForWin = function () {
         if (this.player1Score + this.player2Score === 64) {
             if (this.player1Score > this.player2Score) {
-                alert('Player1 is the Winner!!!')
+                $("#"+game.playerTurn[0].house +"_win").modal({backdrop: true});
             } else if (this.player1Score < this.player2Score) {
-                alert('Player2 is the Winner!!!!')
+                $("#"+game.playerTurn[1].house +"_win").modal({backdrop: true});
             }
         }
-
     }
 }
 
@@ -376,7 +348,11 @@ function removeClickHandler(locations){
 
 function whenNoSpace(){
     //need if statement to check if its the end of game or middle of game
-    console.log("no available move");
+    if (this.player1Score > this.player2Score) {
+        $("#"+game.playerTurn[0].house +"_win").modal({backdrop: true});
+    } else if (this.player1Score < this.player2Score) {
+        $("#"+game.playerTurn[1].house +"_win").modal({backdrop: true});
+    }
     game.toggleCurrentPlayer();
 }
 
