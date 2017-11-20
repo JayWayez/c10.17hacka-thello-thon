@@ -196,8 +196,6 @@ function Othello(){
             }
         }
 
-        console.log(currentPlayer + ' \'s available positions are ' + viableSpace);
-        console.log('spaces to be flipped ' + needToBeFlipped);
         //viableSpace contains both available moves and probable flip locations.
         return (viableSpace);
     };

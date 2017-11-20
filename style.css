@@ -68,8 +68,8 @@ h2{
     width: 20%;
     height: 85%;
     border: 10px solid transparent;
-    border-image: url(images/border1.png) 5% round;
-    border-image-outset: 1px;
+    border-image: url(images/border1.png) 7% round;
+    border-image-outset: 0px;
 
 }
 .p2_area {
@@ -79,14 +79,14 @@ h2{
     width: 20%;
     height: 85%;
     border: 10px solid transparent;
-    border-image: url(images/border1.png) 5% round;
-    border-image-outset: 1px;
+    border-image: url(images/border1.png) 7% round;
+    border-image-outset: 0px;
 }
 .p1_flag_box {
     display: flex;
     justify-content: center;
     height: 75%;
-    background: linear-gradient(rgba(0,0,0,1),rgba(0,0,0,0.8), rgba(0,0,0,1)), url('images/ironthrone.jpg'), center;
+    background: linear-gradient(rgba(0,0,0,1),rgba(0,0,0,0.8), rgba(0,0,0,1)), url('images/ironethrone.jpg  '), center;
     background-size: 100% 100%;
     backgroun-repeat: no-repeat;
 
@@ -102,7 +102,7 @@ h2{
     display: flex;
     justify-content: center;
     height: 75%;
-    background: linear-gradient(rgba(0,0,0,1),rgba(0,0,0,0.8), rgba(0,0,0,1)), url('images/ironthrone.jpg'), center;
+    background: linear-gradient(rgba(0,0,0,1),rgba(0,0,0,0.8), rgba(0,0,0,1)), url('images/ironethrone.jpg'), center;
     background-size: 100% 100%;
     backgroun-repeat: no-repeat;
 }
