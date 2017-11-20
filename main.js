@@ -16,56 +16,6 @@ function initializeApplication() {
 
 }
 
-
-// function playerSelectionModal() {
-//   modal = document.getElementById("modal");
-//   modal.style.display = "block";
-//   $(".stark").on("click", checkPlayerOrder);
-//   $(".lannister").on("click", checkPlayerOrder);
-//   $(".targaryen").on("click", checkPlayerOrder);
-//   $(".greyjoy").on("click", checkPlayerOrder);
-//   close_modal_handle();
-// }
-
-// function close_modal_handle() {
-//   window.onclick = function() {
-//     if (event.target === modal) {
-//       modal.style.display = "none";
-//     }
-//   };
-//   $(".close_modal_button").on("click", function() {
-//     modal.style.display = "none";
-//   });
-// }
-// var player1 = null;
-// var player2 = null;
-
-// function checkPlayerOrder(){
-//     var houses = houseList();
-
-//     if (player1 === null) {
-//         for (var i = 0; i < houses.length; i++){
-//             if(houses[i].house === this.children[0].alt) {
-//                 houses[i].symbol = 0;
-//                 player1 = houses[i];
-//             }
-//         }
-
-//     } else {
-//         for (var i = 0; i < houses.length; i++){
-//             if(houses[i].house === this.children[0].alt) {
-//                 houses[i].symbol = 1;
-//                 player2 = houses[i];
-//                 initialFourCoins();
-//             }
-//         }
-//     }
-
-//     console.log(player1, player2);
-//     // var activePlayers = (player1, player2)
-//     // return activePlayers;
-// }
-
 /*********** Othello*************/
 
 function Othello(){
