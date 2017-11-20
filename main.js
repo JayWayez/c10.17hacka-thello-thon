@@ -8,7 +8,17 @@ function initializeApplication() {
     $("button").prop('disabled', true)
 
 }
+
+function winModal(){
+    $("#starkWin").modal({backdrop: true});
+}
+
+
+/*********** GLOBAL VARIABLE ***************/
 var counter = true;
+
+
+
 /*********** Othello*************/
 
 function Othello(){
