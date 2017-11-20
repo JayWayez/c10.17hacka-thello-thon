@@ -7,12 +7,23 @@ function initializeApplication() {
     game.playerSelectionModal();
     $("button").prop('disabled', true)
 
+    backgroundMusic.loop = true;
+    backgroundMusic.play();
+
 }
 
 
 
 /*********** GLOBAL VARIABLE ***************/
 var counter = true;
+
+/**** SOUND ****/
+
+var backgroundMusic = new Audio('sounds/bgm.mp3');
+var winnerMusic = new Audio('sounds/winnerMusic.mp3');
+var clickSound = new Audio('sounds/clickSound.mp3');
+
+clickSound.volume = 0.5;
 
 
 
@@ -93,12 +104,15 @@ function Othello(){
     this.players = function(playerSelected){
         if(counter){
             game.playerTurn.push(game.houseList[playerSelected]);
+            clickSound.play();
 
             $('.'+playerSelected).addClass('selected').removeClass('selection').siblings('.playerNumShow').text('Player1');
             $('.'+playerSelected).unbind('click');
             counter = false;
         }else {
             game.playerTurn.push(game.houseList[playerSelected]);
+            clickSound.play();
+
             $('.'+playerSelected).addClass('selected').removeClass('selection').siblings('.playerNumShow').text('Player2');
             $('.'+playerSelected).unbind('click');
 
@@ -166,6 +180,7 @@ function Othello(){
     };
     this.handleBlockClick = function(){
         var currentSymbol = game.getCurrentPlayerSymbol();
+        clickSound.play();
         //check if the button has been clicked.
         if(this.getCurrentMark()=== undefined){
             this.setCurrentMark(currentSymbol);
@@ -183,7 +198,6 @@ function Othello(){
         game.showCurrentPlayer()
 
     }
-
 
 }
 
@@ -215,7 +229,7 @@ function IndBlock(locationObj) {
     this.score = function () {
         this.player1Score = 0;
         this.player2Score = 0;
-        console.log(this);
+
         for (var y_axis = 0; y_axis < game.cells.length; y_axis++) {
             for (var x_axis = 0; x_axis < game.cells[y_axis].length; x_axis++) {
                 if ($(game.cells[y_axis][x_axis].domElement[0]).attr('box_owned_by') == '0') {
@@ -232,9 +246,15 @@ function IndBlock(locationObj) {
         if (this.player1Score + this.player2Score === 64) {
             if (this.player1Score > this.player2Score) {
                 $("#"+game.playerTurn[0].house +"_win").modal({backdrop: true});
+                backgroundMusic.muted = true;
+                winnerMusic.play();
             } else if (this.player1Score < this.player2Score) {
                 $("#"+game.playerTurn[1].house +"_win").modal({backdrop: true});
+                backgroundMusic.muted = true;
+                winnerMusic.play();
             }
+        }else if(this.player1Score + this.player2Score === 64 && this.player1Score == this.player2Score){
+            $("#tie").modal({backdrop: true});
         }
     }
 }
@@ -329,7 +349,7 @@ function allowClickHandler(locations){
 
     }
     //when there are no avail spaces to move triggers the no space function.
-    if(locations.length===0){
+    if(locations.length===0 && parseFloat($('.score1').text()) + parseFloat($('.score2').text()) < 64){
         whenNoSpace();
     }
     lastLocations=locations;
@@ -347,42 +367,42 @@ function removeClickHandler(locations){
 }
 
 function whenNoSpace(){
-    //need if statement to check if its the end of game or middle of game
-    if (this.player1Score > this.player2Score) {
-        $("#"+game.playerTurn[0].house +"_win").modal({backdrop: true});
-    } else if (this.player1Score < this.player2Score) {
-        $("#"+game.playerTurn[1].house +"_win").modal({backdrop: true});
-    }
+
+    $("#noMoreMove").modal({backdrop: true});
     game.toggleCurrentPlayer();
 }
 
-/******************** SOUND ***********************/
-var backgroundMusic= new Audio();
-backgroundMusic.src = "sounds/main_song.mp3";
-
-function playBackgroundMusic(){
-
-    if(OstisPlaying){
-        backgroundMusic.pause();
-        OstisPlaying= false;
-    }else {
-        backgroundMusic.play();
-        OstisPlaying= true;
-    }
-}
-var OstisPlaying;
-var playerSongPlaying;
-var playerSong= new Audio();
 
 
-function factionOst(){
-    playerSong.src= $(game.playerTurn[game.currentPlayer]).attr("audio");
-    if(game.currentPlayer ==="1"){
-        playerSong.play();
-    }else{
-        playerSong.play();
-    }
-}
+
+
+
+// var backgroundMusic= new Audio();
+// backgroundMusic.src = "sounds/main_song.mp3";
+
+// function playBackgroundMusic(){
+//
+//     if(OstisPlaying){
+//         backgroundMusic.pause();
+//         OstisPlaying= false;
+//     }else {
+//         backgroundMusic.play();
+//         OstisPlaying= true;
+//     }
+// }
+// var OstisPlaying;
+// var playerSongPlaying;
+// var playerSong= new Audio();
+//
+//
+// function factionOst(){
+//     playerSong.src= $(game.playerTurn[game.currentPlayer]).attr("audio");
+//     if(game.currentPlayer ==="1"){
+//         playerSong.play();
+//     }else{
+//         playerSong.play();
+//     }
+// }
 
 
 
