@@ -101,7 +101,7 @@ function Othello(){
 
     };
     this.toggleTurnIndicator=function(){
-        if(game.currentPlayer==0){
+        if(this.currentPlayer==0){
             $('.playerBanners1').animate({
                 height: 'show'
             }, "slow");
@@ -125,11 +125,11 @@ function Othello(){
     this.allowClickHandler= function(locations){
         for(var i=0; i<locations.length; i++){
             for(var j=0; j<1; j++){
-                if( $(game.cells[locations[i][j]][locations[i][j+1]].domElement[0]).attr('box_owned_by') == 'noOne'){
+                if( $(this.cells[locations[i][j]][locations[i][j+1]].domElement[0]).attr('box_owned_by') == 'noOne'){
                     var clickableButton = this.cells[locations[i][j]][locations[i][j + 1]];
                     $(clickableButton.domElement[0]).addClass("available");
-                    // $(clickableButton.domElement[0]).click(game.handleBlockClick.bind(this));
-                    $(clickableButton.domElement[0]).click(this.handleBlockClick.bind(clickableButton));
+                    // $(clickableButton.domElement[0]).click(this.handleBlockClick.bind(this));
+                    $(clickableButton.domElement[0]).click(this.handleBlockClick.bind(this,clickableButton));
                 }
             }
 
@@ -251,25 +251,25 @@ function Othello(){
     };
     /*=============================================When clicked=======================================================*/
     /*=============================================When clicked=======================================================*/
-    this.handleBlockClick = function(){
-        var currentSymbol = game.getCurrentPlayerSymbol();
+    this.handleBlockClick = function(cell){
+        var currentSymbol = this.getCurrentPlayerSymbol();
         //check if the button has been clicked.
-        if(this.getCurrentMark()=== 'noOne'){
+        if(cell.getCurrentMark()=== 'noOne'){
             //chung's version flipCoin handler
             // flipCoin(checkAvailableSpace(game.currentPlayer),this.location.y,this.location.x, game.currentPlayer);
-            game.flipCoin(this.location.y,this.location.x);
-            this.setCurrentMark(currentSymbol);
-            game.toggleCurrentPlayer();
+            this.flipCoin(cell.location.y,cell.location.x);
+            cell.setCurrentMark(currentSymbol);
+            this.toggleCurrentPlayer();
         }
         var element= document.body.getElementsByClassName('available');
         $(element).removeClass("available");
-        game.removeClickHandler(lastLocations);
-        game.allowClickHandler(game.checkAvailableSpace(game.currentPlayer));
-        game.score();
-        game.view.displayOutput([game.modal.currentScore1, game.modal.currentScore2]);
-        game.checkForWin;
-        game.view.factionOst();
-        game.toggleTurnIndicator();
+        this.removeClickHandler(lastLocations);
+        this.allowClickHandler(this.checkAvailableSpace(this.currentPlayer));
+        this.score();
+        this.view.displayOutput([this.modal.currentScore1, this.modal.currentScore2]);
+        this.checkForWin;
+        this.view.factionOst();
+        this.toggleTurnIndicator();
 
     }
 }
@@ -439,14 +439,20 @@ function IndBlock(locationObj){
     this.IndBlockSelf=this;
     this.location = locationObj;
     this.domElement = null;
+    this.parentClickHandler = null;
     this.createDomElement = function(clickCallback){
         this.domElement = $("<div>",{
             'class': 'cell test',
             'box_owned_by': 'noOne',
             // text: 'x:'+locationObj.x+',y:'+locationObj.y
         });
+        this.parentClickHandler = clickCallback;
+        this.domElement.click( this.handleClick.bind(this));
         return this.domElement;
     };
+    this.handleClick = function(){
+        this.parentClickHandler(this);
+    }
     this.setCurrentMark = function(mark){
         var currentTurnPlayer = game.playerTurn[game.currentPlayer];
         var playerCoin = $("<img>").attr("src", currentTurnPlayer.coinImage);
