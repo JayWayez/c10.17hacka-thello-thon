@@ -8,7 +8,7 @@ function initializeApplication() {
     game.view.playBackgroundMusic();
     // playerSelectionModal();
     // game.view.playBackgroundMusic();
-    $(".btn.btn-default").click(game.view.playBackgroundMusic);
+    $(".close_modal_button").click(game.view.playBackgroundMusic);
     // $(".btn.btn-default").click(game.view.statusBarFlag);
     // $(".btn.btn-default").click(game.view.factionOst);
     /*===========================================Global Variables=========================================================*/
@@ -116,6 +116,9 @@ function Othello(){
                 height: 'hide'
             }, "slow");
         }
+    };
+    this.makeBlink= function(){
+        $(event.target).toggleClass('imgSelectDiv');
     };
     /*=====================================================clickHandlers=======================================================*/
 
@@ -276,6 +279,9 @@ function Modal(){
     this.currentScore1= null;
     this.currentScore2= null;
     this.counter = true;
+    this.backgroundMusic= new Audio();
+    this.backgroundMusic.src = "sounds/main_song.mp3";
+    this.OstisPlaying=false;
 
     this.initialize= function(){
         this.lastLocations;
@@ -285,9 +291,7 @@ function Modal(){
         this.playerSong2Src=$(game.playerTurn[1]).attr("audio");
         this.playerSong1.src= this.playerSong1Src;
         this.playerSong2.src= this.playerSong2Src;
-        this.backgroundMusic= new Audio();
-        this.backgroundMusic.src = "sounds/main_song.mp3";
-        this.OstisPlaying=false;
+
         this.player1Flag=$(game.playerTurn[0]).attr("flagImage");
         this.player2Flag=$(game.playerTurn[1]).attr("flagImage");
     };
@@ -408,7 +412,7 @@ function View(){
             game.modal.OstisPlaying= false;
         }else {
             game.modal.backgroundMusic.play();
-            game.modalOstisPlaying= true;
+            game.modal.OstisPlaying= true;
         }
     };
     /*=================================================Faction Select=====================================================*/
