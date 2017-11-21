@@ -77,9 +77,9 @@ function Othello(){
     this.score= function () {
         var counter1 = null;
         var counter2 = null;
-        for (var i = 0; i < game.cells.length; i++) {
-            for (var j = 0; j < game.cells[i].length; j++) {
-                var currentCell = game.cells[i][j].domElement[0];
+        for (var i = 0; i < this.cells.length; i++) {
+            for (var j = 0; j < this.cells[i].length; j++) {
+                var currentCell = this.cells[i][j].domElement[0];
                 if($(currentCell).attr("box_owned_by") === "1"){
                     counter2++
                 }
@@ -93,8 +93,8 @@ function Othello(){
 
     };
     this.placePlayersBanner= function(){
-        var player1Banner=$('<img>',{src: game.modal.player1Flag, class: 'playerBanners1'});
-        var player2Banner=$('<img>',{src: game.modal.player2Flag, class: 'playerBanners2'});
+        var player1Banner=$('<img>',{src: this.modal.player1Flag, class: 'playerBanners1'});
+        var player2Banner=$('<img>',{src: this.modal.player2Flag, class: 'playerBanners2'});
 
         $('.p1_flag_box div:first-child').append(player1Banner);
         $('.p2_flag_box div:first-child').append(player2Banner);
@@ -126,17 +126,18 @@ function Othello(){
         for(var i=0; i<locations.length; i++){
             for(var j=0; j<1; j++){
                 if( $(game.cells[locations[i][j]][locations[i][j+1]].domElement[0]).attr('box_owned_by') == 'noOne'){
-                    var clickableButton = game.cells[locations[i][j]][locations[i][j + 1]];
+                    var clickableButton = this.cells[locations[i][j]][locations[i][j + 1]];
                     $(clickableButton.domElement[0]).addClass("available");
-                    $(clickableButton.domElement[0]).click(game.handleBlockClick.bind(clickableButton));
+                    // $(clickableButton.domElement[0]).click(game.handleBlockClick.bind(this));
+                    $(clickableButton.domElement[0]).click(this.handleBlockClick.bind(clickableButton));
                 }
             }
 
         }
         //when there are no avail spaces to move triggers the no space function.
         if(locations.length===0){
-            game.whenNoSpace();
-            game.checkForWin(locations.length)
+            this.whenNoSpace();
+            this.checkForWin(locations.length)
         }
         lastLocations=locations;
         return locations;
@@ -144,7 +145,7 @@ function Othello(){
     this.removeClickHandler= function(locations){
         for(var i=0; i<locations.length; i++){
             for(var j=0; j<1; j++){
-                var clickableButton= game.cells[locations[i][j]][locations[i][j+1]];
+                var clickableButton= this.cells[locations[i][j]][locations[i][j+1]];
                 $(clickableButton.domElement[0]).unbind('click');
             }
 
@@ -161,33 +162,33 @@ function Othello(){
 
 
         //search for all boxes owned by player
-        for (var y = 0; y < game.cells.length; y++) {
-            for (var x = 0; x < game.cells[y].length; x++) {
-                if ($(game.cells[y][x].domElement[0]).attr('box_owned_by') == currentPlayer) {
+        for (var y = 0; y < this.cells.length; y++) {
+            for (var x = 0; x < this.cells[y].length; x++) {
+                if ($(this.cells[y][x].domElement[0]).attr('box_owned_by') == currentPlayer) {
                     currentSpaceY = y;
                     currentSpaceX = x;
                     //looks around the found player coin for enemy coins
                     for(var xDelta=-1; xDelta<2; xDelta++){
                         for(var yDelta=-1; yDelta<2; yDelta++){
                             //initial four conditions for corners
-                            if(currentSpaceY+yDelta>-1 && currentSpaceX+xDelta>-1 &&currentSpaceX+xDelta<game.cells.length&&currentSpaceY+yDelta<game.cells.length&&  $(game.cells[currentSpaceY+yDelta][currentSpaceX+xDelta].domElement[0]).attr('box_owned_by') == 1-currentPlayer){
+                            if(currentSpaceY+yDelta>-1 && currentSpaceX+xDelta>-1 &&currentSpaceX+xDelta<this.cells.length&&currentSpaceY+yDelta<this.cells.length&&  $(this.cells[currentSpaceY+yDelta][currentSpaceX+xDelta].domElement[0]).attr('box_owned_by') == 1-currentPlayer){
                                 //if enemy coin found, searches all spaces through the same direction.
-                                for(var y_vector=yDelta, x_vector=xDelta; y_vector<game.cells.length&& y_vector>-game.cells.length && x_vector<game.cells.length&&x_vector>-game.cells.length; y_vector=y_vector+yDelta, x_vector=x_vector+xDelta) {
-                                    if (currentSpaceY + y_vector > -1 && currentSpaceY + y_vector<game.cells.length && currentSpaceX + x_vector> - 1 &&currentSpaceX + x_vector<game.cells.length) {
+                                for(var y_vector=yDelta, x_vector=xDelta; y_vector<this.cells.length&& y_vector>-this.cells.length && x_vector<this.cells.length&&x_vector>-this.cells.length; y_vector=y_vector+yDelta, x_vector=x_vector+xDelta) {
+                                    if (currentSpaceY + y_vector > -1 && currentSpaceY + y_vector<this.cells.length && currentSpaceX + x_vector> - 1 &&currentSpaceX + x_vector<this.cells.length) {
 
-                                        $(game.cells[currentSpaceY + y_vector][currentSpaceX + x_vector].domElement[0]).addClass('highlight');
+                                        $(this.cells[currentSpaceY + y_vector][currentSpaceX + x_vector].domElement[0]).addClass('highlight');
 
-                                        if ($(game.cells[currentSpaceY + y_vector][currentSpaceX + x_vector].domElement[0]).attr('box_owned_by') == 1 - currentPlayer) {
+                                        if ($(this.cells[currentSpaceY + y_vector][currentSpaceX + x_vector].domElement[0]).attr('box_owned_by') == 1 - currentPlayer) {
                                             //pushing as object enemy cell found location, current location, and vector direction.
                                             viableSpace.push([currentSpaceY + y_vector, currentSpaceX + x_vector]);
-                                        } else if ($(game.cells[currentSpaceY + y_vector][currentSpaceX + x_vector].domElement[0]).attr('box_owned_by') == currentPlayer) {
+                                        } else if ($(this.cells[currentSpaceY + y_vector][currentSpaceX + x_vector].domElement[0]).attr('box_owned_by') == currentPlayer) {
                                             //to stop the loop if value found
-                                            y_vector = game.cells.length + 8;
-                                            x_vector = game.cells.length + 8;
-                                        } else if ($(game.cells[currentSpaceY + y_vector][currentSpaceX + x_vector].domElement[0]).attr('box_owned_by') === 'noOne') {
+                                            y_vector = this.cells.length + 8;
+                                            x_vector = this.cells.length + 8;
+                                        } else if ($(this.cells[currentSpaceY + y_vector][currentSpaceX + x_vector].domElement[0]).attr('box_owned_by') === 'noOne') {
                                             viableSpace.push([currentSpaceY + y_vector, currentSpaceX + x_vector]);
-                                            y_vector = game.cells.length + 8;
-                                            x_vector = game.cells.length + 8;
+                                            y_vector = this.cells.length + 8;
+                                            x_vector = this.cells.length + 8;
                                         }
                                         $(".highlight").removeClass('highlight');
 
@@ -207,7 +208,7 @@ function Othello(){
     this.whenNoSpace=function (){
         //need if statement to check if its the end of game or middle of game
         console.log("no available move for Current Player");
-        game.toggleCurrentPlayer();
+        this.toggleCurrentPlayer();
     };
     /*=====================================================FlipCoin=======================================================*/
 
@@ -221,21 +222,21 @@ function Othello(){
             for( var m = currentSpaceX-1; m <= currentSpaceX+1; m++){
                 if(k !== -1 && k !== 8 && m !== -1 && m !== 8) {
                     // $(".checkFlip").removeClass('checkFlip');
-                    // $(game.cells[k][m].domElement[0]).addClass('checkFlip');
-                    if (k > -1 && k < 8 && m > -1 && m < 8 && $(game.cells[k][m].domElement[0]).attr('box_owned_by') === (1 - game.currentPlayer).toString()) {
+                    // $(this.cells[k][m].domElement[0]).addClass('checkFlip');
+                    if (k > -1 && k < 8 && m > -1 && m < 8 && $(this.cells[k][m].domElement[0]).attr('box_owned_by') === (1 - this.currentPlayer).toString()) {
                         var y_axis = k - y;
                         var x_axis = m - x;
                         var possibleCells = []
                         var a = y + y_axis, b = x + x_axis;
                         if(a !== -1 && a !== 8 && b !== -1 && b !== 8) {
-                            while (a !== -1 && a !== 8 && b !== -1 && b !== 8 && $(game.cells[a][b].domElement[0]) !== undefined && $(game.cells[a][b].domElement[0]).attr('box_owned_by') == (1 - game.currentPlayer)) {
+                            while (a !== -1 && a !== 8 && b !== -1 && b !== 8 && $(this.cells[a][b].domElement[0]) !== undefined && $(this.cells[a][b].domElement[0]).attr('box_owned_by') == (1 - this.currentPlayer)) {
                                 // $(".checkFlip2").removeClass('checkFlip2');
                                 // $(game.cells[a][b].domElement[0]).addClass('checkFlip2');
-                                possibleCells.push($(game.cells[a][b].domElement[0]));
+                                possibleCells.push($(this.cells[a][b].domElement[0]));
                                 a += y_axis;
                                 b += x_axis;
                             }
-                            if (a !== -1 && a !== 8 && b !== -1 && b !== 8 && $(game.cells[a][b].domElement[0]).attr('box_owned_by') == game.currentPlayer) {
+                            if (a !== -1 && a !== 8 && b !== -1 && b !== 8 && $(this.cells[a][b].domElement[0]).attr('box_owned_by') == this.currentPlayer) {
                                 totalCellsToFlip = totalCellsToFlip.concat(possibleCells);
                             }
                         }
@@ -244,8 +245,8 @@ function Othello(){
             }
         }
         for(var flipIndex=0; flipIndex<totalCellsToFlip.length; flipIndex++){
-            var currentTurnPlayer = game.playerTurn[game.currentPlayer];
-            totalCellsToFlip[flipIndex].attr('box_owned_by', game.currentPlayer).find('img').attr('src', currentTurnPlayer.coinImage);
+            var currentTurnPlayer = this.playerTurn[this.currentPlayer];
+            totalCellsToFlip[flipIndex].attr('box_owned_by', this.currentPlayer).find('img').attr('src', currentTurnPlayer.coinImage);
         }
     };
     /*=============================================When clicked=======================================================*/
