@@ -5,9 +5,10 @@ function initializeApplication() {
     game.createBlocks(8, 8);
     game.initialize();
     game.view.playerSelectionModal();
+    game.view.playBackgroundMusic();
     // playerSelectionModal();
     // game.view.playBackgroundMusic();
-    // $(".btn.btn-default").click(game.view.playBackgroundMusic);
+    $(".btn.btn-default").click(game.view.playBackgroundMusic);
     // $(".btn.btn-default").click(game.view.statusBarFlag);
     // $(".btn.btn-default").click(game.view.factionOst);
     /*===========================================Global Variables=========================================================*/
@@ -25,9 +26,10 @@ function Othello(){
     this.cells = [ ];
     this.playerTurn = [];
     this.initialize= function(){
-        this.view= new View(selfOthello);
-        this.modal= new Modal();
 
+        this.modal= new Modal();
+        this.modal.initialize;
+        this.view= new View(selfOthello);
 
     }
     ;
@@ -277,7 +279,6 @@ function Modal(){
 
     this.initialize= function(){
         this.lastLocations;
-        this.playerSongPlaying;
         this.playerSong1= new Audio();
         this.playerSong2= new Audio();
         this.playerSong1Src=$(game.playerTurn[0]).attr("audio");
@@ -286,7 +287,7 @@ function Modal(){
         this.playerSong2.src= this.playerSong2Src;
         this.backgroundMusic= new Audio();
         this.backgroundMusic.src = "sounds/main_song.mp3";
-        this.OstisPlaying=null;
+        this.OstisPlaying=false;
         this.player1Flag=$(game.playerTurn[0]).attr("flagImage");
         this.player2Flag=$(game.playerTurn[1]).attr("flagImage");
     };

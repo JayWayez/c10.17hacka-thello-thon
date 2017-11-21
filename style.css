@@ -152,8 +152,16 @@ h2{
 }
 
 .available{
-    color: yellow;
-    border: 2px solid blue;
+
+    border: 2px solid rgba(145, 189, 9, 0.22);
+    -webkit-animation-name: greenPulse;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-iteration-count: infinite;
+}
+@-webkit-keyframes greenPulse {
+    from { background-color: #749a02; -webkit-box-shadow: 0 0 18px #333; }
+    50% { background-color: #91bd09; -webkit-box-shadow: 0 0 36px #91bd09; }
+    to { background-color: #749a02; -webkit-box-shadow: 0 0 18px #333; }
 }
 #modal_content {
     display: flex;
