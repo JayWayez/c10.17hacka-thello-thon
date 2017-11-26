@@ -62,7 +62,7 @@ h1, h2, h3{
     background-color: black;
 
 }
-.player1, .player2{
+.player{
     height: 15%;
     text-align: center;
 }
