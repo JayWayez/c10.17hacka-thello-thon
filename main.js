@@ -12,6 +12,7 @@ function initializeApplication() {
 
     $(".winModal").on('hidden.bs.modal', restartGame.bind(this));
     $("#noMoreMove").on('hidden.bs.modal', restartGame.bind(this));
+    $('.restart').on('click', restartGame);
 
 
 }
