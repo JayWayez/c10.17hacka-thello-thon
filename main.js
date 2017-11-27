@@ -5,7 +5,7 @@ function initializeApplication() {
 
     window.game = new Othello();
     game.playerSelectionModal();
-    $(".close_modal_button").prop('disabled', true)
+    $(".close_modal_button").prop('disabled', true);
 
     backgroundMusic.loop = true;
     backgroundMusic.play();
@@ -24,7 +24,7 @@ function initializeApplication() {
 
 
 /*********** GLOBAL VARIABLE ***************/
-
+var lastLocations;
 
 /**** SOUND ****/
 
@@ -107,7 +107,7 @@ function Othello(){
     }
 
     this.playerSelectionModal = function() {
-        $('#modal').modal({backdrop: true});
+        $('#modal').modal({backdrop: 'static', keyboard: false});
         $(".stark").on("click", this.players.bind(this,'stark'));
         $(".lannister").on("click", this.players.bind(this,'lannister'));
         $(".targaryen").on("click", this.players.bind(this,'targaryen'));
@@ -360,7 +360,7 @@ function checkAvailableSpace(currentPlayer) {
 }
 
 
-var lastLocations;
+
 function allowClickHandler(locations){
     for(var i=0; i<locations.length; i++){
         for(var j=0; j<1; j++){
