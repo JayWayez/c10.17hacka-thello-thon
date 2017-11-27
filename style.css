@@ -30,6 +30,10 @@ h1, h2, h3{
     height: 15vh;
     background-image: linear-gradient(rgb(37, 37, 37), transparent);    
 }
+/*.restart{*/
+    /*position: relative;*/
+    /*left: 20%;*/
+/*}*/
 .mid_row{
     display: flex;
     justify-content: space-around;
@@ -284,5 +288,9 @@ h1, h2, h3{
 
 .imgDiv h2{
     font-size: 5vmin;
+}
+
+.restart{
+
 }
 

@@ -13,7 +13,7 @@ function initializeApplication() {
 
     $(".winModal").on('hidden.bs.modal', restartGame.bind(this));
     $("#noMoreMove").on('hidden.bs.modal', restartGame.bind(this));
-    $('.restart').on('click', restartGame.bind(this));
+    $('.restart button').on('click', restartGame.bind(this));
 
 
 
@@ -137,6 +137,8 @@ function Othello(){
                 modal.style.display = "none";
                 game.init();
                 $(".close_modal_button").unbind('click');
+
+
 
             });
         }
@@ -399,13 +401,25 @@ function whenNoSpace(){
 
 
 function restartGame(){
-    $('.restart').unbind('click');
+
+    //unbind the click and modal handlers
+    $('.restart button').unbind('click');
+    $(".winModal").unbind('hidden.bs.modal');
+    $("#noMoreMove").unbind('hidden.bs.modal');
+    $('.players').bind('click').addClass('selection').removeClass('selected');
+
+    //reset the music
     backgroundMusic.muted = false;
     winnerMusic.muted = true;
-    $('.players').bind('click').addClass('selection').removeClass('selected');
+
+    //initialize
+    counter = true;
+    $('.p2_flag_box :first-child').removeClass()
+    $('.p1_flag_box :first-child').removeClass()
+    $(".p1_stat_box p:nth-child(2)").text(2);
+    $(".p2_stat_box p:nth-child(2)").text(2);
     $('.playerNumShow').text('');
     $('#gameBoard div').remove();
-    counter = true;
     initializeApplication();
 
 
