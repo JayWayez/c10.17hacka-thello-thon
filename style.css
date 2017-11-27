@@ -215,6 +215,11 @@ h1, h2, h3{
     position: relative;
     text-align: center;
 }
+.imgDiv img{
+    width: 100%;
+    /*height: 100%;*/
+
+}
 
 .currentPlayerShow_stark, .currentPlayerShow_lannister, .currentPlayerShow_targaryen, .currentPlayerShow_greyjoy{
     border: 5px solid;
@@ -273,5 +278,11 @@ h1, h2, h3{
     border: 2px solid #8f4a00
 }
 
+.modal-header h1{
+    font-size: 7vmin;
+}
 
+.imgDiv h2{
+    font-size: 5vmin;
+}
 

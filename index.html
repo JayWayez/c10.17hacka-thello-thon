@@ -58,44 +58,45 @@
 
 
     <div id="modal" class="modal fade in">
-        <div class="playerSelectModal modal_content">
-            <div class="modal-header">
-                <div class="modal-header">
+        <div class="playerSelectModal modal_content container-fluid">
+            <div class="modal-header row">
+                <div class="modal-header col-xs-12">
                     <h1>Please Select your house</h1>
                 </div>
             </div>
-            <div class="modal-body">
+            <div class="modal-body row">
                 <div class="col-md-3 col-xs-3 col-sm-3 imgDiv">
-                    <img src="images/stark.png" alt="stark" class="selection stark">
+                    <img src="images/stark.png" alt="stark" class="players selection stark">
                     <h2>Stark</h2>
                     <h3 class="playerNumShow"></h3>
                 </div>
                 <div class="col-md-3 col-xs-3 col-sm-3 imgDiv">
-                    <img src="images/lannister.png" alt="lannister" class="selection lannister">
+                    <img src="images/lannister.png" alt="lannister" class="players selection lannister">
                     <h2>Lannister</h2>
                     <h3 class="playerNumShow"></h3>
                 </div>
                 <div class="col-md-3 col-xs-3 col-sm-3 imgDiv">
-                    <img src="images/targaryen.png" alt="targaryen" class="selection targaryen">
+                    <img src="images/targaryen.png" alt="targaryen" class="players selection targaryen">
                     <h2>Targaryen</h2>
                     <h3 class="playerNumShow"></h3>
                 </div>
                 <div class="col-md-3 col-xs-3 col-sm-3 imgDiv">
-                    <img src="images/greyjoy.png" alt="greyjoy" class="selection greyjoy">
+                    <img src="images/greyjoy.png" alt="greyjoy" class="players selection greyjoy">
                     <h2>Greyjoy</h2>
                     <h3 class="playerNumShow"></h3>
                 </div>
-                <div>
-                    <button type="button" class="close_modal_button btn start" data-dismiss="modal">START</button>
-                </div>
             </div>
+            <div class="row">
+                <button type="button" class="close_modal_button btn start col-xs-12" data-dismiss="modal">START</button>
+            </div>
+
         </div>
     </div>
 
 
     <!-- Winning Modal  -->
     <div class="container">
-        <div class="modal fade" id="stark_win" role="dialog" data-backdrop="true">
+        <div class="modal fade windModal" id="stark_win" role="dialog" data-backdrop="true">
             <div class="modal-dialog win-dialog">
                 <div class="modal-content win-content">
                     <div class="modal-body text-center imgDiv">
@@ -107,7 +108,7 @@
         </div>
     </div>
     <div class="container">
-        <div class="modal fade" id="lannister_win" role="dialog" data-backdrop="true">
+        <div class="modal fade winModal" id="lannister_win" role="dialog" data-backdrop="true">
             <div class="modal-dialog win-dialog">
                 <div class="modal-content win-content">
                     <div class="modal-body text-center imgDiv">
@@ -119,7 +120,7 @@
         </div>
     </div>
     <div class="container">
-        <div class="modal fade" id="targaryen_win" role="dialog" data-backdrop="true">
+        <div class="modal fade winModal" id="targaryen_win" role="dialog" data-backdrop="true">
             <div class="modal-dialog win-dialog">
                 <div class="modal-content win-content">
                     <div class="modal-body text-center imgDiv">
@@ -131,7 +132,7 @@
         </div>
     </div>
     <div class="container">
-        <div class="modal fade" id="greyjoy_win" role="dialog" data-backdrop="true">
+        <div class="modal fade winModal" id="greyjoy_win" role="dialog" data-backdrop="true">
             <div class="modal-dialog win-dialog">
                 <div class="modal-content win-content">
                     <div class="modal-body text-center imgDiv">
