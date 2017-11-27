@@ -4,15 +4,19 @@ $(document).ready(initializeApplication);
 function initializeApplication() {
 
     window.game = new Othello();
-    game.playerSelectionModal()
+    game.playerSelectionModal();
     $(".close_modal_button").prop('disabled', true)
 
     backgroundMusic.loop = true;
     backgroundMusic.play();
 
+
     $(".winModal").on('hidden.bs.modal', restartGame.bind(this));
     $("#noMoreMove").on('hidden.bs.modal', restartGame.bind(this));
-    $('.restart').on('click', restartGame);
+    $('.restart').on('click', restartGame.bind(this));
+
+
+
 
 
 }
@@ -20,9 +24,7 @@ function initializeApplication() {
 
 
 /*********** GLOBAL VARIABLE ***************/
-var counter = true;
-var counterForRestart = true;
-var counterForRestartDouble = true;
+
 
 /**** SOUND ****/
 
@@ -42,18 +44,17 @@ function Othello(){
     this.currentPlayer = 0;
     this.playerTurn = [];
     this.cells = [ ];
+    var counter = true;
 
 
     this.init = function(){
-        if(counterForRestart) {
-            game.createBlocks(8, 8);
-            game.initialFourCoins();
-            game.statusBarFlag();
-            allowClickHandler(checkAvailableSpace(game.currentPlayer));
-            $('.p1_flag_box :first-child').addClass('currentPlayerShow_' + game.playerTurn[0].house);
-            $('.player1 > h3').text(game.playerTurn[0].house.toUpperCase());
-            $('.player2 > h3').text(game.playerTurn[1].house.toUpperCase());
-        }
+        game.createBlocks(8, 8);
+        game.initialFourCoins();
+        game.statusBarFlag();
+        allowClickHandler(checkAvailableSpace(game.currentPlayer));
+        $('.p1_flag_box :first-child').addClass('currentPlayerShow_' + game.playerTurn[0].house);
+        $('.player1 > h3').text(game.playerTurn[0].house.toUpperCase());
+        $('.player2 > h3').text(game.playerTurn[1].house.toUpperCase());
 
     }
 
@@ -131,12 +132,11 @@ function Othello(){
             $('.selection').removeClass('selection');
 
             $(".close_modal_button").prop('disabled', false);
+
             $(".close_modal_button").on("click", function() {
                 modal.style.display = "none";
                 game.init();
-                if(!counterForRestartDouble){
-                   counterForRestart = false;
-                }
+                $(".close_modal_button").unbind('click');
 
             });
         }
@@ -357,11 +357,6 @@ function checkAvailableSpace(currentPlayer) {
     return (viableSpace);
 }
 
-function displayViable() {
-    if (game.currentPlayer === "1") {
-        checkAvailableSpace();
-    }
-}
 
 var lastLocations;
 function allowClickHandler(locations){
@@ -404,6 +399,7 @@ function whenNoSpace(){
 
 
 function restartGame(){
+    $('.restart').unbind('click');
     backgroundMusic.muted = false;
     winnerMusic.muted = true;
     $('.players').bind('click').addClass('selection').removeClass('selected');
@@ -411,8 +407,8 @@ function restartGame(){
     $('#gameBoard div').remove();
     counter = true;
     initializeApplication();
-    counterForRestart = true;
-    counterForRestartDouble = false;
+
+
 
 
 }
