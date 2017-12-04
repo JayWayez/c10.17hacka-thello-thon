@@ -190,14 +190,38 @@ h2{
     border: 0;
     /* border: 1px solid #888; */
     width: 60%;
-    height: 50%;
+    height: 80%;
     /* box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19); */
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
     animation-name: animatetop;
     animation-duration: 0.4s
 }
-
+.modal-body{
+    height: 60%;
+}
+.item{
+    height: 100%;
+}
+#myCarousel{
+    height: 80%;
+}
+.carousel-inner{
+    height: 100%;
+}
+.selection{
+    /*transform: translateX(200%);*/
+    /*text-align: center;*/
+    display: block;
+    z-index: 10;
+    height:10vh;
+    margin: 10px;
+    position:relative;
+    right:-40%;
+}
+.carousel-caption{
+    margin: 10px;
+}
 /* Add Animation */
 @-webkit-keyframes animatetop {
     from {top:-300px; opacity:0}
@@ -224,3 +248,5 @@ h2{
     color: white;
     background-color: white;
 }
+
+/*======================================Slider========================================================================*/

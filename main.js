@@ -249,6 +249,43 @@ function Othello(){
             totalCellsToFlip[flipIndex].attr('box_owned_by', this.currentPlayer).find('img').attr('src', currentTurnPlayer.coinImage);
         }
     };
+    //Chung's version, still needs to be fixed;
+// this.flipCoin= function(location,y,x, currentPlayer){
+//     var locations=location;
+//     var currentY=y;
+//     var currentX=x;
+//     var totalCellsToFlip = [];
+//     var possibleCells = [];
+//     for(var i=locations.length-1; i>=0; i--){
+//         for(var j=0; j<1;j++){
+//             if(locations[i][j]=== currentY &&locations[i][j+1]===currentX){
+//                 locations.splice(i,locations.length-i);
+//                 i=locations.length-1;
+//                 j=0;
+//                 for(var arraylocation_i=locations.length-1; arraylocation_i>=0; arraylocation_i--){
+//                     for(var arrayIndex_j=0; arrayIndex_j<1; arrayIndex_j++){
+//                         if($(game.cells[locations[arraylocation_i][arrayIndex_j]][locations[arraylocation_i][arrayIndex_j+1]].domElement[0]).attr('box_owned_by')==1-currentPlayer){
+//                             possibleCells.push($(game.cells[locations[arraylocation_i][arrayIndex_j]][locations[arraylocation_i][arrayIndex_j+1]].domElement[0]));
+//                             locations.pop();
+//                         } else{
+//                             //temporary patch;
+//                             arraylocation_i=-1
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//
+//     }
+//     totalCellsToFlip = totalCellsToFlip.concat(possibleCells);
+//     for (var flipIndex = 0; flipIndex < totalCellsToFlip.length; flipIndex++) {
+//         var currentTurnPlayer = game.playerTurn[game.currentPlayer];
+//         totalCellsToFlip[flipIndex].attr('box_owned_by', currentPlayer).find('img').attr('src', currentTurnPlayer.coinImage);
+//     }
+//
+//
+// };
+
     /*=============================================When clicked=======================================================*/
     /*=============================================When clicked=======================================================*/
     this.handleBlockClick = function(cell){
@@ -472,41 +509,5 @@ function IndBlock(locationObj){
 
 
 
-/*==============================================FLIP COIN=============================================================*/
+/*==============================================slider=============================================================*/
 /*====================================================================================================================*/
-//Chung's version, still needs to be fixed;
-// function flipCoin (location,y,x, currentPlayer){
-//     var locations=location;
-//     var currentY=y;
-//     var currentX=x;
-//     var totalCellsToFlip = [];
-//     var possibleCells = [];
-//     for(var i=locations.length-1; i>=0; i--){
-//         for(var j=0; j<1;j++){
-//             if(locations[i][j]=== currentY &&locations[i][j+1]===currentX){
-//                 locations.splice(i,locations.length-i);
-//                 i=locations.length-1;
-//                 j=0;
-//                 for(var arraylocation_i=locations.length-1; arraylocation_i>=0; arraylocation_i--){
-//                     for(var arrayIndex_j=0; arrayIndex_j<1; arrayIndex_j++){
-//                         if($(game.cells[locations[arraylocation_i][arrayIndex_j]][locations[arraylocation_i][arrayIndex_j+1]].domElement[0]).attr('box_owned_by')==1-currentPlayer){
-//                             possibleCells.push($(game.cells[locations[arraylocation_i][arrayIndex_j]][locations[arraylocation_i][arrayIndex_j+1]].domElement[0]));
-//                             locations.pop();
-//                         } else{
-//                             //temporary patch;
-//                             arraylocation_i=-1
-//                         }
-//                     }
-//                 }
-//             }
-//         }
-//
-//     }
-//     totalCellsToFlip = totalCellsToFlip.concat(possibleCells);
-//     for (var flipIndex = 0; flipIndex < totalCellsToFlip.length; flipIndex++) {
-//         var currentTurnPlayer = game.playerTurn[game.currentPlayer];
-//         totalCellsToFlip[flipIndex].attr('box_owned_by', currentPlayer).find('img').attr('src', currentTurnPlayer.coinImage);
-//     }
-//
-//
-// }
